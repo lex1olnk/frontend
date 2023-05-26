@@ -1,0 +1,7 @@
+.navItem {
+    @apply mx-3 my-auto;
+}
+
+tr td:last-child, th:last-child {
+    @apply rounded-r-lg;
+}
