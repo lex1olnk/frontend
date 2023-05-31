@@ -1,0 +1,7 @@
+.galleryItem {
+  @apply block h-48 w-36 relative rounded-md mx-auto;
+}
+
+.topTitleItem {
+  @apply inline-block h-28 w-20 relative my-auto rounded-md sm:h-32 sm:w-24;
+}
