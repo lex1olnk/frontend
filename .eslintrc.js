@@ -24,6 +24,12 @@ module.exports = {
         'prefer-const': 'error',
         'no-use-before-define': 'error',
         'react/jsx-key': 'off',
+        "prettier/prettier": [
+            "error",
+            {
+              "endOfLine": "auto"
+            }
+        ]
     },
     settings: {
         react: {

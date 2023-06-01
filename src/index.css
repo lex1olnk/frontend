@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'react-alice-carousel/lib/alice-carousel.css';
-
 body {
   @apply overflow-y-scroll;
 }

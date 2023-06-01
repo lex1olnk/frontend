@@ -1,7 +1,23 @@
 .galleryItem {
-  @apply block h-48 w-36 relative rounded-md mx-auto;
+  @apply block h-60 aspect-[3/4] mx-auto relative rounded-md;
 }
 
 .topTitleItem {
-  @apply inline-block h-28 w-20 relative my-auto rounded-md sm:h-32 sm:w-24;
+  @apply inline-block aspect-[3/4] sm:w-24 relative my-auto rounded-md h-32;
+}
+
+.__active .a {
+  @apply h-72;
+}
+
+.alice-carousel__prev-btn {
+  @apply absolute top-[7.5rem] p-0 text-left -left-8 -translate-y-1/2;
+}
+
+.alice-carousel__next-btn {
+  @apply absolute top-[7.5rem] p-0 text-right -right-8 -translate-y-1/2;
+}
+
+.alice-carousel__stage {
+  @apply py-4 bg-white rounded-md;
 }
