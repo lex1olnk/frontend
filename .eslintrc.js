@@ -24,6 +24,7 @@ module.exports = {
         'prefer-const': 'error',
         'no-use-before-define': 'error',
         'react/jsx-key': 'off',
+        "react/prop-types": "off",
         "prettier/prettier": [
             "error",
             {

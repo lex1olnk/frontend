@@ -1,9 +1,21 @@
 .galleryItem {
-  @apply block h-60 aspect-[3/4] mx-auto relative rounded-md;
+  @apply block h-full w-full relative rounded-md;
 }
 
-.topTitleItem {
-  @apply inline-block aspect-[3/4] sm:w-24 relative my-auto rounded-md h-32;
+.popularItem {
+  @apply inline-block aspect-3/4 sm:h-44 relative my-auto rounded-md px-4;
+}
+
+.alice-carousel__stage-item + .__active + .__target {
+  @apply h-60 rounded-md mx-0;
+}
+
+.alice-carousel__stage-item {
+  @apply h-60 rounded-md mx-0 px-2;
+}
+
+.topDayItem {
+  @apply inline-block aspect-3/4 sm:h-40 relative my-auto rounded-md;
 }
 
 .__active .a {
@@ -18,6 +30,10 @@
   @apply absolute top-[7.5rem] p-0 text-right -right-8 -translate-y-1/2;
 }
 
-.alice-carousel__stage {
-  @apply py-4 bg-white rounded-md;
+.alice-carousel__wrapper {
+  @apply py-4 bg-white rounded-md px-1;
+}
+
+.editor-container {
+  @apply border-2;
 }

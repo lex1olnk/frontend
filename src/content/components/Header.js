@@ -3,10 +3,10 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false }
+  { name: 'Dashboard', href: '/', current: true },
+  { name: 'TitleAdd', href: '/title/add', current: false },
+  { name: 'Registration', href: '/registration', current: false },
+  { name: 'AddTeam', href: '/team/add', current: false }
 ];
 
 function classNames(...classes) {
@@ -18,7 +18,7 @@ export default function HeaderComponent() {
     <Disclosure as="nav" className="bg-teal-400">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-myw px-4">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}

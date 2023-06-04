@@ -3,6 +3,7 @@ module.exports = {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
     theme: {
       screens: {
+
         'sm': '640px',
         // => @media (min-width: 640px) { ... }
   
@@ -18,6 +19,18 @@ module.exports = {
         '2xl': '1536px',
         // => @media (min-width: 1536px) { ... }
       },
+      extend: {
+        aspectRatio: {
+          '3/4': '3 / 4'
+        },
+        spacing: {
+          '8xl': '96rem',
+          'myw': '1017px',
+        },
+        maxWidth: {
+          'myw': '90rem',
+        }
+      }
     },
     plugins: []
 };
