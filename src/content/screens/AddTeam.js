@@ -2,8 +2,30 @@ import React from 'react';
 import { Label, Input } from '../components/TextInput';
 import NoteViewer from '../components/NoteViewer';
 import MultipleSelect from '../components/MultipleSelect';
+import UploadImage from '../components/UploadImage';
+import axios from 'axios';
 
 const AddTeam = () => {
+  const [name, setName] = React.useState('');
+  const [src, setSrc] = React.useState('');
+  const [users, setUsers] = React.useState('');
+  const [img, setImg] = React.useState('');
+  const adminId = 0;
+  //const desc = document.querySelector('.ContentEditable__root').innerHTML;
+  console.log(name);
+
+  function register() {
+    //const user = { nickname: name, password, email, img };
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('src', src);
+    formData.append('img', img);
+    formData.append('adminId', adminId);
+    axios.post(`http://localhost:5000/api/team/`, formData).then(res => {
+      //window.location.replace('/');
+      console.log(res);
+    });
+  }
   const working = 'working';
   console.log(working);
   return (
@@ -13,26 +35,39 @@ const AddTeam = () => {
         <div className="flex flex-row mx-auto">
           <div className="flex flex-col mr-8 mt-2">
             <Label value={'ЛОГО'} />
-            <img
-              src="https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/23e65bb0e903382915182731fa1dcdc2.jpg"
-              className="object-cover aspect-3/4 w-60 rounded-md"
-            />
+            <UploadImage value={img} setValue={setImg} />
           </div>
           <div className="ml-8">
             <Input
               title={'Название команды'}
               input={'Название'}
               helper={'Напишите уникальное значение'}
+              value={name}
+              setValue={setName}
             />
             <Input
               title={'Сайт команды'}
               input={'ссылка'}
               helper={'Обычно пишут ссылки на вк группу, тг-канал'}
+              value={src}
+              setValue={setSrc}
             />
-            <MultipleSelect type={'user'} input={'Пользователи'} />
+            <MultipleSelect
+              type={'user'}
+              input={'Пользователи'}
+              selectedOption={users}
+              setSelectedOption={setUsers}
+              valueType="nickname"
+            />
           </div>
         </div>
         <NoteViewer />
+        <button
+          type="button"
+          onClick={() => register()}
+          className="text-white w-36 mx-auto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+          Default
+        </button>
       </div>
     </div>
   );

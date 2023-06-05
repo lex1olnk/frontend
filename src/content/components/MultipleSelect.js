@@ -1,26 +1,31 @@
 import React from 'react';
 import axios from 'axios';
 import Select from 'react-select';
+import { $host } from '../http';
+import { getData } from '../http/univApi';
 
-const MultipleSelect = ({ type, input, helper }) => {
-  const [selectedOption, setSelectedOption] = React.useState(null);
+const MultipleSelect = ({
+  type,
+  input,
+  helper,
+  selectedOption,
+  setSelectedOption,
+  valueType = 'value'
+}) => {
   const [items, setItems] = React.useState(null);
 
   React.useEffect(() => {
-    axios.get(`http://localhost:5000/api/` + type + '/all').then(res => {
-      const data = res.data.map(item => ({
+    getData(type).then(res => {
+      const data = res.map(item => ({
         id: item.id,
-        value: item.value,
-        label: item.value
+        value: item[valueType],
+        label: item[valueType]
       }));
-
       setItems(data);
     });
   }, []);
 
   if (!items) return null;
-
-  console.log('selected', selectedOption);
 
   return (
     <div>
@@ -36,7 +41,7 @@ const MultipleSelect = ({ type, input, helper }) => {
             defaultValue={selectedOption}
             onChange={setSelectedOption}
             options={items}
-            className="basic-multi-select"
+            className="input"
             classNamePrefix="select"
           />
           <p className="text-gray-600 text-xs italic">{helper}</p>
