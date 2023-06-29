@@ -1,9 +1,9 @@
 import React from 'react';
-import { Label, Input } from '../components/TextInput';
-import NoteViewer from '../components/NoteViewer';
-import MultipleSelect from '../components/MultipleSelect';
-import UploadImage from '../components/UploadImage';
+import { Label, Input } from '../../components/TextInput';
+import NoteViewer from '../../components/NoteViewer';
+import UploadImage from '../../components/UploadImage';
 import axios from 'axios';
+import SelectedInput from '../../components/SelectedInput';
 
 const AddTeam = () => {
   const [name, setName] = React.useState('');
@@ -31,9 +31,11 @@ const AddTeam = () => {
   return (
     <div className="bg-slate-100 h-full">
       <div className="max-w-6xl m-auto bg-white flex flex-col">
-        <Label value={'Регистрация'} />
+        <label className="block uppercase tracking-wide text-gray-700 text-xl font-bold my-8 mx-auto text-center">
+          Добавление команды
+        </label>
         <div className="flex flex-row mx-auto">
-          <div className="flex flex-col mr-8 mt-2">
+          <div className="flex flex-col mr-8">
             <Label value={'ЛОГО'} />
             <UploadImage value={img} setValue={setImg} />
           </div>
@@ -52,7 +54,7 @@ const AddTeam = () => {
               value={src}
               setValue={setSrc}
             />
-            <MultipleSelect
+            <SelectedInput
               type={'user'}
               input={'Пользователи'}
               selectedOption={users}

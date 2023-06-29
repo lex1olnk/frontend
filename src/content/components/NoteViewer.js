@@ -24,7 +24,7 @@ const NoteViewer: FC = () => {
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
         Описание
       </label>
-      <Editor hashtagsEnabled={true}>
+      <Editor hashtagsEnabled={true} isEditable={false}>
         <ToolbarPlugin defaultFontSize="20px">
           <FontFamilyDropdown />
           <FontSizeDropdown />

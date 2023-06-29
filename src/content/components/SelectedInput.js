@@ -1,16 +1,16 @@
 import React from 'react';
-import axios from 'axios';
 import Select from 'react-select';
-import { $host } from '../http';
 import { getData } from '../http/univApi';
 
-const MultipleSelect = ({
+const SelectedInput = ({
   type,
   input,
   helper,
   selectedOption,
   setSelectedOption,
-  valueType = 'value'
+  valueType = 'value',
+  isMulti = true,
+  onSelect = false
 }) => {
   const [items, setItems] = React.useState(null);
 
@@ -31,24 +31,24 @@ const MultipleSelect = ({
     <div>
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-[640px] mx-auto px-3">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ml-3">
             {type}
           </label>
           <Select
-            closeMenuOnSelect={false}
-            isMulti
+            closeMenuOnSelect={onSelect}
             name={input}
+            isMulti={isMulti}
             defaultValue={selectedOption}
             onChange={setSelectedOption}
             options={items}
             className="input"
             classNamePrefix="select"
           />
-          <p className="text-gray-600 text-xs italic">{helper}</p>
+          <p className="text-gray-600 text-xs italic mt-2">{helper}</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default MultipleSelect;
+export default SelectedInput;

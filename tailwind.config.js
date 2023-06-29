@@ -20,15 +20,20 @@ module.exports = {
         // => @media (min-width: 1536px) { ... }
       },
       extend: {
+        colors: {
+          'cred': '#FF5A5A'
+        },
         aspectRatio: {
           '3/4': '3 / 4'
         },
         spacing: {
           '8xl': '96rem',
           'myw': '1017px',
+          'lb': "906px"
         },
         maxWidth: {
-          'myw': '90rem',
+          'myw': '80rem',
+          'lb': "906px"
         }
       }
     },

@@ -3,11 +3,10 @@ import React from 'react';
 const UploadImage = ({ value, setValue, className }) => {
   const phone = value ? window.URL.createObjectURL(value) : null;
   const input = React.useRef(null);
-  console.log(value);
   return (
     <div
       className={
-        'flex bg-white rounded-md border-2 border-b-slate-300 aspect-3/4 w-60 text-gray-700 border-gray-200  p-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' +
+        'flex bg-white object-cover rounded-md border-2 border-b-slate-300 aspect-3/4 w-60 text-gray-700 border-gray-200  p-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' +
         ' ' +
         className
       }

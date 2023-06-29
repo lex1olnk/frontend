@@ -3,19 +3,19 @@
 }
 
 .popularItem {
-  @apply inline-block aspect-3/4 sm:h-44 relative my-auto rounded-md px-4;
+  @apply inline-block aspect-3/4 h-40 relative rounded-md;
 }
 
 .alice-carousel__stage-item + .__active + .__target {
-  @apply h-60 rounded-md mx-0;
+  @apply h-52 rounded-md mx-0;
 }
 
 .alice-carousel__stage-item {
-  @apply h-60 rounded-md mx-0 px-2;
+  @apply h-52 rounded-md mx-0 px-2;
 }
 
 .topDayItem {
-  @apply inline-block aspect-3/4 sm:h-40 relative my-auto rounded-md;
+  @apply inline-block aspect-3/4 sm:h-36 relative my-auto rounded-md;
 }
 
 .__active .a {
@@ -38,6 +38,30 @@
   @apply border-2;
 }
 
-.input {
-  @apply block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 my-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+.select__control {
+  @apply px-2 py-1;
+}
+
+.select__indicator {
+  @apply ml-2;
+}
+
+.logoInput {
+  @apply block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-1 px-2 my-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+}
+
+.kek span {
+  @apply text-lg mb-1 text-white;
+}
+
+.titlePageButton {
+  @apply rounded-md text-lg px-4 py-2 bg-white last:ml-8;
+}
+
+.titleMenuSpan {
+  @apply first:ml-0 text-lg py-2 px-4;
+}
+
+.ratingStars path {
+  @apply fill-yellow-400;
 }

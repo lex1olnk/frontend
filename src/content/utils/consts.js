@@ -1,4 +1,5 @@
 export const ADMIN_ROUTE = '/admin';
+export const AUTHOR_ROUTE = '/author';
 export const LOGIN_ROUTE = '/login';
 export const REGISTRATION_ROUTE = '/registration';
 export const TITLE_ROUTE = '/title';

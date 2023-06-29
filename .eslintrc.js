@@ -16,7 +16,6 @@ module.exports = {
         //'prettier/prettier': 1,
         'react/react-in-jsx-scope': 'off',
         'no-var': 'error',
-        'semi': 'error',
         'indent': ["error", 2],
         'no-multi-spaces': 'error',
         'space-in-parens': 'error',
