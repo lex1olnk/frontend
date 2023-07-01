@@ -2,48 +2,40 @@
   @apply block h-full w-full relative rounded-md;
 }
 
-.popularItem {
-  @apply inline-block aspect-3/4 h-40 relative rounded-md;
-}
-
-.alice-carousel__stage-item + .__active + .__target {
-  @apply h-52 rounded-md mx-0;
-}
-
-.alice-carousel__stage-item {
-  @apply h-52 rounded-md mx-0 px-2;
-}
-
 .topDayItem {
   @apply inline-block aspect-3/4 sm:h-36 relative my-auto rounded-md;
 }
 
-.__active .a {
-  @apply h-72;
+.mostPopular {
+  .alice-carousel__wrapper {
+    @apply py-4 bg-white rounded-md;
+  }
+
+  .alice-carousel__stage-item {
+    @apply rounded-md h-40 px-2;
+  }
+
+  @apply bg-white rounded-md;
 }
 
-.alice-carousel__prev-btn {
-  @apply absolute top-[7.5rem] p-0 text-left -left-8 -translate-y-1/2;
-}
+.gallery {
+  .alice-carousel__prev-btn {
+    @apply absolute top-[7.5rem] p-0 text-left -left-8 -translate-y-1/2;
+  }
 
-.alice-carousel__next-btn {
-  @apply absolute top-[7.5rem] p-0 text-right -right-8 -translate-y-1/2;
-}
+  .alice-carousel__next-btn {
+    @apply absolute top-[7.5rem] p-0 text-right -right-8 -translate-y-1/2;
+  }
 
-.alice-carousel__wrapper {
-  @apply py-4 bg-white rounded-md px-1;
-}
+  .alice-carousel__wrapper {
+    @apply py-4 bg-white rounded-md px-1;
+  }
 
-.editor-container {
-  @apply border-2;
-}
+  .alice-carousel__stage-item {
+    @apply w-auto h-52 rounded-md mx-0 px-2;
+  }
 
-.select__control {
-  @apply px-2 py-1;
-}
-
-.select__indicator {
-  @apply ml-2;
+  @apply rounded-md sm:max-w-6xl mx-auto h-[250px];
 }
 
 .logoInput {
@@ -60,8 +52,4 @@
 
 .titleMenuSpan {
   @apply first:ml-0 text-lg py-2 px-4;
-}
-
-.ratingStars path {
-  @apply fill-yellow-400;
 }

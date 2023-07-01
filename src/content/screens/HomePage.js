@@ -71,14 +71,6 @@ const data = [
 
 const handleDragStart = e => e.preventDefault();
 
-const responsive = {
-  360: { items: 2 },
-  640: { items: 3 },
-  800: { items: 4 },
-  1024: { items: 5 },
-  1280: { items: 7 }
-};
-
 const GalleryItem = ({
   id,
   img = 'default.jpg',
@@ -112,12 +104,20 @@ const GalleryItem = ({
 };
 
 function Gallery() {
+  const responsive = {
+    360: { items: 2 },
+    640: { items: 3 },
+    800: { items: 4 },
+    1024: { items: 5 },
+    1280: { items: 7 }
+  };
+
   const items = data.map(title => {
     return <GalleryItem id={title.id} img={title.img} name={title.name} imgStyle={'galleryItem'} />;
   });
 
   return (
-    <div className="rounded-md sm:max-w-6xl mx-auto h-[250px]">
+    <div className="gallery">
       <AliceCarousel
         disableButtonsControls={true}
         disableDotsControls={true}
@@ -268,18 +268,35 @@ const FavouriteLinks = ({ click, isActive }) => {
 };
 
 const MostPopular = () => {
-  const items = data.filter(item => item.id < 6);
+  const responsive = {
+    360: { items: 2 },
+    640: { items: 3 },
+    800: { items: 4 },
+    1024: { items: 5 },
+    1280: { items: 6 }
+  };
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const items2 = data.map(title => {
+      return (
+        <GalleryItem id={title.id} img={title.img} name={title.name} imgStyle={'galleryItem'} />
+      );
+    });
+    setItems(items2);
+  }, []);
+
   return (
-    <div className="flex flex-col relative">
-      <div className="px-6 py-2 bg-red-500 w-fit rounded-t-lg absolute text-xl -top-1 z-0 bg-red-500">
-        Горячие новинки
-      </div>
-      <div className="px-6 py-2 bg-white w-fit rounded-t-lg z-20 text-xl">Горячие новинки</div>
-      <div className="flex flex-row h-full justify-between p-4 bg-white ">
-        {items.map(item => (
-          <GalleryItem id={item.id} img={item.img} name={item.name} imgStyle={'popularItem'} />
-        ))}
-      </div>
+    <div className="mostPopular">
+      <AliceCarousel
+        disableButtonsControls={true}
+        disableDotsControls={true}
+        paddingLeft={4}
+        paddingRight={4}
+        responsive={responsive}
+        mouseTracking
+        items={items}
+      />
     </div>
   );
 };
@@ -356,12 +373,12 @@ const HomePage = () => {
         <TopDay />
         <Announcements />
       </div>
-      <div className="flex flex-row w-full sm:max-w-6xl mx-auto mt-4 justify-between">
-        <div className="flex h-full flex-col w-[906px]">
+      <div className="flex flex-row mx-auto max-w-6xl mt-4 justify-between">
+        <div className="w-[820px]">
           <MostPopular />
           <LastUpdatesComponent />
         </div>
-        <div className="w-[374px] h-16">
+        <div className=" w-[336px] h-16">
           <div className="bg-white ml-4 p-4">Menu</div>
           <ShowGenres />
         </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { titleGetById } from '../http/titleApi';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as Star } from '../icons/ratingStar.svg';
+import Table from '../components/Table';
 
 const Group = ({ title, items }) => {
   const data = items;
@@ -19,12 +20,42 @@ const Group = ({ title, items }) => {
   );
 };
 
+const Info = title => {
+  return (
+    <div className="max-w-5xl mx-auto h-full flex flex-col">
+      <div className="flex flex-row">
+        <div className="text-xl m-4">Глав: 0</div>
+        <div className="text-xl mx-8 my-4">Год выпуска: 2019</div>
+      </div>
+      <Group title={'Теги'} items={[...title.genres, ...title.tags, ...title.fandoms]} />
+      <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
+      <div className="flex flex-col">
+        <span className="text-xl mb-4">Описание</span>
+        <span className="text-md">
+          Ян Хе-Джи - известная звезда SNS с более чем 100 000 подписчиками в Instagram. Из-за своей
+          популярности девушка получила много признаний, но, несмотря на это, она не имеет большого
+          опыта с противоположным полом. Однажды Хе-Джи получила приглашение от SNS пойти на
+          свидание с другой популярной звездой, за которой она
+        </span>
+        <div className="aspect-3/4 w-[240px] bg-purple-200 mx-auto my-4">img</div>
+      </div>
+      <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
+      <Rating />
+      <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
+    </div>
+  );
+};
+
+const Chapters = () => {
+  return <Table />;
+};
+
 const navMenu = [
-  { value: 'Подробности' },
-  { value: 'Главы' },
-  { value: 'Обсуждения' },
-  { value: 'Анонсы' },
-  { value: 'Отзывы' }
+  { id: 0, value: 'Подробности', component: Info },
+  { id: 1, value: 'Главы', component: Chapters },
+  { id: 2, value: 'Обсуждения' },
+  { id: 3, value: 'Анонсы' },
+  { id: 4, value: 'Отзывы' }
 ];
 
 const RatingStars = ({ value, rate }) => {
@@ -116,7 +147,7 @@ const Rating = () => {
 
 const TitlePage = () => {
   const [title, setTitle] = useState('');
-  const [active, setActive] = useState('Подробности');
+  const [active, setActive] = useState(0);
   const { id } = useParams();
   useEffect(() => {
     titleGetById(id).then(res => {
@@ -172,9 +203,11 @@ const TitlePage = () => {
               <span
                 key={item.value}
                 className={
-                  active === item.value ? 'bg-white titleMenuSpan' : 'titleMenuSpan text-white'
+                  navMenu[active].value === item.value
+                    ? 'bg-white titleMenuSpan'
+                    : 'titleMenuSpan text-white'
                 }
-                onClick={() => navClick(item.value)}>
+                onClick={() => navClick(item.id)}>
                 {item.value}
               </span>
             ))}
@@ -182,27 +215,7 @@ const TitlePage = () => {
         </div>
       </div>
       <div className="max-w-5xl h-[0.1rem] bg-slate-200 rounded-md mx-auto"></div>
-      <div className="max-w-5xl mx-auto h-full flex flex-col">
-        <div className="flex flex-row">
-          <div className="text-xl m-4">Глав: 0</div>
-          <div className="text-xl mx-8 my-4">Год выпуска: 2019</div>
-        </div>
-        <Group title={'Теги'} items={[...title.genres, ...title.tags, ...title.fandoms]} />
-        <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
-        <div className="flex flex-col">
-          <span className="text-xl mb-4">Описание</span>
-          <span className="text-md">
-            Ян Хе-Джи - известная звезда SNS с более чем 100 000 подписчиками в Instagram. Из-за
-            своей популярности девушка получила много признаний, но, несмотря на это, она не имеет
-            большого опыта с противоположным полом. Однажды Хе-Джи получила приглашение от SNS пойти
-            на свидание с другой популярной звездой, за которой она
-          </span>
-          <div className="aspect-3/4 w-[240px] bg-purple-200 mx-auto my-4">img</div>
-        </div>
-        <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
-        <Rating />
-        <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
-      </div>
+      {navMenu[active].component(title)}
     </div>
   );
 };
