@@ -53,3 +53,12 @@
 .titleMenuSpan {
   @apply first:ml-0 text-lg py-2 px-4;
 }
+
+.titleChapterButton {
+  @apply rounded-md text-lg px-4 py-2 bg-cred mx-4 text-white;
+}
+
+[data-toggle='toggle'] {
+  transition: 0.2s;
+  display: none;
+}

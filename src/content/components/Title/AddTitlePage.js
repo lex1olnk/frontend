@@ -1,47 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import NoteViewer from '../../components/NoteViewer';
-import UploadImage from '../../components/UploadImage';
-import { Label } from '../../components/TextInput';
+import NoteViewer from '../NoteViewer';
+import UploadImage from '../UploadImage';
 import { titlePost } from '../../http/titleApi';
-import SelectedInput from '../../components/SelectedInput';
-import AddAuthor from '../../components/modals/AddAuthor';
+import { SelectedInput, CreatableInput, Label, TextInputDiv } from '../Inputs/Inputs';
 import { Context } from '../../..';
-
-const TextInputDiv = ({ title = null, input = null, helper = null, value, setValue }) => {
-  return (
-    <div className="flex flex-wrap -mx-3 mb-3">
-      <div className="w-[640px] mx-auto px-3">
-        <label className="ml-3 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-          {title}
-        </label>
-        <input
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-3 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          placeholder={input}
-          value={value}
-          onChange={e => setValue(e.target.value)}
-        />
-        <p className="text-gray-600 text-xs italic">{helper}</p>
-      </div>
-    </div>
-  );
-};
+import { authorPost } from '../../http/authorApi';
 
 const AddTitlePage = observer(() => {
   const { user } = useContext(Context);
+  const [name, setName] = useState('');
+  const [origName, setOrigName] = useState('');
+  const [src, setSrc] = useState('');
+  const [year, setYear] = useState(0);
+  const [author, setAuthor] = useState(null);
+  const [language, setLanguage] = useState('');
+  const [genres, setGenres] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [fandoms, setFandoms] = useState([]);
+  const [img, setImg] = useState('');
+  const [desc, setDesc] = useState('');
 
-  const [showModal, setShowModal] = React.useState(false);
-  const [name, setName] = React.useState('');
-  const [origName, setOrigName] = React.useState('');
-  const [src, setSrc] = React.useState('');
-  const [author, setAuthor] = React.useState({});
-  const [language, setLanguage] = React.useState('');
-  const [genres, setGenres] = React.useState([]);
-  const [tags, setTags] = React.useState([]);
-  const [fandoms, setFandoms] = React.useState([]);
-  const [img, setImg] = React.useState('');
-
-  console.log(user);
+  const _user = toJS(user.user);
 
   const click = async () => {
     const res = await titlePost({
@@ -49,10 +30,12 @@ const AddTitlePage = observer(() => {
       origName,
       origLink: src,
       authorId: author.id,
-      translatorId: user.id,
+      translatorId: _user.id,
       languageId: language.id,
       img,
+      year,
       genres,
+      desc: JSON.stringify(desc),
       tags,
       fandoms
     });
@@ -90,14 +73,13 @@ const AddTitlePage = observer(() => {
               value={src}
               setValue={setSrc}
             />
-            <SelectedInput
+            <TextInputDiv title={'Год выпуска'} name={'Год'} value={year} setValue={setYear} />
+            <CreatableInput
               type="author"
               input="Автор"
-              helper={<a onClick={() => setShowModal(!showModal)}>Добавить автора</a>}
               selectedOption={author}
               setSelectedOption={setAuthor}
-              isMulti={false}
-              valueType="name"
+              post={authorPost}
               onSelect={true}
             />
             <SelectedInput
@@ -107,7 +89,6 @@ const AddTitlePage = observer(() => {
               selectedOption={language}
               setSelectedOption={setLanguage}
               isMulti={false}
-              valueType="value"
               onSelect={true}
             />
             <SelectedInput
@@ -133,7 +114,7 @@ const AddTitlePage = observer(() => {
             />
           </div>
         </div>
-        <NoteViewer />
+        <NoteViewer setDesc={setDesc} />
         <button
           type="button"
           onClick={click}
@@ -141,7 +122,6 @@ const AddTitlePage = observer(() => {
           Default
         </button>
       </div>
-      <AddAuthor visible={showModal} onClick={setShowModal} />
     </div>
   );
 });

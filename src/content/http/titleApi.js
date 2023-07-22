@@ -1,17 +1,20 @@
 import { $host, $authHost } from './index';
 
-export const titlePost = async ({
-  name,
-  origName,
-  origLink,
-  authorId,
-  translatorId,
-  languageId,
-  img,
-  genres,
-  tags,
-  fandoms
-}) => {
+export const titlePost = async props => {
+  const {
+    name,
+    origName,
+    origLink,
+    authorId,
+    translatorId,
+    languageId,
+    img,
+    genres,
+    tags,
+    fandoms,
+    year,
+    desc
+  } = props;
   const formData = new FormData();
   formData.append('name', name);
   formData.append('origName', origName);
@@ -20,6 +23,8 @@ export const titlePost = async ({
   formData.append('authorId', authorId);
   formData.append('translatorId', translatorId);
   formData.append('languageId', languageId);
+  formData.append('desc', desc);
+  formData.append('year', year);
   formData.append('genres', JSON.stringify(genres));
   formData.append('tags', JSON.stringify(tags));
   formData.append('fandoms', JSON.stringify(fandoms));

@@ -1,6 +1,6 @@
-import { $host } from './index';
+import { $authHost } from './index';
 
-export const authorPost = async name => {
-  const response = await $host.post('author', { name });
-  return response;
+export const authorPost = async value => {
+  const { data } = await $authHost.post('author', { value });
+  return data;
 };

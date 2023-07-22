@@ -1,12 +1,15 @@
 import React, { Fragment, useContext } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Context } from '../..';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import { Context } from '../../..';
+import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 
 const navigation = [
   { name: 'Каталог', href: '#', current: false },
   { name: 'Поиск', href: '#', current: false },
+  { name: 'Команды', href: '/team', current: false },
   { name: 'Форум', href: '#', current: false }
 ];
 
@@ -22,7 +25,7 @@ function classNames(...classes) {
 
 const HeaderComponent = observer(() => {
   const { user } = useContext(Context);
-  console.log(user);
+  const _user = toJS(user.user);
   const auth = user.isAuth;
 
   const logout = () => {
@@ -73,7 +76,7 @@ const HeaderComponent = observer(() => {
                           item.current
                             ? 'bg-gray-900 text-white'
                             : 'text-black-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          'rounded-md px-3 py-2 text-lg font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}>
                         {item.name}
@@ -87,13 +90,9 @@ const HeaderComponent = observer(() => {
                 {auth ? (
                   <Menu as="div" className="relative mr-3">
                     <div>
-                      <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none">
+                      <Menu.Button className="flex focus:outline-none">
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt=""
-                        />
+                        <PostAddIcon sx={{ fontSize: 32 }} />
                       </Menu.Button>
                     </div>
                     <Transition
@@ -127,9 +126,9 @@ const HeaderComponent = observer(() => {
 
                 <button
                   type="button"
-                  className="rounded-full bg-gray-800 p-1 text-black-400 hover:text-white focus:outline-none">
+                  className="rounded-full bg-white p-1 text-black-400 hover:text-white hover:bg-slate-800 focus:outline-none">
                   <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  <BellIcon className="h-8 w-8" aria-hidden="true" />
                 </button>
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -203,6 +202,18 @@ const HeaderComponent = observer(() => {
                                   'block px-4 py-2 text-sm text-black-700'
                                 )}>
                                 Войти
+                              </a>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="/registration"
+                                className={classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'block px-4 py-2 text-sm text-black-700'
+                                )}>
+                                Регистрация
                               </a>
                             )}
                           </Menu.Item>

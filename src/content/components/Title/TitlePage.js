@@ -1,18 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { titleGetById } from '../http/titleApi';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Context } from '../../..';
+import { bookTomesGetByBookId } from '../../http/bookTomeApi';
+import { titleGetById } from '../../http/titleApi';
+import { toJS } from 'mobx';
+import ConvertLexical from '../../plugins/ConvertLexical';
+import { getDescString } from '../../http/univApi';
+import parse from 'html-react-parser';
+
+import AddChapter from '../modals/AddChapter';
+import { MyTable } from '../Table';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+
 import { ReactComponent as Star } from '../icons/ratingStar.svg';
-import Table from '../components/Table';
 
 const Group = ({ title, items }) => {
   const data = items;
   if (!data) return null;
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row flex-wrap">
       {data.map(item => (
-        <div
-          className="bg-purple-200 px-4 py-2 mx-2 rounded-md first:ml-0"
-          key={item.id + item.value}>
+        <div className="bg-purple-200 px-4 py-1.5 my-1 mr-2 rounded-md" key={item.id + item.value}>
           {item.value}
         </div>
       ))}
@@ -20,7 +32,8 @@ const Group = ({ title, items }) => {
   );
 };
 
-const Info = title => {
+const Info = props => {
+  const { title, desc } = props;
   return (
     <div className="max-w-5xl mx-auto h-full flex flex-col">
       <div className="flex flex-row">
@@ -31,12 +44,7 @@ const Info = title => {
       <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
       <div className="flex flex-col">
         <span className="text-xl mb-4">Описание</span>
-        <span className="text-md">
-          Ян Хе-Джи - известная звезда SNS с более чем 100 000 подписчиками в Instagram. Из-за своей
-          популярности девушка получила много признаний, но, несмотря на это, она не имеет большого
-          опыта с противоположным полом. Однажды Хе-Джи получила приглашение от SNS пойти на
-          свидание с другой популярной звездой, за которой она
-        </span>
+        <span className="text-md">{parse(desc)}</span>
         <div className="aspect-3/4 w-[240px] bg-purple-200 mx-auto my-4">img</div>
       </div>
       <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
@@ -46,17 +54,47 @@ const Info = title => {
   );
 };
 
-const Chapters = () => {
-  return <Table />;
-};
+const Chapters = ({ titleId, translatorId }) => {
+  const { user } = useContext(Context);
+  const [isVisible, setIsVisible] = useState(false);
+  const [bookTomes, setBookTomes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isEditor, setIsEditor] = useState(false);
+  const _user = toJS(user.user);
 
-const navMenu = [
-  { id: 0, value: 'Подробности', component: Info },
-  { id: 1, value: 'Главы', component: Chapters },
-  { id: 2, value: 'Обсуждения' },
-  { id: 3, value: 'Анонсы' },
-  { id: 4, value: 'Отзывы' }
-];
+  useEffect(() => {
+    if (_user.id === translatorId) {
+      setIsEditor(true);
+    }
+    bookTomesGetByBookId(titleId).then(res => {
+      setIsLoading(true);
+      setBookTomes(res);
+    });
+  }, []);
+
+  return (
+    <div className="max-w-5xl mx-auto mt-4">
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row">
+          <a href="#" className="titleChapterButton" onClick={() => setIsVisible(!isVisible)}>
+            Добавить главу
+          </a>
+          <a href="#" className="titleChapterButton">
+            Скачать
+          </a>
+          <a href="#" className="titleChapterButton">
+            Выбрать главы
+          </a>
+        </div>
+        <a href="#" className="titlePageButton">
+          Добавить главу
+        </a>
+      </div>
+      <MyTable cols={bookTomes} rowName={'chapters'} isEditor={false} />
+      <AddChapter isVisible={isVisible} onClick={setIsVisible} titleId={titleId} />
+    </div>
+  );
+};
 
 const RatingStars = ({ value, rate }) => {
   const stars = [20.0, 20.0, 20.0, 20.0, 20.0];
@@ -147,26 +185,31 @@ const Rating = () => {
 
 const TitlePage = () => {
   const [title, setTitle] = useState('');
-  const [active, setActive] = useState(0);
+  const [desc, setDesc] = useState('');
+  const [value, setValue] = React.useState('1');
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const { id } = useParams();
+
   useEffect(() => {
     titleGetById(id).then(res => {
       setTitle(res);
+      getDescString('titles', res.name + '.txt').then(res => {
+        ConvertLexical({ descString: res, setDesc });
+      });
+      console.log('1');
     });
   }, []);
-
-  console.log(title);
-
-  const navClick = value => {
-    setActive(value);
-  };
 
   if (!title) return <div>...LOADING</div>;
 
   return (
     <div>
       <div className="w-full bg-cred">
-        <div className="max-w-5xl mx-auto h-[416px] flex flex-col justify-between">
+        <div className="max-w-5xl mx-auto h-fit flex flex-col justify-between">
           <div className="flex flex-row py-4">
             <img
               src={process.env.REACT_APP_API_URL + '/img/' + title.img}
@@ -198,24 +241,40 @@ const TitlePage = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row titleMenu">
-            {navMenu.map(item => (
-              <span
-                key={item.value}
-                className={
-                  navMenu[active].value === item.value
-                    ? 'bg-white titleMenuSpan'
-                    : 'titleMenuSpan text-white'
-                }
-                onClick={() => navClick(item.id)}>
-                {item.value}
-              </span>
-            ))}
-          </div>
         </div>
+        <TabContext value={value}>
+          <div className="bg-white">
+            <Box className="bg-cred" sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <TabList
+                onChange={handleChange}
+                aria-label="lab API tabs example"
+                className="max-w-5xl mx-auto"
+                TabIndicatorProps={{
+                  sx: { backgroundColor: '#AAA' }
+                }}
+                sx={{
+                  '& button': { color: 'white', backgroundColor: '#FF5A5A' },
+                  '& button:active': { color: 'black', backgroundColor: 'white' },
+                  '& button:hover': { color: 'white', backgroundColor: '#FF7C8C' },
+                  '& button.Mui-selected': { color: 'black', backgroundColor: 'white' }
+                }}>
+                <Tab label="Подробности" value="1" />
+                <Tab label="Главы" value="2" />
+                <Tab label="Обсуждения" value="3" />
+              </TabList>
+            </Box>
+            <TabPanel sx={{ padding: 0 }} value="1">
+              <Info title={title} desc={desc} />
+            </TabPanel>
+            <TabPanel sx={{ padding: 0 }} value="2">
+              <Chapters titleId={title.id} />
+            </TabPanel>
+            <TabPanel sx={{ padding: 0 }} value="3">
+              Item Three
+            </TabPanel>
+          </div>
+        </TabContext>
       </div>
-      <div className="max-w-5xl h-[0.1rem] bg-slate-200 rounded-md mx-auto"></div>
-      {navMenu[active].component(title)}
     </div>
   );
 };

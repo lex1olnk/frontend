@@ -14,8 +14,8 @@ export default class UserStore {
     this._isAuth = bool;
   }
 
-  setUser({ token, id }) {
-    this._user = { token, id };
+  setUser(token) {
+    this._user = { token, id: token.id };
   }
 
   get isAuth() {

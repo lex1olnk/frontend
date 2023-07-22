@@ -9,13 +9,15 @@ import {
   TEAM_ROUTE
 } from '../utils/consts';
 import { Context } from '../..';
-import { AuthPage, Login } from '../screens/AuthPage';
+import { AuthPage, Login } from './Authenticaon/AuthPage';
 
-import AddTitlePage from '../screens/Edits/AddTitlePage';
-import AddTeam from '../screens/Edits/AddTeam';
-import AdminPage from '../screens/AdminPage';
-import TitlePage from '../screens/TitlePage';
-import HomePage from '../screens/HomePage';
+import AddTitlePage from './Team/AddTitlePage';
+import AddTeam from './Team/AddTeam';
+import AdminPage from './Admin/AdminPage';
+import TitlePage from './Title/TitlePage';
+import HomePage from './Home/HomePage';
+import TeamsPage from '../screens/TeamsPage';
+import TeamPage from './Team/TeamPage';
 
 const AppRouter = () => {
   const { user } = useContext(Context);
@@ -28,6 +30,8 @@ const AppRouter = () => {
       <Route path={LOGIN_ROUTE} element={<Login />} />;
       <Route path={ADMIN_ROUTE} element={<AdminPage />} />;
       <Route path={TITLE_ROUTE + '/:id'} element={<TitlePage />} />;
+      <Route path={TEAM_ROUTE + '/:id'} element={<TeamPage />} />;
+      <Route path={TEAM_ROUTE} element={<TeamsPage />} />;
       <Route path={TEAM_ROUTE + '/add'} element={<AddTeam />} />;
       <Route path={TITLE_ROUTE + '/add'} element={<AddTitlePage />} />;
       <Route path={HOME_ROUTE} element={<HomePage />} />;

@@ -4,7 +4,7 @@ import AliceCarousel from 'react-alice-carousel';
 
 import 'react-alice-carousel/lib/alice-carousel.css';
 import '../styles/styles.css';
-import { titleGetLastUpdates } from '../http/titleApi';
+import { titleGetLastUpdates } from '../../http/titleApi';
 
 const data = [
   {
@@ -200,7 +200,7 @@ const getLastUpdatesByPage = pageNum => {
 const LastUpdatesComponent = () => {
   const [isActive, setIsActive] = useState(true);
   const [titles, setTitles] = useState([]);
-  const asd = 'block aspect-3/4 sm:h-36 rounded-md';
+  const asd = 'block aspect-3/4 sm:h-28 rounded-md';
   const pageNum = 1;
 
   const click = () => {
@@ -225,7 +225,7 @@ const LastUpdatesComponent = () => {
           const titleTime = new Date(title.updatedAt);
           return (
             <div key={title.id}>
-              <div className="bg-white w-full h-42 flex flex-row p-3 my-3 rounded-md first:mt-0">
+              <div className="bg-white w-full h-42 flex flex-row p-3 my-2 rounded-md first:mt-0">
                 <GalleryItem id={title.id} img={title.img} imgStyle={asd} isLine={false} />
                 <div className="pl-3 grid grid-cols-1 grid-rows-4 w-full">
                   <div className="flex flex-row justify-between">

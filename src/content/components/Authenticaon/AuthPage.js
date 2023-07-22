@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Context } from '../..';
-import { login, registration } from '../http/userApi';
+import { Context } from '../../..';
+import { login, registration } from '../../http/userApi';
 import { useNavigate } from 'react-router-dom';
-
-import { Input, Label } from '../components/TextInput';
+import { Input, Label } from '../Inputs/Inputs';
 import Select from 'react-select';
-import NoteViewer from '../components/NoteViewer';
-import UploadImage from '../components/UploadImage';
+import NoteViewer from '../NoteViewer';
+import UploadImage from '../UploadImage';
 
 const SingleSelect = ({ selectedOption, setSelectedOption }) => {
   const items = [
@@ -45,14 +44,14 @@ const SingleSelect = ({ selectedOption, setSelectedOption }) => {
 };
 
 export const Login = observer(() => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { user } = useContext(Context);
   const navigate = useNavigate();
 
   const click = async () => {
     await login({ email, password }).then(res => {
-      user.setUser({ token: res.token, id: res.id });
+      user.setUser(res.token);
       user.setIsAuth(true);
       navigate('/');
       console.log(user);
@@ -93,19 +92,20 @@ export const Login = observer(() => {
 });
 
 export const AuthPage = observer(() => {
-  const [name, setName] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [isPassword, setIsPassword] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [sex, setSex] = React.useState(0);
-  const [img, setImg] = React.useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [isPassword, setIsPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [sex, setSex] = useState(0);
+  const [img, setImg] = useState('');
+  const [desc, setDesc] = useState('');
   const { user } = useContext(Context);
   const navigate = useNavigate();
   //const desc = document.querySelector('.ContentEditable__root').innerHTML;
 
   const click = async () => {
-    await registration({ name, password, email, img }).then(res => {
-      user.setUser({ token: res.token, id: res.id });
+    await registration({ name, password, email, img, desc }).then(res => {
+      user.setUser({ token: res.token });
       user.setIsAuth(true);
       navigate('/');
       console.log(res);
@@ -157,7 +157,7 @@ export const AuthPage = observer(() => {
             />
           </div>
         </div>
-        <NoteViewer />
+        <NoteViewer setDesc={setDesc} />
         <button
           type="button"
           onClick={click}

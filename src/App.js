@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './content/components/AppRouter';
-import HeaderComponent from './content/components/Header';
+import HeaderComponent from './content/components/Header/Header';
 import { observer } from 'mobx-react-lite';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '.';
@@ -12,10 +12,10 @@ const App = observer(() => {
 
   useEffect(() => {
     check().then(data => {
-      user.setUser(true)
-      user.setIsAuth(true)
+      user.setUser(data.token);
+      user.setIsAuth(true);
     }).catch((error) => {
-      console.log(error)
+      console.log(error.message)
     }).finally(() => setLoading(false))
   }, []);
 
