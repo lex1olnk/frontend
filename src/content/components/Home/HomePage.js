@@ -3,7 +3,7 @@ import AliceCarousel from 'react-alice-carousel';
 //import { useMediaQuery } from 'react-responsive';
 
 import 'react-alice-carousel/lib/alice-carousel.css';
-import '../styles/styles.css';
+import '../../styles/styles.css';
 import { titleGetLastUpdates } from '../../http/titleApi';
 
 const data = [

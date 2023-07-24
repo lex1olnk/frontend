@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { SimpleTable } from '../components/Table';
-import { teamsGetAll } from '../http/teamApi';
+import { SimpleTable } from '../Table';
+import { teamsGetAll } from '../../http/teamApi';
 
 const TeamsPage = () => {
   const [teams, setTeams] = useState('');

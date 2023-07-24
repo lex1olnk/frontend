@@ -11,12 +11,12 @@ import {
 import { Context } from '../..';
 import { AuthPage, Login } from './Authenticaon/AuthPage';
 
-import AddTitlePage from './Team/AddTitlePage';
+import AddTitlePage from './Title/AddTitlePage';
 import AddTeam from './Team/AddTeam';
 import AdminPage from './Admin/AdminPage';
 import TitlePage from './Title/TitlePage';
 import HomePage from './Home/HomePage';
-import TeamsPage from '../screens/TeamsPage';
+import TeamsPage from './Team/TeamsPage';
 import TeamPage from './Team/TeamPage';
 
 const AppRouter = () => {

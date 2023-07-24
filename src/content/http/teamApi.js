@@ -4,7 +4,6 @@ export const teamPost = async props => {
   const { name, src, img, adminId, desc } = props;
   const formData = new FormData();
   formData.append('name', name);
-  formData.append('src', src);
   formData.append('img', img);
   formData.append('adminId', adminId);
   formData.append('desc', desc);

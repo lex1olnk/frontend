@@ -16,15 +16,17 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-import { ReactComponent as Star } from '../icons/ratingStar.svg';
+import { ReactComponent as Star } from '../../icons/ratingStar.svg';
 
 const Group = ({ title, items }) => {
   const data = items;
   if (!data) return null;
   return (
-    <div className="flex flex-row flex-wrap">
+    <div className="flex flex-row flex-wrap mt-2">
       {data.map(item => (
-        <div className="bg-purple-200 px-4 py-1.5 my-1 mr-2 rounded-md" key={item.id + item.value}>
+        <div
+          className="bg-cred text-white text-sm px-3 py-1 my-1 mr-2 rounded-md"
+          key={item.id + item.value}>
           {item.value}
         </div>
       ))}
@@ -35,14 +37,8 @@ const Group = ({ title, items }) => {
 const Info = props => {
   const { title, desc } = props;
   return (
-    <div className="max-w-5xl mx-auto h-full flex flex-col">
-      <div className="flex flex-row">
-        <div className="text-xl m-4">Глав: 0</div>
-        <div className="text-xl mx-8 my-4">Год выпуска: 2019</div>
-      </div>
-      <Group title={'Теги'} items={[...title.genres, ...title.tags, ...title.fandoms]} />
-      <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
-      <div className="flex flex-col">
+    <div className="max-w-[1144px] bg-white mx-auto h-full flex flex-col">
+      <div className="flex flex-col p-4">
         <span className="text-xl mb-4">Описание</span>
         <span className="text-md">{parse(desc)}</span>
         <div className="aspect-3/4 w-[240px] bg-purple-200 mx-auto my-4">img</div>
@@ -73,7 +69,7 @@ const Chapters = ({ titleId, translatorId }) => {
   }, []);
 
   return (
-    <div className="max-w-5xl mx-auto mt-4">
+    <div className="max-w-[1144px] bg-white mx-auto mt-4">
       <div className="flex flex-row justify-between">
         <div className="flex flex-row">
           <a href="#" className="titleChapterButton" onClick={() => setIsVisible(!isVisible)}>
@@ -186,7 +182,7 @@ const Rating = () => {
 const TitlePage = () => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-  const [value, setValue] = React.useState('1');
+  const [value, setValue] = useState('1');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -204,56 +200,95 @@ const TitlePage = () => {
     });
   }, []);
 
+  const TitleDesc = props => {
+    const { name, value } = props;
+    return (
+      <div className="px-16 first:pl-0" key={name + value}>
+        <span className="text-sm">{name}</span>
+        <br />
+        <span className="text-lg">{value}</span>
+      </div>
+    );
+  };
+
   if (!title) return <div>...LOADING</div>;
 
+  const titleDescs = [
+    {
+      name: 'Переводчик',
+      value: title.translatorId
+    },
+    {
+      name: 'Автор',
+      value: title.author.value
+    },
+    {
+      name: 'Глав',
+      value: 102
+    },
+    {
+      name: 'Просмотров',
+      value: title.views
+    }
+  ];
+
+  console.log(title);
   return (
-    <div>
-      <div className="w-full bg-cred">
-        <div className="max-w-5xl mx-auto h-fit flex flex-col justify-between">
-          <div className="flex flex-row py-4">
+    <div className="bg-slate-100">
+      <div className="w-full py-4">
+        <div className="max-w-[1144px] h-full mx-auto flex flex-row justify-between">
+          <div>
             <img
               src={process.env.REACT_APP_API_URL + '/img/' + title.img}
-              className="rounded-md aspect-3/4 w-60 object-cover"
+              className="rounded-md h-[240px] w-[200px] object-cover"
             />
-            <div className="flex flex-col w-[480px] ml-6 justify-between">
-              <span className="px-4 text-4xl text-white">{title.name}</span>
-              <div className="flex flex-row px-4">
-                <div className="flex flex-col kek text-xl">
-                  <span>Иное название</span>
-                  <span>Автор</span>
-                  <span>Статус</span>
-                  <span>Просмотров</span>
-                  <span>Язык</span>
-                  <span>Подписка</span>
-                </div>
-                <div className="flex flex-col kek ml-16">
-                  <span>{title.origName}</span>
-                  <span>{title.name}</span>
-                  <span>{title.statusTran}</span>
-                  <span>{title.views}</span>
-                  <span>{title.name}</span>
-                  <span>НР</span>
-                </div>
+            <div className="flex flex-row mt-2 justify-between">
+              <button className="w-[92px] text-sm py-2 bg-white">Читать</button>
+              <button className="w-[92px] text-sm py-2 bg-white">В закладки</button>
+            </div>
+          </div>
+
+          <div className="rounded-md w-[925px] bg-white">
+            <div className="flex flex-row justify-between pt-2 px-4 text-2xl ">
+              <div>
+                <span className="text-2xl">{title.name}</span>
+                <span className="mx-4 text-base py-1 px-3 bg-white h-fit rounded-md">Category</span>
+                <span className="text-base py-1 px-3 bg-white h-fit rounded-md">Status</span>
+                <br />
+                <span className="text-base">{title.origName}</span>
               </div>
-              <div className="flex flex-row ml-4">
-                <div className="titlePageButton">Начать читать</div>
-                <div className="titlePageButton">В закладки</div>
+              <div className="flex flex-row">
+                <a href="#" className="block h-8 text-center w-8 bg-cred">
+                  v
+                </a>
+                <a className="block h-8 text-center ml-4 w-8 bg-cred">t</a>
               </div>
+            </div>
+            <div className="pt-2 px-4">
+              <div className="flex flex-row">
+                {titleDescs.map(desc => (
+                  <TitleDesc name={desc.name} value={desc.value} />
+                ))}
+              </div>
+              <Group title={'Теги'} items={[...title.genres, ...title.tags, ...title.fandoms]} />
             </div>
           </div>
         </div>
         <TabContext value={value}>
-          <div className="bg-white">
-            <Box className="bg-cred" sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <div>
+            <Box className="mt-4">
               <TabList
                 onChange={handleChange}
                 aria-label="lab API tabs example"
-                className="max-w-5xl mx-auto"
+                className="max-w-[1144px] mx-auto"
                 TabIndicatorProps={{
                   sx: { backgroundColor: '#AAA' }
                 }}
                 sx={{
-                  '& button': { color: 'white', backgroundColor: '#FF5A5A' },
+                  '& button': {
+                    color: 'white',
+                    backgroundColor: '#FF5A5A'
+                  },
                   '& button:active': { color: 'black', backgroundColor: 'white' },
                   '& button:hover': { color: 'white', backgroundColor: '#FF7C8C' },
                   '& button.Mui-selected': { color: 'black', backgroundColor: 'white' }
