@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 //import { useMediaQuery } from 'react-responsive';
 
-import 'react-alice-carousel/lib/alice-carousel.css';
 import '../../styles/styles.css';
 import { titleGetLastUpdates } from '../../http/titleApi';
+import { Gallery, GalleryItem } from '../Gallery';
+
+const hideText = (value, maxlimit) => {
+  return value.length > maxlimit ? value.substring(0, maxlimit - 3) + '...' : value;
+};
 
 const data = [
   {
@@ -69,99 +73,6 @@ const data = [
   }
 ];
 
-const handleDragStart = e => e.preventDefault();
-
-const GalleryItem = ({
-  id,
-  img = 'default.jpg',
-  name,
-  imgStyle,
-  spanStyle = 'absolute bottom-1 left-2 text-white text-center font-normal',
-  isLine = true,
-  rating = '5.00'
-}) => {
-  const linear =
-    'linear-gradient(to bottom, transparent, rgba(0,0,0,0) 65%, rgba(0,0,0,0.85) 97%, rgba(0,0,0, 1) 100%), url(';
-  const ratingStyle = 'absolute bottom-6 left-2 text-white text-center font-normal';
-  return (
-    <a
-      href={'/title/' + id}
-      key={id}
-      onDragStart={handleDragStart}
-      role="presentation"
-      style={{
-        background: isLine
-          ? linear + process.env.REACT_APP_API_URL + '/img/' + img + ')'
-          : 'url(' + process.env.REACT_APP_API_URL + '/img/' + img + ')',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}
-      className={imgStyle}>
-      {rating ? <span className={ratingStyle}>{rating}</span> : null}
-      {name ? <span className={spanStyle}>{name}</span> : null}
-    </a>
-  );
-};
-
-function Gallery() {
-  const responsive = {
-    360: { items: 2 },
-    640: { items: 3 },
-    800: { items: 4 },
-    1024: { items: 5 },
-    1280: { items: 7 }
-  };
-
-  const items = data.map(title => {
-    return <GalleryItem id={title.id} img={title.img} name={title.name} imgStyle={'galleryItem'} />;
-  });
-
-  return (
-    <div className="gallery">
-      <AliceCarousel
-        disableButtonsControls={true}
-        disableDotsControls={true}
-        paddingLeft={'0.25rem'}
-        paddingRight={'0.25rem'}
-        responsive={responsive}
-        mouseTracking
-        items={items}
-      />
-    </div>
-  );
-}
-
-/*
-
-const AdvertismentComponent = () => (
-  <div className="my-3 w-full flex-column border-1 py-3 rounded-md h-64 justify-between bg-white">
-    <h2 className="mb-3">Обновление популярной манги</h2>
-    <div className="w-full justify-between flex flex-row">
-      {data.map(title => (
-        <div key={title.id} className="inline-block h-48">
-          <a
-            href="#"
-            style={{
-              background:
-                'linear-gradient(to bottom, transparent, rgba(176,176,176,0) 80%, rgba(223,223,223,0.7) 76%, rgba(255,255,255,0.83) 100%), url(' +
-                title.img +
-                ')',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-            className="block h-48 w-36 relative rounded-md">
-            <span className="absolute bottom-2 left-1/2 text-black text-center -translate-x-1/2">
-              {title.name}
-            </span>
-          </a>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-*/
-
 const TopDay = () => {
   const mass = Array();
   for (let i = 0; i < 4; i++) {
@@ -191,16 +102,10 @@ const TopDay = () => {
   );
 };
 
-/*
-const getLastUpdatesByPage = pageNum => {
-  const someData = [];
-  return someData;
-};
-*/
 const LastUpdatesComponent = () => {
   const [isActive, setIsActive] = useState(true);
   const [titles, setTitles] = useState([]);
-  const asd = 'block aspect-3/4 sm:h-28 rounded-md';
+  const asd = 'block aspect-3/4 sm:h-36 rounded-md';
   const pageNum = 1;
 
   const click = () => {
@@ -216,7 +121,9 @@ const LastUpdatesComponent = () => {
     });
   }, []);
   console.log(titles);
-  if (titles.length === 0) return null;
+
+  if (!titles) return null;
+
   return (
     <div className="w-full lg:max-w-6xl mx-auto flex h-full flex-col">
       <FavouriteLinks click={click} isActive={isActive} />
@@ -225,15 +132,17 @@ const LastUpdatesComponent = () => {
           const titleTime = new Date(title.updatedAt);
           return (
             <div key={title.id}>
-              <div className="bg-white w-full h-42 flex flex-row p-3 my-2 rounded-md first:mt-0">
+              <div className="bg-white w-full h-[168px] flex flex-row p-3 my-2 rounded-md first:mt-0">
                 <GalleryItem id={title.id} img={title.img} imgStyle={asd} isLine={false} />
-                <div className="pl-3 grid grid-cols-1 grid-rows-4 w-full">
-                  <div className="flex flex-row justify-between">
-                    <span className="text-xl my-auto">{title.name}</span>
+                <div className="pl-3 grid grid-cols-1 grid-rows-6 w-full">
+                  <div>
+                    <span className="text-base my-auto">{hideText(title.name, 80)}</span>
                   </div>
-                  <span className="text-md my-auto">{title.name}</span>
+                  <span className="text-sm my-auto">{hideText(title.name, 96)}</span>
                   <span></span>
-                  <span className="text-md my-auto">
+                  <span></span>
+                  <span></span>
+                  <span className="text-sm my-auto">
                     {titleTime.getDate() +
                       '.' +
                       (titleTime.getMonth() + 1) +
@@ -368,7 +277,7 @@ const ShowGenres = () => {
 const HomePage = () => {
   return (
     <div className=" bg-slate-100 pt-2">
-      <Gallery />
+      <Gallery data={data} />
       <div className="flex flex-row w-full sm:max-w-6xl mx-auto justify-between">
         <TopDay />
         <Announcements />

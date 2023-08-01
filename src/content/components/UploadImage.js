@@ -20,7 +20,7 @@ const UploadImage = ({ value, setValue, className }) => {
         type="file"
         id="logoInput"
         ref={input}
-        onChange={e => setValue(e.target.files[0])}
+        onChange={e => setValue({ target: { name: 'img', value: e.target.files[0] } })}
         hidden={true}
       />
     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import NoteViewer from '../NoteViewer';
 import UploadImage from '../UploadImage';
 import { Label, Input } from '../Inputs/Inputs';
@@ -7,23 +7,32 @@ import { Context } from '../../..';
 import { toJS } from 'mobx';
 
 const AddTeam = () => {
-  const [name, setName] = React.useState('');
-  const [src, setSrc] = React.useState('');
-  const [img, setImg] = React.useState('');
-  const [desc, setDesc] = useState('');
+  const [team, setTeam] = useState({
+    name: '',
+    src: '',
+    img: '',
+    desc: '',
+    adminId: -1
+  });
+
   const { user } = useContext(Context);
   const _user = toJS(user.user);
 
-  const adminId = _user.id;
+  useEffect(() => {
+    setTeam(prevState => ({ ...prevState, ['adminId']: _user.id }));
+  }, []);
 
-  //const desc = document.querySelector('.ContentEditable__root').innerHTML;
+  const handleChange = e => {
+    setTeam(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
+
   const onClick = async () => {
     const res = await teamPost({
-      name: name,
-      src: src,
-      img: img,
-      desc: JSON.stringify(desc),
-      adminId: adminId
+      name: team.name,
+      src: team.src,
+      img: team.img,
+      desc: JSON.stringify(team.desc),
+      adminId: team.adminId
     });
   };
 
@@ -36,26 +45,26 @@ const AddTeam = () => {
         <div className="flex flex-row mx-auto">
           <div className="flex flex-col mr-8">
             <Label value={'ЛОГО'} />
-            <UploadImage value={img} setValue={setImg} />
+            <UploadImage value={team.img} setValue={handleChange} />
           </div>
           <div className="ml-8">
             <Input
               title={'Название команды'}
               input={'Название'}
               helper={'Напишите уникальное значение'}
-              value={name}
-              setValue={setName}
+              name="name"
+              setValue={handleChange}
             />
             <Input
               title={'Сайт команды'}
               input={'ссылка'}
               helper={'Обычно пишут ссылки на вк группу, тг-канал'}
-              value={src}
-              setValue={setSrc}
+              name="src"
+              setValue={handleChange}
             />
           </div>
         </div>
-        <NoteViewer setDesc={setDesc} />
+        <NoteViewer setDesc={handleChange} />
         <button
           type="button"
           onClick={onClick}

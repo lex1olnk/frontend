@@ -9,7 +9,7 @@ const SelectedInput = props => {
     input,
     title,
     helper,
-    selectedOption,
+    name,
     setSelectedOption,
     valueType = 'value',
     isMulti = true,
@@ -39,10 +39,8 @@ const SelectedInput = props => {
           </label>
           <Select
             closeMenuOnSelect={onSelect}
-            name={input}
             isMulti={isMulti}
-            defaultValue={selectedOption}
-            onChange={setSelectedOption}
+            onChange={newValue => setSelectedOption({ target: { name: name, value: newValue } })}
             options={items}
             className="input"
             classNamePrefix="select"
@@ -55,17 +53,7 @@ const SelectedInput = props => {
 };
 
 const CreatableInput = props => {
-  const {
-    type,
-    input,
-    helper,
-    selectedOption,
-    setSelectedOption,
-    onSelect = false,
-    post,
-    get = getData,
-    someV = null
-  } = props;
+  const { type, name, helper, setSelectedOption, post, get = getData, someV = null } = props;
   const [items, setItems] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -102,10 +90,8 @@ const CreatableInput = props => {
             {type}
           </label>
           <CreatableSelect
-            name={input}
-            defaultValue={selectedOption}
             isLoading={isLoading}
-            onChange={newValue => setSelectedOption(newValue)}
+            onChange={newValue => setSelectedOption({ target: { name: name, value: newValue } })}
             onCreateOption={handleCreate}
             options={items}
             className="input"
@@ -118,42 +104,21 @@ const CreatableInput = props => {
   );
 };
 
-const TextInputDiv = ({ title = null, input = null, helper = null, value, setValue }) => {
-  console.log(value);
+const Input = props => {
+  const { title = null, input = null, helper = null, setValue, type = 'text', name } = props;
   return (
-    <div className="flex flex-wrap -mx-3 mb-3">
-      <div className="w-[640px] mx-auto px-3">
-        <label className="ml-3 block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-          {title}
-        </label>
-        <input
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-3 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          placeholder={input}
-          value={value}
-          onChange={e => setValue(e.target.value)}
-        />
-        <p className="text-gray-600 text-xs italic">{helper}</p>
-      </div>
-    </div>
-  );
-};
-
-const Input = ({ title = null, input = null, helper = null, value, setValue, type = 'text' }) => {
-  return (
-    <div className="flex flex-wrap -mx-3 mb-3">
-      <div className="w-[640px] mx-auto px-3">
-        <Label value={title} />
-        <input
-          className={
-            'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-3 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-          }
-          onChange={e => setValue(e.target.value)}
-          value={value}
-          type={type}
-          placeholder={input}
-        />
-        <p className="text-gray-600 text-xs italic">{helper}</p>
-      </div>
+    <div className="w-[640px] mx-auto">
+      <Label value={title} />
+      <input
+        className={
+          'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-3 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+        }
+        onChange={setValue}
+        type={type}
+        name={name}
+        placeholder={input}
+      />
+      <p className="text-gray-600 text-xs italic">{helper}</p>
     </div>
   );
 };
@@ -169,4 +134,4 @@ const Label = ({ value, className = '' }) => {
   );
 };
 
-export { TextInputDiv, SelectedInput, CreatableInput, Input, Label };
+export { SelectedInput, CreatableInput, Input, Label };

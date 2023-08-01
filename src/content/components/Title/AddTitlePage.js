@@ -4,42 +4,47 @@ import { observer } from 'mobx-react-lite';
 import NoteViewer from '../NoteViewer';
 import UploadImage from '../UploadImage';
 import { titlePost } from '../../http/titleApi';
-import { SelectedInput, CreatableInput, Label, TextInputDiv } from '../Inputs/Inputs';
+import { SelectedInput, CreatableInput, Label, Input } from '../Inputs/Inputs';
 import { Context } from '../../..';
 import { authorPost } from '../../http/authorApi';
 
 const AddTitlePage = observer(() => {
-  const { user } = useContext(Context);
-  const [name, setName] = useState('');
-  const [origName, setOrigName] = useState('');
-  const [src, setSrc] = useState('');
-  const [year, setYear] = useState(0);
-  const [author, setAuthor] = useState(null);
-  const [language, setLanguage] = useState('');
-  const [genres, setGenres] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [fandoms, setFandoms] = useState([]);
-  const [img, setImg] = useState('');
-  const [desc, setDesc] = useState('');
+  const [title, setTitle] = useState({
+    name: '',
+    origName: '',
+    origLink: '',
+    src: '',
+    year: 0,
+    author: {},
+    language: {},
+    genres: [],
+    tags: [],
+    fandoms: [],
+    desc: ''
+  });
 
+  const { user } = useContext(Context);
   const _user = toJS(user.user);
+
+  const handleChange = e => {
+    setTitle(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
 
   const click = async () => {
     const res = await titlePost({
-      name,
-      origName,
-      origLink: src,
-      authorId: author.id,
+      name: title.name,
+      origName: title.origName,
+      origLink: title.origLink,
+      authorId: title.author.id,
       translatorId: _user.id,
-      languageId: language.id,
-      img,
-      year,
-      genres,
-      desc: JSON.stringify(desc),
-      tags,
-      fandoms
+      languageId: title.language.id,
+      img: title.img,
+      year: title.year,
+      genres: title.genres,
+      desc: JSON.stringify(title.desc),
+      tags: title.tags,
+      fandoms: title.fandoms
     });
-    console.log(res);
   };
 
   return (
@@ -51,70 +56,33 @@ const AddTitlePage = observer(() => {
         <div className="flex flex-row mx-auto">
           <div className="flex flex-col mr-8 mt-2">
             <Label value={'ЛОГО'} />
-            <UploadImage value={img} setValue={setImg} />
+            <UploadImage value={title.img} setValue={handleChange} />
           </div>
           <div className="ml-8">
-            <TextInputDiv
-              title={'Название тайтла'}
-              name={'Тайтл'}
-              input={'Тайтееел'}
-              value={name}
-              setValue={setName}
-            />
-            <TextInputDiv
-              title={'Оригинальное название'}
-              name={'кек'}
-              value={origName}
-              setValue={setOrigName}
-            />
-            <TextInputDiv
-              title={'Ссылка на первоисточник'}
-              name={'ССылка'}
-              value={src}
-              setValue={setSrc}
-            />
-            <TextInputDiv title={'Год выпуска'} name={'Год'} value={year} setValue={setYear} />
+            <Input title="Название тайтла" name="name" setValue={handleChange} />
+            <Input title="Оригинальное название" name="origName" setValue={handleChange} />
+            <Input title="Ссылка на первоисточник" name="src" setValue={handleChange} />
+            <Input title="Год выпуска" name="year" setValue={handleChange} />
             <CreatableInput
+              name="author"
               type="author"
-              input="Автор"
-              selectedOption={author}
-              setSelectedOption={setAuthor}
+              setSelectedOption={handleChange}
               post={authorPost}
               onSelect={true}
             />
             <SelectedInput
+              name="language"
               type="language"
-              input="Язык оригинала"
-              helper={'Японский, корейский и т.д'}
-              selectedOption={language}
-              setSelectedOption={setLanguage}
+              setSelectedOption={handleChange}
               isMulti={false}
               onSelect={true}
             />
-            <SelectedInput
-              type="genre"
-              input="Жанры"
-              helper="Старайтесь добавлять не столь много жанров"
-              selectedOption={genres}
-              setSelectedOption={setGenres}
-            />
-            <SelectedInput
-              type="tag"
-              input="Теги"
-              helper="Старайтесь добавлять не столь много тегов"
-              selectedOption={tags}
-              setSelectedOption={setTags}
-            />
-            <SelectedInput
-              type="fandom"
-              input="Фандомы"
-              helper="Старайтесь добавлять не столь много фандомов"
-              selectedOption={fandoms}
-              setSelectedOption={setFandoms}
-            />
+            <SelectedInput name="genres" type="genre" setSelectedOption={handleChange} />
+            <SelectedInput name="tags" type="tag" input="Теги" setSelectedOption={handleChange} />
+            <SelectedInput name="tags" type="fandom" setSelectedOption={handleChange} />
           </div>
         </div>
-        <NoteViewer setDesc={setDesc} />
+        <NoteViewer setDesc={handleChange} />
         <button
           type="button"
           onClick={click}

@@ -51,3 +51,8 @@ export const titleGetById = async id => {
   const { data } = await $host.get('title/' + id);
   return data;
 };
+
+export const titleGetByTranslatorId = async id => {
+  const { data } = await $host.get('title/translator/' + id);
+  return data;
+};

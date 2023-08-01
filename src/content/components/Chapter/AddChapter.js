@@ -23,6 +23,7 @@ const AddChapter = props => {
         name,
         bookTome: bookTome.id,
         status: status.id,
+        titleId: titleId,
         costChapter,
         costAudio
       }).then(res => {

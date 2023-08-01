@@ -4,6 +4,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 const TABLE_HEAD = [
   { value: '', style: '' },
   { value: 'Название', style: 'w-1/2' },
+  { value: '', style: '' },
   { value: 'Статус', style: '' },
   { value: 'Понравилось', style: '' },
   { value: 'Просмотров', style: '' },
@@ -11,22 +12,20 @@ const TABLE_HEAD = [
 ];
 
 const Td = props => {
-  const { value, textAlign = 'center', onClick, className } = props;
+  const { value, textAlign = 'center', onClick, className, key } = props;
   return (
     <td
-      key={value}
+      key={key}
       style={{ textAlign }}
       onClick={onClick}
-      className={
-        'text-center px-1 py-3 text-md font-medium text-gray-800 whitespace-nowrap ' + className
-      }>
+      className={'px-1 py-3 text-md font-medium text-gray-800 whitespace-nowrap ' + className}>
       {value}
     </td>
   );
 };
 
 const Tbody = props => {
-  const { cols, rows, rowNames, isEditor } = props;
+  const { cols, rows, rowNames, isEditor, titleId } = props;
   const [active, setActive] = useState(false);
 
   const click = () => {
@@ -36,7 +35,7 @@ const Tbody = props => {
   return (
     <tbody className="divide-gray-200 border-b-2" key={cols.id}>
       <tr>
-        <td></td>
+        <td className="w-8"></td>
         <Td value={cols.value} onClick={click} textAlign="left" />
       </tr>
       {rows.map(row => {
@@ -59,12 +58,22 @@ const Tbody = props => {
                 className="flex m-auto w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
               />
             </td>
-            {rowNames.map(name => (
-              <Td value={row[name]} key={name} />
-            ))}
+            {rowNames.map(name =>
+              name !== 'edit' ? (
+                <Td
+                  value={row[name]}
+                  key={row.id + row[name]}
+                  textAlign={name === 'name' ? 'left' : 'center'}
+                />
+              ) : (
+                <td key={row.id + name}>
+                  <a href={'/title/' + titleId + '/' + row['id'] + '/import'}>Импортировать</a>
+                </td>
+              )
+            )}
             <Td value={time} />
             {isEditor && (
-              <td className="h-fit">
+              <td className="m-auto p-2">
                 <ModeEditIcon />
               </td>
             )}
@@ -76,10 +85,10 @@ const Tbody = props => {
 };
 
 export const MyTable = props => {
-  const { isEditor = true, setIsEditor, cols, rowName } = props;
+  const { isEditor = true, setIsEditor, cols, rowName, titleId } = props;
   if (!cols) return;
   return (
-    <div className="flex flex-col max-w-5xl mx-auto">
+    <div className="flex flex-col max-w-full mx-auto">
       <table className="min-w-full  divide-gray-200">
         <thead>
           <tr>
@@ -98,8 +107,9 @@ export const MyTable = props => {
           <Tbody
             cols={col}
             rows={col[rowName]}
-            rowNames={['name', 'likes', 'views', 'downloaded']}
+            rowNames={['name', 'edit', 'likes', 'views', 'downloaded']}
             isEditor={isEditor}
+            titleId={titleId}
           />
         ))}
       </table>

@@ -21,55 +21,47 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { $generateHtmlFromNodes } from '@lexical/html';
 
-function SetEditorPlugin({ setEditor }) {
-  const [editor] = useLexicalComposerContext();
+// function SetEditorPlugin({ setEditor }) {
+//   const [editor] = useLexicalComposerContext();
 
-  useEffect(() => {
-    if (!setEditor) return;
-    setEditor(editor);
-  }, [editor]);
+//   useEffect(() => {
+//     if (!setEditor) return;
+//     setEditor(editor);
+//   }, [editor]);
 
-  return null;
-}
+//   return null;
+// }
 
 const onChange = (editorState, editor, setDesc) => {
   if (editor) {
     editor.update(() => {
       const htmlString = $generateHtmlFromNodes(editor, null);
     });
-    setDesc(editor.getEditorState());
+    setDesc({ target: { name: 'desc', value: editor.getEditorState() } });
   }
 };
 
 const NoteViewer = props => {
   const { setDesc } = props;
-  const [editor, setEditor] = useState(null);
-
+  console.log('Note');
   return (
     <EditorComposer>
-      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-        Описание
-      </label>
-      <Editor hashtagsEnabled={true}>
-        <ToolbarPlugin defaultFontSize="20px">
-          <FontFamilyDropdown />
-          <FontSizeDropdown />
-          <Divider />
+      <Editor>
+        <ToolbarPlugin defaultFontSize="16px">
           <BoldButton />
           <ItalicButton />
           <UnderlineButton />
-          <CodeFormatButton />
           <InsertLinkButton />
           <TextColorPicker />
           <BackgroundColorPicker />
           <TextFormatDropdown />
           <Divider />
-          <InsertDropdown enablePoll={true} />
-          <Divider />
           <AlignDropdown />
         </ToolbarPlugin>
-        <SetEditorPlugin setEditor={setEditor} />
-        <OnChangePlugin onChange={editorState => onChange(editorState, editor, setDesc)} />
+        {/* <SetEditorPlugin /> */}
+        <OnChangePlugin
+          onChange={(editorState, editor) => onChange(editorState, editor, setDesc)}
+        />
       </Editor>
     </EditorComposer>
   );
