@@ -107,30 +107,24 @@ const CreatableInput = props => {
 const Input = props => {
   const { title = null, input = null, helper = null, setValue, type = 'text', name } = props;
   return (
-    <div className="w-[640px] mx-auto">
+    <div>
       <Label value={title} />
       <input
         className={
-          'appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-3 mb-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+          'appearance-none block w-full bg-white text-gray-700 border border-gray-300 rounded-md py-2 px-4 mb-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
         }
         onChange={setValue}
         type={type}
         name={name}
         placeholder={input}
       />
-      <p className="text-gray-600 text-xs italic">{helper}</p>
     </div>
   );
 };
 
 const Label = ({ value, className = '' }) => {
   return (
-    <label
-      className={
-        'uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ml-3' + ' ' + className
-      }>
-      {value}
-    </label>
+    <div className={'tracking-wide text-gray-700 text-md mb-1' + ' ' + className}>{value}</div>
   );
 };
 

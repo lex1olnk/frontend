@@ -5,34 +5,39 @@ import { bookTomePost, bookTomesGetByBookId } from '../../http/bookTomeApi';
 import { chapterPost } from '../../http/chapterApi';
 
 const AddChapter = props => {
-  const { isVisible, onClick, titleId } = props;
-  console.log(titleId);
-  const [name, setName] = useState('');
-  const [bookTome, setBookTome] = useState('');
-  const [status, setStatus] = useState('');
-  const [costChapter, setCostChapter] = useState(0);
-  const [costAudio, setCostAudio] = useState(0);
+  const { setUpdated, isVisible, onClick, titleId } = props;
+  const [chapter, setChapter] = useState({
+    name: '',
+    bookTome: [],
+    status: {},
+    costChapter: 0,
+    costAudio: 0
+  });
 
   const nav = useNavigate();
 
-  if (!isVisible) return null;
+  const handleChange = e => {
+    setChapter(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
 
   const click = async () => {
     try {
       const res = await chapterPost({
-        name,
-        bookTome: bookTome.id,
-        status: status.id,
+        name: chapter.name,
+        bookTome: chapter.bookTome.id,
+        status: chapter.status.id,
         titleId: titleId,
-        costChapter,
-        costAudio
+        costChapter: chapter.costChapter,
+        costAudio: chapter.costAudio
       }).then(res => {
-        console.log(res);
+        setUpdated(currentState => !currentState);
       });
     } catch (e) {
       return null;
     }
   };
+
+  if (!isVisible) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backgrop-blue-sm flex justify-center items-center">
@@ -43,18 +48,18 @@ const AddChapter = props => {
         <div className="flex flex-col mx-auto">
           <Input
             title={'Название'}
+            name="name"
             input={'Автор'}
             helper={'пишите латинскими символами'}
-            value={name}
-            setValue={setName}
+            setValue={handleChange}
           />
           <CreatableInput
             type={titleId}
             title={'Название'}
             input={'Том'}
+            name={'bookTome'}
             helper={'пишите латинскими символами'}
-            selectedOption={bookTome}
-            setSelectedOption={setBookTome}
+            setSelectedOption={handleChange}
             get={bookTomesGetByBookId}
             someV={titleId}
             post={bookTomePost}
@@ -63,26 +68,26 @@ const AddChapter = props => {
             type="chapter/status"
             title="Статус"
             input="Статус"
+            name="status"
             helper={'В переводе'}
-            selectedOption={status}
-            setSelectedOption={setStatus}
+            setSelectedOption={handleChange}
             isMulti={false}
             valueType="value"
             onSelect={true}
           />
           <Input
             title={'Стоимость подписки'}
+            name="costChapter"
             input={'Автор'}
             helper={'пишите латинскими символами'}
-            value={costChapter}
-            setValue={setCostChapter}
+            setValue={handleChange}
           />
           <Input
             title={'Стоимость аудио'}
+            name="costAudio"
             input={'Автор'}
             helper={'пишите латинскими символами'}
-            value={costAudio}
-            setValue={setCostAudio}
+            setValue={handleChange}
           />
         </div>
         <div>

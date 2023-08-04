@@ -12,6 +12,7 @@ const Chapters = ({ titleId, translatorId }) => {
   const [bookTomes, setBookTomes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditor, setIsEditor] = useState(false);
+  const [updated, setUpdated] = useState(false);
   const _user = toJS(user.user);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const Chapters = ({ titleId, translatorId }) => {
       setIsLoading(true);
       setBookTomes(res);
     });
-  }, []);
+  }, [updated]);
 
   if (!isLoading) return;
   console.log(_user.id, translatorId);
@@ -50,7 +51,12 @@ const Chapters = ({ titleId, translatorId }) => {
         isEditor={isEditor}
         titleId={titleId}
       />
-      <AddChapter isVisible={isVisible} onClick={setIsVisible} titleId={titleId} />
+      <AddChapter
+        setUpdated={setUpdated}
+        isVisible={isVisible}
+        onClick={setIsVisible}
+        titleId={titleId}
+      />
     </div>
   );
 };

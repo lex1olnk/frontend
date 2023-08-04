@@ -44,13 +44,20 @@ const SingleSelect = ({ selectedOption, setSelectedOption }) => {
 };
 
 export const Login = observer(() => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [_user, setUser] = useState({
+    email: '',
+    password: ''
+  });
+
   const { user } = useContext(Context);
   const navigate = useNavigate();
 
+  const handleChange = e => {
+    setUser(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
+
   const click = async () => {
-    await login({ email, password }).then(res => {
+    await login({ email: _user.email, password: _user.password }).then(res => {
       user.setUser(res.token);
       user.setIsAuth(true);
       navigate('/');
@@ -67,17 +74,17 @@ export const Login = observer(() => {
           <Input
             title={'Почта'}
             input={'почта'}
+            name="email"
             helper={'Напишите уникальное значение'}
-            value={email}
-            setValue={setEmail}
+            setValue={handleChange}
           />
           <Input
             title={'Пароль'}
             input={'Пароль'}
             type={'password'}
+            name="password"
             helper={'Напишите уникальное значение'}
-            value={password}
-            setValue={setPassword}
+            setValue={handleChange}
           />
         </div>
         <button
@@ -92,77 +99,61 @@ export const Login = observer(() => {
 });
 
 export const AuthPage = observer(() => {
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [isPassword, setIsPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [sex, setSex] = useState(0);
-  const [img, setImg] = useState('');
-  const [desc, setDesc] = useState('');
-  const { user } = useContext(Context);
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    repassword: '',
+    sex: 0
+  });
+
+  const names = [
+    { name: 'name', type: 'text', label: 'Никнэйм' },
+    { name: 'password', type: 'password', label: 'Пароль' },
+    { name: 'repassword', type: 'password', label: 'Подтверждения пароля' },
+    { name: 'email', type: 'email', label: 'Почта' }
+  ];
+
+  const { _user } = useContext(Context);
   const navigate = useNavigate();
-  //const desc = document.querySelector('.ContentEditable__root').innerHTML;
+
+  const handleChange = e => {
+    setUser(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
 
   const click = async () => {
-    await registration({ name, password, email, img, desc }).then(res => {
-      user.setUser({ token: res.token });
-      user.setIsAuth(true);
-      navigate('/');
-      console.log(res);
-    });
+    await registration({ nickname: user.name, password: user.password, email: user.email }).then(
+      res => {
+        _user.setUser({ token: res.token });
+        _user.setIsAuth(true);
+        navigate('/');
+        console.log(res);
+      }
+    );
   };
 
   return (
-    <div className="bg-slate-100 h-full">
-      <div className="max-w-6xl m-auto bg-white flex flex-col mb-8">
-        <label className="block uppercase tracking-wide text-gray-700 text-xl font-bold my-8 mx-auto text-center">
-          Регистрация
+    <div className="bg-slate-200 flex-1">
+      <div className="w-[564px] m-auto bg-white flex flex-col p-4">
+        <label className="block text-xl">
+          Новый пользователь?
+          <br />
+          <span className="text-sm">
+            воспользуйтесь приведенной ниже формой для создания учетной записи
+          </span>
         </label>
-        <div className="flex flex-row mx-auto">
-          <div className="flex flex-col mr-8 mt-2">
-            <Label value={'ЛОГО'} />
-            <UploadImage value={img} setValue={setImg} />
-            <SingleSelect selectedOption={sex} setSelectedOption={setSex} />
-          </div>
-          <div className="ml-8">
-            <Input
-              title={'Никнэйм'}
-              input={'Название'}
-              helper={'Напишите уникальное значение'}
-              value={name}
-              setValue={setName}
-            />
-            <Input
-              title={'Пароль'}
-              input={'Пароль'}
-              type={'password'}
-              helper={'Напишите уникальное значение'}
-              value={password}
-              setValue={setPassword}
-            />
-            <Input
-              title={'Повторение пароля'}
-              input="Повторный пароль"
-              type={'password'}
-              helper="Напишите уникальное значение"
-              value={isPassword}
-              setValue={setIsPassword}
-            />
-            <Input
-              title={'Email'}
-              input={'email'}
-              helper={'Напишите уникальное значение'}
-              value={email}
-              setValue={setEmail}
-            />
-          </div>
+        <div className="flex flex-col mt-6">
+          {names.map(item => (
+            <div key={item.name} className="w-full">
+              <Input title={item.label} type={item.type} name={item.name} setValue={handleChange} />
+            </div>
+          ))}
         </div>
-        <NoteViewer setDesc={setDesc} />
         <button
           type="button"
           onClick={click}
-          className="text-white w-36 mx-auto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-          Default
+          className="text-white w-36 mx-auto bg-cred hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
+          Создать
         </button>
       </div>
     </div>

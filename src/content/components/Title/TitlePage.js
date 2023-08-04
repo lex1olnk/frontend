@@ -108,7 +108,7 @@ const TitlePage = () => {
     titleIncrementViews(id);
     titleGetById(id).then(res => {
       setTitle(res);
-      getDescString('titles', res.name + '.txt').then(res => {
+      getDescString('titles/' + res.id + '/', res.name + '.txt').then(res => {
         ConvertLexical({ descString: res, setDesc });
       });
       console.log('1');
@@ -138,7 +138,7 @@ const TitlePage = () => {
 
   console.log(title);
   return (
-    <div className="bg-slate-100 h-full ">
+    <div className="bg-slate-200 h-full">
       <div className="w-full py-4">
         <div className="max-w-[1144px] h-full mx-auto">
           <span className="text-2xl">{title.name}</span>

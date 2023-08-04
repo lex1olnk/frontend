@@ -6,8 +6,6 @@ export const registration = async ({ name, password, email, img, desc }) => {
   formData.append('nickname', name);
   formData.append('password', password);
   formData.append('email', email);
-  formData.append('img', img);
-  formData.append('desc', desc);
   const { data } = await $host.post('user/registration', formData);
   localStorage.setItem('token', data.token);
   return { token: jwt_decode(data.token) };

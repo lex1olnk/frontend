@@ -12,14 +12,14 @@ const TABLE_HEAD = [
 ];
 
 const Td = props => {
-  const { value, textAlign = 'center', onClick, className, key } = props;
+  const { value, textAlign = 'center', onClick, className, key, href } = props;
   return (
     <td
       key={key}
       style={{ textAlign }}
       onClick={onClick}
       className={'px-1 py-3 text-md font-medium text-gray-800 whitespace-nowrap ' + className}>
-      {value}
+      <a href={href}>{value}</a>
     </td>
   );
 };
@@ -64,6 +64,7 @@ const Tbody = props => {
                   value={row[name]}
                   key={row.id + row[name]}
                   textAlign={name === 'name' ? 'left' : 'center'}
+                  href={'/title/' + titleId + '/' + row['id']}
                 />
               ) : (
                 <td key={row.id + name}>

@@ -42,10 +42,9 @@ const onChange = (editorState, editor, setDesc) => {
 };
 
 const NoteViewer = props => {
-  const { setDesc } = props;
-  console.log('Note');
+  const { editor, setDesc } = props;
   return (
-    <EditorComposer>
+    <EditorComposer initialEditorState={editor}>
       <Editor>
         <ToolbarPlugin defaultFontSize="16px">
           <BoldButton />
