@@ -5,5 +5,6 @@ export const HOME_ROUTE = '/';
 export const REGISTRATION_ROUTE = '/registration';
 export const SEARCH_ROUTE = '/search';
 export const TITLE_ROUTE = '/title';
+export const CHAPTER_ROUTE = TITLE_ROUTE + '/:title/:id';
 export const TEAM_ROUTE = '/team';
 export const USER_ROUTE = '/user';

@@ -1,10 +1,13 @@
 import React, { Fragment, useContext } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import PostAddIcon from '@mui/icons-material/PostAdd';
 import { Context } from '../../..';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
+
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import Logo from '../../icons/logo.png';
+import { useLocation } from 'react-router-dom';
 
 const navigation = [
   { name: 'Каталог', href: '#', current: false },
@@ -23,24 +26,13 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const HeaderComponent = observer(() => {
-  const { user } = useContext(Context);
-  const _user = toJS(user.user);
-  const auth = user.isAuth;
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    user.setIsAuth(false);
-    user.setUser({});
-    console.log('logout');
-    window.location.reload(false);
-  };
-
+const DefaultHeader = props => {
+  const { auth, logout } = props;
   return (
-    <Disclosure as="nav" className="bg-white border-b-rose-500">
+    <Disclosure as="nav" className="bg-white z-10 border-b-rose-500">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-6xl px-4">
+          <div className="mx-auto max-w-[1152px]">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -55,28 +47,18 @@ const HeaderComponent = observer(() => {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <a className="flex flex-shrink-0 items-center" href="/">
-                  <img
-                    className="block h-8 w-auto lg:hidden"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
-                  />
-                  <img
-                    className="hidden h-8 w-auto lg:block"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
-                  />
+                  <img className="block h-8 w-auto lg:hidden" src={Logo} alt="Your Company" />
+                  <img className="hidden h-8 w-auto lg:block" src={Logo} alt="Your Company" />
                 </a>
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 h-full">
                     {navigation.map(item => (
                       <a
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current
-                            ? 'bg-gray-900 text-white'
-                            : 'text-black-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-md font-medium'
+                          item.current ? 'bg-gray-900 text-white' : '',
+                          'headerNavItem lineUnderWord'
                         )}
                         aria-current={item.current ? 'page' : undefined}>
                         {item.name}
@@ -151,7 +133,7 @@ const HeaderComponent = observer(() => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95">
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {user.isAuth ? (
+                      {auth ? (
                         <div>
                           <Menu.Item>
                             {({ active }) => (
@@ -248,6 +230,39 @@ const HeaderComponent = observer(() => {
         </>
       )}
     </Disclosure>
+  );
+};
+
+const ReaderComponent = props => {
+  return (
+    <>
+      <div className="mx-auto max-w-full">
+        <div className="flex h-16"></div>
+      </div>
+    </>
+  );
+};
+
+const HeaderComponent = observer(() => {
+  const { user } = useContext(Context);
+  const _user = toJS(user.user);
+  const auth = user.isAuth;
+
+  const location = useLocation();
+
+  const validPage = new RegExp('^(/title/[0-9]/[0-9])$');
+  const logout = () => {
+    localStorage.removeItem('token');
+    user.setIsAuth(false);
+    user.setUser({});
+    console.log('logout');
+    window.location.reload(false);
+  };
+
+  return validPage.test(location.pathname) ? (
+    <ReaderComponent />
+  ) : (
+    <DefaultHeader auth={auth} logout={logout} />
   );
 });
 

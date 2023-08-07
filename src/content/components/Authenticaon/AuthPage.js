@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../../..';
 import { login, registration } from '../../http/userApi';
 import { useNavigate } from 'react-router-dom';
-import { Input, Label } from '../Inputs/Inputs';
+import { Input, Label, SelectedInput } from '../Inputs/Inputs';
 import Select from 'react-select';
 import NoteViewer from '../NoteViewer';
 import UploadImage from '../UploadImage';
@@ -67,10 +67,18 @@ export const Login = observer(() => {
   };
 
   return (
-    <div className="bg-slate-100 h-screen flex">
-      <div className="max-w-6xl m-auto bg-white flex flex-col py-8 rounded-md">
-        <Label value={'Авторизация'} />
-        <div className="flex flex-col px-8 mx-auto">
+    <div className="bg-slate-200 min-h-[calc(100vh_-_65px_-_148px)] flex flex-row justify-center">
+      <div className="text-center justify-centerw-[333px] h-[400px] rounded-md my-auto mx-2 bg-cred flex flex-col p-4 text-white">
+        <img
+          src={process.env.REACT_APP_API_URL + '/img/' + 'defaultImg.jpg'}
+          className="h-[217px] w-[217px] object-cover mx-auto rounded-full border-2 border-white"
+        />
+        <span className="my-2">Добро пожаловать к нам!</span>
+        <span>Чувствуйте себя как дома.</span>
+      </div>
+      <div className="bg-white flex flex-col my-auto justify-center h-[400px] rounded-md p-4">
+        <span className="text-xl text-center">Авторизация</span>
+        <div className="flex flex-col mx-auto w-[364px]">
           <Input
             title={'Почта'}
             input={'почта'}
@@ -87,34 +95,38 @@ export const Login = observer(() => {
             setValue={handleChange}
           />
         </div>
+        <a className="text-right">забыли пароль?</a>
         <button
           type="button"
           onClick={click}
-          className="text-white w-36 mx-auto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-          Default
+          className="text-white w-28 mx-auto my-4 outline-none bg-cred h-9 rounded-full">
+          Войти
         </button>
+        <a className="text-center">Нету аккаунта? зарегистрируйтесь!</a>
       </div>
     </div>
   );
 });
 
 export const AuthPage = observer(() => {
-  const [user, setUser] = useState({
+  const [_user, setUser] = useState({
     name: '',
     email: '',
     password: '',
     repassword: '',
+    birthday: '',
+    img: '',
     sex: 0
   });
 
   const names = [
     { name: 'name', type: 'text', label: 'Никнэйм' },
+    { name: 'email', type: 'email', label: 'Почта' },
     { name: 'password', type: 'password', label: 'Пароль' },
-    { name: 'repassword', type: 'password', label: 'Подтверждения пароля' },
-    { name: 'email', type: 'email', label: 'Почта' }
+    { name: 'repassword', type: 'password', label: 'Подтверждения пароля' }
   ];
 
-  const { _user } = useContext(Context);
+  const { user } = useContext(Context);
   const navigate = useNavigate();
 
   const handleChange = e => {
@@ -122,19 +134,33 @@ export const AuthPage = observer(() => {
   };
 
   const click = async () => {
-    await registration({ nickname: user.name, password: user.password, email: user.email }).then(
-      res => {
-        _user.setUser({ token: res.token });
-        _user.setIsAuth(true);
-        navigate('/');
-        console.log(res);
-      }
-    );
+    console.log(_user);
+    await registration({
+      nickname: _user.name,
+      password: _user.password,
+      email: _user.email,
+      birthday: _user.birthday,
+      sex: _user.sex,
+      img: _user.img
+    }).then(res => {
+      user.setUser({ token: res.token });
+      user.setIsAuth(true);
+      navigate('/');
+      console.log(res);
+    });
   };
 
   return (
-    <div className="bg-slate-200 flex-1">
-      <div className="w-[564px] m-auto bg-white flex flex-col p-4">
+    <div className="bg-slate-200 h-[calc(100vh_-_65px)] flex flex-row align-middle justify-center">
+      <div className="text-center w-[333px] h-[600px] rounded-md my-auto mx-2 bg-white flex flex-col p-4">
+        <span className="text-xl mt-8">Аватар</span>
+        <UploadImage className="mx-auto mt-12" value={_user.img} setValue={handleChange} />
+        <span className="my-2">JPG или PNG не больше 5 мб</span>
+        <span>
+          Нажмите на <b>квадрат</b>, чтобы добавить изображение
+        </span>
+      </div>
+      <div className="w-[564px] h-[600px] rounded-md my-auto mx-2 bg-white flex flex-col p-4">
         <label className="block text-xl">
           Новый пользователь?
           <br />
@@ -148,6 +174,23 @@ export const AuthPage = observer(() => {
               <Input title={item.label} type={item.type} name={item.name} setValue={handleChange} />
             </div>
           ))}
+          <div className="flex flex-row justify-between">
+            <div className="w-[240px]">
+              <Input type="date" title="Дата рождения" name="birthday" setValue={handleChange} />
+            </div>
+            <div>
+              <Label value="Пол" />
+              <select
+                className="w-[240px] appearance-none block bg-white text-gray-700 border border-gray-300 rounded-md py-2 px-4 mb-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                name="sex"
+                id="sex"
+                onChange={handleChange}>
+                <option value="0">Мужчина</option>
+                <option value="1">Женщина</option>
+                <option value="2">Неопределено</option>
+              </select>
+            </div>
+          </div>
         </div>
         <button
           type="button"

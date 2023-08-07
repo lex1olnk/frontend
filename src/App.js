@@ -5,26 +5,31 @@ import { observer } from 'mobx-react-lite';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '.';
 import { check } from './content/http/userApi';
+import Footer from './content/components/Footer/Footer';
 
 const App = observer(() => {
-  const {user} = useContext(Context);
+  const { user } = useContext(Context);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    check().then(data => {
-      user.setUser(data.token);
-      user.setIsAuth(true);
-    }).catch((error) => {
-      console.log(error.message)
-    }).finally(() => setLoading(false))
+    check()
+      .then(data => {
+        user.setUser(data.token);
+        user.setIsAuth(true);
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div>LOADING...</div> 
+  if (loading) return <div>LOADING...</div>;
 
   return (
     <BrowserRouter>
       <HeaderComponent />
       <AppRouter />
+      <Footer />
     </BrowserRouter>
   );
 });

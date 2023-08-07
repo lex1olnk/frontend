@@ -56,7 +56,12 @@ const AddTitlePage = observer(() => {
         <div className="flex flex-row mx-auto">
           <div className="flex flex-col mr-8 mt-2">
             <Label value={'ЛОГО'} />
-            <UploadImage value={title.img} setValue={handleChange} />
+
+            <UploadImage
+              value={title.img}
+              setValue={handleChange}
+              className="w-[240px] h-[320px]"
+            />
           </div>
           <div className="ml-8">
             <Input title="Название тайтла" name="name" setValue={handleChange} />

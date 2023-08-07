@@ -82,3 +82,45 @@
 .ChapterTextButtons button {
   @apply h-[46px] w-[216px] mx-2 border-2 rounded-md;
 }
+
+.MuiButtonBase-root {
+  @apply transition-all duration-200;
+}
+
+.footerNav {
+  @apply flex flex-wrap w-[390px];
+}
+
+.footerNav a {
+  @apply mx-4 block h-6;
+}
+
+.lineUnderWord::before {
+  transform: scaleX(0) scaleY(0.1);
+  transform-origin: bottom right;
+}
+
+.lineUnderWord:hover::before {
+  transform: scaleX(1) scaleY(0.1);
+  transform-origin: bottom left;
+}
+
+.lineUnderWord::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  transition: transform 0.3s ease;
+  @apply bg-cred -bottom-1 inset-0;
+}
+
+.lineUnderWord {
+  position: relative;
+}
+
+.headerNavItem {
+  @apply my-auto;
+}
+
+.textOptionStyle {
+  @apply bg-white p-4 transition-transform duration-500 w-[400px] ease-out absolute top-0 right-0 min-h-screen origin-right;
+}

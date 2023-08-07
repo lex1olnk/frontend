@@ -52,6 +52,7 @@ const Chapters = ({ titleId, translatorId }) => {
         titleId={titleId}
       />
       <AddChapter
+        translatorId={translatorId}
         setUpdated={setUpdated}
         isVisible={isVisible}
         onClick={setIsVisible}

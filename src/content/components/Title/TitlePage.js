@@ -138,7 +138,7 @@ const TitlePage = () => {
 
   console.log(title);
   return (
-    <div className="bg-slate-200 h-full">
+    <div className="bg-slate-200 min-h-[calc(100vh_-_65px_-_148px)]">
       <div className="w-full py-4">
         <div className="max-w-[1144px] h-full mx-auto">
           <span className="text-2xl">{title.name}</span>

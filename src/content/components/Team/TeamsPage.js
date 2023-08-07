@@ -12,7 +12,7 @@ const TeamsPage = () => {
   }, []);
 
   return (
-    <div className="bg-slate-100 pt-2">
+    <div className="bg-slate-100 pt-2 min-h-[calc(100vh_-_65px_-_148px)]">
       <div className="my-4 max-w-[1144px] rounded-lg bg-white mx-auto p-4">
         <span className="my-auto text-xl">Команды</span>
       </div>

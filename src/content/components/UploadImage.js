@@ -4,18 +4,14 @@ const UploadImage = ({ value, setValue, className }) => {
   const phone = value ? window.URL.createObjectURL(value) : null;
   const input = React.useRef(null);
   return (
-    <div
-      className={
-        'flex bg-white object-cover rounded-md border-2 border-b-slate-300 aspect-3/4 w-60 text-gray-700 border-gray-200  p-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' +
-        ' ' +
-        className
-      }
-      style={{
-        background: 'url(' + phone + ')',
-        resize: 'cover'
-      }}
-      onClick={() => input.current.click()}>
-      {!value ? <span className="m-auto text-center">Нажмите, чтобы добавить картину</span> : null}
+    <div className={className}>
+      <img
+        className={'bg-white h-full w-full rounded-md border-2 object-cover border-gray-200'}
+        style={{
+          backgroundImage: 'url(' + phone + ')',
+          backgroundSize: '240px auto'
+        }}
+        onClick={() => input.current.click()}></img>
       <input
         type="file"
         id="logoInput"

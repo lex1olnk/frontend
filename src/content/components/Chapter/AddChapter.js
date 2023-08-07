@@ -5,7 +5,7 @@ import { bookTomePost, bookTomesGetByBookId } from '../../http/bookTomeApi';
 import { chapterPost } from '../../http/chapterApi';
 
 const AddChapter = props => {
-  const { setUpdated, isVisible, onClick, titleId } = props;
+  const { setUpdated, isVisible, onClick, titleId, translatorId } = props;
   const [chapter, setChapter] = useState({
     name: '',
     bookTome: [],
@@ -27,6 +27,7 @@ const AddChapter = props => {
         bookTome: chapter.bookTome.id,
         status: chapter.status.id,
         titleId: titleId,
+        translatorId: translatorId,
         costChapter: chapter.costChapter,
         costAudio: chapter.costAudio
       }).then(res => {

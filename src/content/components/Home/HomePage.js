@@ -134,14 +134,24 @@ const LastUpdatesComponent = () => {
             <div key={title.id}>
               <div className="bg-white w-full h-[168px] flex flex-row p-3 my-2 rounded-md first:mt-0">
                 <GalleryItem id={title.id} img={title.img} imgStyle={asd} isLine={false} />
-                <div className="pl-3 grid grid-cols-1 grid-rows-6 w-full">
+                <div className="pl-3 grid grid-cols-1 grid-rows-5 w-full">
                   <div>
-                    <span className="text-base my-auto">{hideText(title.name, 80)}</span>
+                    <a
+                      href={'title/' + title.id}
+                      className="text-base my-auto lineUnderWord before:duration-700">
+                      {hideText(title.name, 80)}
+                    </a>
                   </div>
-                  <span className="text-sm my-auto">{hideText(title.name, 96)}</span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
+                  <a href={'title/' + title.id} className="text-sm my-auto">
+                    {hideText(title.origName, 96)}
+                  </a>
+                  <a
+                    className="flex flex-row justify-between border-t-2"
+                    href={'title/' + title.id + '/' + title.chapters[0].id}>
+                    <span className="lineUnderWord">{title.chapters[0].name}</span>
+                    <span>{title.chapters[0].updatedAt}</span>
+                  </a>
+                  <span>{title.chapters[1]?.name}</span>
                   <span className="text-sm my-auto">
                     {titleTime.getDate() +
                       '.' +
@@ -276,7 +286,7 @@ const ShowGenres = () => {
 
 const HomePage = () => {
   return (
-    <div className=" bg-slate-100 pt-2">
+    <div className=" bg-slate-200 pt-2">
       <Gallery data={data} />
       <div className="flex flex-row w-full sm:max-w-6xl mx-auto justify-between">
         <TopDay />

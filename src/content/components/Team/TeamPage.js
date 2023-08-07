@@ -22,7 +22,7 @@ const TeamPage = () => {
   if (!team && !desc) return <div>...LOADING</div>;
   console.log(team);
   return (
-    <div className="bg-slate-100 pt-1">
+    <div className="bg-slate-100 pt-1 min-h-[calc(100vh_-_65px_-_148px)]">
       <div className="max-w-[1144px] mx-auto">
         <div>
           <div className="w-full bg-cred p-4 rounded-t-lg mt-4">
