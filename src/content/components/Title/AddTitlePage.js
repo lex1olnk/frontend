@@ -48,53 +48,85 @@ const AddTitlePage = observer(() => {
   };
 
   return (
-    <div className="bg-slate-100">
-      <div className="max-w-6xl m-auto bg-white flex flex-col">
-        <label className="block uppercase tracking-wide text-gray-700 text-xl font-bold my-8 mx-auto text-center">
-          Информация о тайтле
-        </label>
-        <div className="flex flex-row mx-auto">
-          <div className="flex flex-col mr-8 mt-2">
-            <Label value={'ЛОГО'} />
-
+    <div className="bg-slate-50">
+      <div className="flex flex-row w-full justify-center">
+        <div className="shadow-md text-center w-[333px] h-[600px] rounded-md mx-2 bg-white flex flex-col">
+          <div className="w-full bg-slate-200 h-[52px] flex">
+            <span className="text-xl text-left px-8 my-auto">Лого</span>
+          </div>
+          <div className="px-8 mt-8">
             <UploadImage
+              className="mx-auto h-[320px] w-[240px]"
               value={title.img}
               setValue={handleChange}
-              className="w-[240px] h-[320px]"
             />
+            <p className="my-3">JPG или PNG не больше 5 мб</p>
+            <p>
+              Нажмите на <b>квадрат</b>, чтобы добавить изображение
+            </p>
           </div>
-          <div className="ml-8">
+        </div>
+        <div className="w-[720px] h-[800px] bg-white shadow-md">
+          <div className="w-full bg-slate-200 h-[52px] flex">
+            <span className="text-xl text-left px-8 my-auto">Информация о тайтле</span>
+          </div>
+          <div className="px-8 mt-4">
             <Input title="Название тайтла" name="name" setValue={handleChange} />
             <Input title="Оригинальное название" name="origName" setValue={handleChange} />
             <Input title="Ссылка на первоисточник" name="src" setValue={handleChange} />
             <Input title="Год выпуска" name="year" setValue={handleChange} />
-            <CreatableInput
-              name="author"
-              type="author"
+            <div className="flex flex-row justify-between align-middle [&>div]:w-[320px]">
+              <CreatableInput
+                name="author"
+                type="author"
+                label="Автор"
+                setSelectedOption={handleChange}
+                post={authorPost}
+                onSelect={true}
+              />
+              <SelectedInput
+                label="Язык оригинала"
+                name="language"
+                type="language"
+                setSelectedOption={handleChange}
+                isMulti={false}
+                onSelect={true}
+              />
+            </div>
+            <SelectedInput
+              label="Жанры"
+              name="genres"
+              type="genre"
               setSelectedOption={handleChange}
-              post={authorPost}
-              onSelect={true}
             />
             <SelectedInput
-              name="language"
-              type="language"
+              label="Теги"
+              name="tags"
+              type="tag"
+              input="Теги"
               setSelectedOption={handleChange}
-              isMulti={false}
-              onSelect={true}
             />
-            <SelectedInput name="genres" type="genre" setSelectedOption={handleChange} />
-            <SelectedInput name="tags" type="tag" input="Теги" setSelectedOption={handleChange} />
-            <SelectedInput name="tags" type="fandom" setSelectedOption={handleChange} />
+            <SelectedInput
+              label="Фандомы"
+              name="tags"
+              type="fandom"
+              setSelectedOption={handleChange}
+            />
           </div>
         </div>
-        <NoteViewer setDesc={handleChange} />
-        <button
-          type="button"
-          onClick={click}
-          className="text-white w-36 mx-auto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-          Default
-        </button>
       </div>
+      <div className="block mx-auto w-[996px] mt-4">
+        <div className=" bg-slate-200 shadow-md h-[52px] flex">
+          <span className="text-xl text-left px-8 my-auto">Описание</span>
+        </div>
+        <NoteViewer setDesc={handleChange} />
+      </div>
+      <button
+        type="button"
+        onClick={click}
+        className="block text-white w-36 mx-auto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+        Default
+      </button>
     </div>
   );
 });

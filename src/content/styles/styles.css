@@ -16,7 +16,7 @@
   }
 
   .alice-carousel__stage-item {
-    @apply rounded-md h-40 px-2;
+    @apply rounded-md h-44 px-2 hover:scale-[1.025] transition-transform ease-out duration-300;
   }
 
   @apply bg-white rounded-md;
@@ -32,14 +32,22 @@
   }
 
   .alice-carousel__wrapper {
-    @apply py-4 bg-white rounded-md px-1;
+    @apply py-4 bg-white px-1;
   }
 
   .alice-carousel__stage-item {
-    @apply w-auto h-52 rounded-md mx-0 px-2;
+    @apply w-auto h-60 rounded-md mx-0 px-2 hover:scale-[1.025] transition-transform ease-out duration-300;
   }
 
-  @apply rounded-md sm:max-w-6xl mx-auto h-[250px];
+  @apply sm:max-w-[1245px] mx-auto h-[300px];
+}
+
+.galleryItem:hover .galleryItemLink div {
+  @apply text-yellow-300;
+}
+
+.galleryItemLink {
+  @apply text-white transition-colors duration-100;
 }
 
 .logoInput {
@@ -75,6 +83,10 @@
   @apply border-2 border-solid rounded-md mx-auto my-0 w-full;
 }
 
+.editor-container {
+  @apply w-full;
+}
+
 .ChapterTextButtons {
   @apply w-fit mx-auto;
 }
@@ -96,12 +108,12 @@
 }
 
 .lineUnderWord::before {
-  transform: scaleX(0) scaleY(0.1);
+  transform: scaleX(0) scaleY(0.05);
   transform-origin: bottom right;
 }
 
 .lineUnderWord:hover::before {
-  transform: scaleX(1) scaleY(0.1);
+  transform: scaleX(1) scaleY(0.05);
   transform-origin: bottom left;
 }
 
@@ -110,7 +122,7 @@
   display: block;
   position: absolute;
   transition: transform 0.3s ease;
-  @apply bg-cred -bottom-1 inset-0;
+  @apply bg-cred bottom-0 inset-0;
 }
 
 .lineUnderWord {
@@ -122,5 +134,9 @@
 }
 
 .textOptionStyle {
-  @apply bg-white p-4 transition-transform duration-500 w-[400px] ease-out absolute top-0 right-0 min-h-screen origin-right;
+  @apply p-4 border-l-2 transition-transform duration-500 w-[400px] ease-out absolute top-0 right-0 min-h-screen origin-right;
+}
+
+.topTitleNavBar {
+  @apply bg-white flex flex-col transition-all duration-300 ease-out origin-top;
 }

@@ -7,7 +7,7 @@ const SelectedInput = props => {
   const {
     type,
     input,
-    title,
+    label,
     helper,
     name,
     setSelectedOption,
@@ -33,10 +33,8 @@ const SelectedInput = props => {
   return (
     <div>
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-[640px] mx-auto px-3">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ml-3">
-            {title}
-          </label>
+        <div className="w-full mx-auto px-3">
+          <Label value={label} />
           <Select
             closeMenuOnSelect={onSelect}
             isMulti={isMulti}
@@ -53,7 +51,7 @@ const SelectedInput = props => {
 };
 
 const CreatableInput = props => {
-  const { type, name, helper, setSelectedOption, post, get = getData, someV = null } = props;
+  const { type, name, helper, setSelectedOption, post, get = getData, someV = null, label } = props;
   const [items, setItems] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -85,10 +83,8 @@ const CreatableInput = props => {
   return (
     <div>
       <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-[640px] mx-auto px-3">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ml-3">
-            {type}
-          </label>
+        <div className="w-full mx-auto px-3">
+          <Label value={label} />
           <CreatableSelect
             isLoading={isLoading}
             onChange={newValue => setSelectedOption({ target: { name: name, value: newValue } })}

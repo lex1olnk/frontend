@@ -67,7 +67,7 @@ export const Login = observer(() => {
   };
 
   return (
-    <div className="bg-slate-200 min-h-[calc(100vh_-_65px_-_148px)] flex flex-row justify-center">
+    <div className="bg-slate-100 min-h-[calc(100vh_-_65px_-_148px)] flex flex-row justify-center">
       <div className="text-center justify-centerw-[333px] h-[400px] rounded-md my-auto mx-2 bg-cred flex flex-col p-4 text-white">
         <img
           src={process.env.REACT_APP_API_URL + '/img/' + 'defaultImg.jpg'}
@@ -153,9 +153,13 @@ export const AuthPage = observer(() => {
   return (
     <div className="bg-slate-200 h-[calc(100vh_-_65px)] flex flex-row align-middle justify-center">
       <div className="text-center w-[333px] h-[600px] rounded-md my-auto mx-2 bg-white flex flex-col p-4">
-        <span className="text-xl mt-8">Аватар</span>
-        <UploadImage className="mx-auto mt-12" value={_user.img} setValue={handleChange} />
-        <span className="my-2">JPG или PNG не больше 5 мб</span>
+        <span className="text-xl mt-2">Аватар</span>
+        <UploadImage
+          className="mx-auto mt-12 h-[240px] w-[240px]"
+          value={_user.img}
+          setValue={handleChange}
+        />
+        <span className="my-4">JPG или PNG не больше 5 мб</span>
         <span>
           Нажмите на <b>квадрат</b>, чтобы добавить изображение
         </span>

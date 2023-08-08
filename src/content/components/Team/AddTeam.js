@@ -37,17 +37,29 @@ const AddTeam = () => {
   };
 
   return (
-    <div className="bg-slate-100 h-full">
-      <div className="max-w-6xl m-auto bg-white flex flex-col">
-        <label className="block uppercase tracking-wide text-gray-700 text-xl font-bold my-8 mx-auto text-center">
-          Добавление команды
-        </label>
-        <div className="flex flex-row mx-auto">
-          <div className="flex flex-col mr-8">
-            <Label value={'ЛОГО'} />
-            <UploadImage value={team.img} setValue={handleChange} />
+    <div className="bg-slate-100 min-h-[calc(100vh_-_65px_-_148px)]">
+      <div className="flex flex-row mx-auto justify-center">
+        <div className="shadow-md text-center w-[333px] h-[460px] rounded-md mx-2 bg-white flex flex-col">
+          <div className="w-full bg-slate-200 h-[52px] flex">
+            <span className="text-xl text-left px-8 my-auto">Лого</span>
           </div>
-          <div className="ml-8">
+          <div className="px-8 mt-8">
+            <UploadImage
+              className="mx-auto h-[240px] w-[240px]"
+              value={team.img}
+              setValue={handleChange}
+            />
+            <p className="my-3">JPG или PNG не больше 5 мб</p>
+            <p>
+              Нажмите на <b>квадрат</b>, чтобы добавить изображение
+            </p>
+          </div>
+        </div>
+        <div className="w-[720px] min-h-[250px] bg-white shadow-md">
+          <div className="w-full bg-slate-200 h-[52px] flex">
+            <span className="text-xl text-left px-8 my-auto">Информация о тайтле</span>
+          </div>
+          <div className="px-8 my-4 mb-12">
             <Input
               title={'Название команды'}
               input={'Название'}
@@ -63,15 +75,16 @@ const AddTeam = () => {
               setValue={handleChange}
             />
           </div>
+          <NoteViewer setDesc={handleChange} />
         </div>
-        <NoteViewer setDesc={handleChange} />
-        <button
-          type="button"
-          onClick={onClick}
-          className="text-white w-36 mx-auto bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-          Default
-        </button>
       </div>
+
+      <button
+        type="button"
+        onClick={onClick}
+        className="block text-white w-36 mx-auto my-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+        Default
+      </button>
     </div>
   );
 };

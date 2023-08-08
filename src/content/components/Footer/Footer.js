@@ -5,10 +5,10 @@ import { ReactComponent as DiscordIcon } from '../../icons/vk.svg';
 
 const Footer = () => {
   return (
-    <div className="w-full bg-white flex">
-      <div className="w-[1152px] mx-auto py-8 flex flex-row justify-between [&>*]:my-auto ">
+    <div className="w-full bg-white flex text-sm">
+      <div className="w-[1152px] mx-auto py-4 flex flex-row justify-between [&>*]:my-auto ">
         <div>
-          <img src={Logo} width={240} height={59} />
+          <img src={Logo} width={240} height={59} className="mb-2" />
           <span>© 2023 Readzone. Все права защищены. </span>
         </div>
         <div className="footerNav">

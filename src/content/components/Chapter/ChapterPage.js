@@ -14,10 +14,50 @@ function classNames(...classes) {
 }
 
 const TextOptionMenu = props => {
-  const { setTextSize, setLineHeight, setWidth, setParagraphMargin } = props;
+  const {
+    setTextSize,
+    setLineHeight,
+    setWidth,
+    setParagraphMargin,
+    setTextColor,
+    setBgColor,
+    bgColor,
+    textColor
+  } = props;
+  const [headerColor, setHeaderColor] = useState('bg-white');
   const [isOpen, setIsOpen] = useState(false);
+  const Ts = [
+    {
+      textColor: 'text-black',
+      bgColor: 'bg-slate-100',
+      headerColor: 'bg-white'
+    },
+    {
+      textColor: 'text-stone-800',
+      bgColor: 'bg-amber-100',
+      headerColor: 'bg-amber-50'
+    },
+    {
+      textColor: 'text-amber-200',
+      bgColor: 'bg-stone-800',
+      headerColor: 'bg-stone-700'
+    },
+    {
+      textColor: 'text-slate-200',
+      bgColor: 'bg-gray-950',
+      headerColor: 'bg-gray-900'
+    },
+    {
+      textColor: 'text-gray-300',
+      bgColor: 'bg-neutral-950',
+      headerColor: 'bg-neutral-900'
+    }
+  ];
   return (
-    <div className="absolute flex top-0 w-full h-16 bg-none z-0">
+    <div
+      className={
+        'absolute flex top-0 w-full h-16 bg-none z-0 border-b-2 ' + headerColor + ' ' + textColor
+      }>
       <a className="my-auto" href="/">
         <img className="h-8 w-auto ml-4" src={Logo} alt="Your Company" />
       </a>
@@ -40,10 +80,31 @@ const TextOptionMenu = props => {
             />
           )}
         </div>
-        <div className={classNames(isOpen ? 'scale-x-100' : 'scale-x-0', 'textOptionStyle')}>
-          <div className="text-lg mb-4">Стилизация страницы</div>
-          <span>Размер шрифта</span>
-          <Box sx={{ width: 300 }}>
+        <div
+          className={classNames(
+            isOpen ? 'translate-x-0' : 'translate-x-full',
+            'textOptionStyle mt-16'
+          )}>
+          <div className="text-lg mt-1 pb-2 mb-4">Стилизация страницы</div>
+
+          <div className="flex flex-row justify-between w-full px-3 mb-2">
+            {Ts.map(t => {
+              const bor = ' border-' + t.textColor.substr(5);
+              return (
+                <div
+                  onClick={() => {
+                    setBgColor(t.bgColor);
+                    setTextColor(t.textColor);
+                    setHeaderColor(t.headerColor);
+                  }}
+                  className={'py-3 px-6 border-2 ' + t.bgColor + ' ' + t.textColor + bor}>
+                  T
+                </div>
+              );
+            })}
+          </div>
+          <Box className="mx-auto" sx={{ width: 350 }}>
+            <span>Размер шрифта</span>
             <Slider
               aria-label="Small steps"
               defaultValue={16}
@@ -55,8 +116,8 @@ const TextOptionMenu = props => {
               valueLabelDisplay="auto"
             />
           </Box>
-          <span>Размер шрифта</span>
-          <Box sx={{ width: 300 }}>
+          <Box className="mx-auto" sx={{ width: 350 }}>
+            <span>Размер шрифта</span>
             <Slider
               aria-label="Small steps"
               defaultValue={1.4}
@@ -68,8 +129,8 @@ const TextOptionMenu = props => {
               valueLabelDisplay="auto"
             />
           </Box>
-          <span>Ширина контейнера</span>
-          <Box sx={{ width: 300 }}>
+          <Box className="mx-auto" sx={{ width: 350 }}>
+            <span>Ширина контейнера</span>
             <Slider
               aria-label="Small steps"
               defaultValue={840}
@@ -81,8 +142,8 @@ const TextOptionMenu = props => {
               valueLabelDisplay="auto"
             />
           </Box>
-          <span>Размеры отступа</span>
-          <Box sx={{ width: 300 }}>
+          <Box className="mx-auto" sx={{ width: 350 }}>
+            <span>Размеры отступа</span>
             <Slider
               aria-label="Small steps"
               defaultValue={12}
@@ -101,6 +162,8 @@ const TextOptionMenu = props => {
 };
 
 const ChapterPage = () => {
+  const [textColor, setTextColor] = useState('text-black');
+  const [bgColor, setBgColor] = useState('bg-slate-50');
   const [textSize, setTextSize] = useState(14);
   const [lineHeight, setLineHeight] = useState(1);
   const [width, setWidth] = useState(800);
@@ -137,9 +200,16 @@ const ChapterPage = () => {
         setLineHeight={setLineHeight}
         setWidth={setWidth}
         setParagraphMargin={setParagraphMargin}
+        setBgColor={setBgColor}
+        setTextColor={setTextColor}
+        bgColor={bgColor}
+        textColor={textColor}
       />
-      <div className="min-h-[calc(100vh_-_65px_-_148px)] bg-slate-200">
-        <div style={{ width: width }} className={'bg-white mx-auto p-4'}>
+      <div
+        className={
+          'min-h-[calc(100vh_-_65px_-_148px)] transition-all ' + bgColor + ' ' + textColor
+        }>
+        <div style={{ width: width }} className={'mx-auto p-4'}>
           <span>Глава №</span>
           <div
             style={{

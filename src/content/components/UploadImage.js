@@ -6,7 +6,7 @@ const UploadImage = ({ value, setValue, className }) => {
   return (
     <div className={className}>
       <img
-        className={'bg-white h-full w-full rounded-md border-2 object-cover border-gray-200'}
+        className={'bg-white h-full w-full rounded-md object-cover'}
         style={{
           backgroundImage: 'url(' + phone + ')',
           backgroundSize: '240px auto'

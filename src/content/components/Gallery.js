@@ -1,6 +1,7 @@
 import AliceCarousel from 'react-alice-carousel';
 
 import 'react-alice-carousel/lib/alice-carousel.css';
+import { ReactComponent as Star } from '../icons/ratingStar.svg';
 
 const handleDragStart = e => e.preventDefault();
 
@@ -13,13 +14,13 @@ const GalleryItem = ({
   img = 'default.jpg',
   name,
   imgStyle,
-  spanStyle = 'absolute bottom-1 left-2 text-white text-center font-normal',
+  spanStyle = 'absolute bottom-1 left-2 text-center font-normal',
   isLine = true,
   rating = '5.00'
 }) => {
   const linear =
-    'linear-gradient(to bottom, transparent, rgba(0,0,0,0) 65%, rgba(0,0,0,0.85) 97%, rgba(0,0,0, 1) 100%), url(';
-  const ratingStyle = 'absolute bottom-6 left-2 text-white text-center font-normal';
+    'linear-gradient(to bottom, transparent, rgba(0,0,0,0) 75%, rgba(0,0,0,0.85) 97%, rgba(0,0,0, 1) 100%), url(';
+  const ratingStyle = 'absolute bottom-6 left-2 text-center font-normal flex flex-row';
   return (
     <a
       href={'/title/' + id}
@@ -34,8 +35,17 @@ const GalleryItem = ({
         backgroundPosition: 'center'
       }}
       className={imgStyle}>
-      {rating ? <span className={ratingStyle}>{rating}</span> : null}
-      {name ? <span className={spanStyle}>{hideText(name, 22)}</span> : null}
+      {isLine && (
+        <div className="galleryItemLink">
+          {rating ? (
+            <div className={ratingStyle}>
+              <Star className="my-auto mr-1" />
+              {rating}
+            </div>
+          ) : null}
+          {name ? <span className={spanStyle}>{hideText(name, 22)}</span> : null}
+        </div>
+      )}
     </a>
   );
 };

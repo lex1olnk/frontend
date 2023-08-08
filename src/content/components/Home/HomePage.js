@@ -10,6 +10,10 @@ const hideText = (value, maxlimit) => {
   return value.length > maxlimit ? value.substring(0, maxlimit - 3) + '...' : value;
 };
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
+
 const data = [
   {
     id: 0,
@@ -125,9 +129,9 @@ const LastUpdatesComponent = () => {
   if (!titles) return null;
 
   return (
-    <div className="w-full lg:max-w-6xl mx-auto flex h-full flex-col">
+    <div className="w-full mx-auto flex flex-col">
       <FavouriteLinks click={click} isActive={isActive} />
-      <div className="mx-auto h-fit w-full">
+      <div className="mx-auto w-full">
         {titles.map(title => {
           const titleTime = new Date(title.updatedAt);
           return (
@@ -199,14 +203,20 @@ const MostPopular = () => {
   useEffect(() => {
     const items2 = data.map(title => {
       return (
-        <GalleryItem id={title.id} img={title.img} name={title.name} imgStyle={'galleryItem'} />
+        <GalleryItem
+          id={title.id}
+          img={title.img}
+          name={title.name}
+          imgStyle={'galleryItem'}
+          isLine={false}
+        />
       );
     });
     setItems(items2);
   }, []);
 
   return (
-    <div className="mostPopular">
+    <div className="mostPopular mb-4">
       <AliceCarousel
         disableButtonsControls={true}
         disableDotsControls={true}
@@ -245,32 +255,28 @@ const Announcements = () => {
 
   return (
     <>
-      <div className="flex flex-col relative bg-white w-[648px] h-[300px] p-4 rounded-lg">
-        <div className="flex rounded-md text-2xl h-[40px] font-medium bg-red-500 mb-2 p-2 text-white">
-          <span className="ml-2 top-0">Анонсы</span>
-        </div>
-        <div className="aspect-3/4 h-60 flex flex-row w-full">
-          <div className="flex flex-col w-full justify-between">
-            <div className="flex flex-row">
-              <img src={data[0].img} className="rounded-md aspect-3/4 w-[76px] object-cover" />
-              <div className="flex flex-col justify-between ml-4">
-                <span className="text-lg font-medium">{data[0].title}</span>
-                <span className="text-sm">{data[0].info}</span>
-                <div className="flex flex-row justify-between">
-                  <span>{data[0].time}</span>
-                  <span>{data[0].team}</span>
-                </div>
+      <div className="flex flex-col relative bg-white w-full h-[170px] p-3 rounded-lg">
+        <span className="top-0 text-lg mb-2">Анонсы</span>
+        <div className="flex flex-row justify-between w-full">
+          <div className="flex flex-row w-[410px] h-[110px] text-sm hover:-translate-y-1 transition-all ease-out duration-200">
+            <img src={data[0].img} className="rounded-md w-[72px] h-[110px] object-cover" />
+            <div className="h-full flex flex-col ml-2 justify-between">
+              <span>{hideText(data[0].title, 48)}</span>
+              <span>{hideText(data[0].info, 140)}</span>
+              <div className="flex flex-row justify-between">
+                <span>{data[0].time}</span>
+                <span>{data[0].team}</span>
               </div>
             </div>
-            <div className="flex flex-row">
-              <img src={data[0].img} className="rounded-md aspect-3/4 w-[76px] object-cover" />
-              <div className="flex flex-col justify-between ml-4">
-                <span className="text-lg font-medium">{data[0].title}</span>
-                <span className="text-sm">{data[0].info}</span>
-                <div className="flex flex-row justify-between">
-                  <span>{data[0].time}</span>
-                  <span>{data[0].team}</span>
-                </div>
+          </div>
+          <div className="flex flex-row w-[410px] h-[110px] text-sm hover:-translate-y-1 transition-all ease-out duration-200">
+            <img src={data[0].img} className="rounded-md w-[72px] h-[110px] object-cover" />
+            <div className="h-full flex flex-col ml-2 justify-between">
+              <span>{hideText(data[0].title, 48)}</span>
+              <span>{hideText(data[0].info, 140)}</span>
+              <div className="flex flex-row justify-between">
+                <span>{data[0].time}</span>
+                <span>{data[0].team}</span>
               </div>
             </div>
           </div>
@@ -284,21 +290,132 @@ const ShowGenres = () => {
   return <div></div>;
 };
 
+const HomePageNews = props => {
+  return (
+    <div className="w-full h-[260px] bg-white p-3 mb-4">
+      <span className="text-lg">Новости</span>
+      <div className="w-full text-sm">
+        <a href="#" className="lineUnderWord">
+          <p>Технические работы на сервере 7 Июля.</p>
+          <div className="flex flex-row justify-between">
+            <p>05.06.2023</p>
+            <p>TeamA</p>
+          </div>
+        </a>
+      </div>
+      <div className="w-full text-sm my-2">
+        <a href="#" className="lineUnderWord">
+          <p>Технические работы на сервере 7 Июля.</p>
+          <div className="flex flex-row justify-between">
+            <p>05.06.2023</p>
+            <p>TeamA</p>
+          </div>
+        </a>
+      </div>
+      <div className="w-full text-sm my-2">
+        <a href="#" className="lineUnderWord">
+          <p>Технические работы на сервере 7 Июля.</p>
+          <div className="flex flex-row justify-between">
+            <p>05.06.2023</p>
+            <p>TeamA</p>
+          </div>
+        </a>
+      </div>
+      <div className="w-full text-sm my-2">
+        <a href="#" className="lineUnderWord">
+          <p>Технические работы на сервере 7 Июля.</p>
+          <div className="flex flex-row justify-between">
+            <p>05.06.2023</p>
+            <p>TeamA</p>
+          </div>
+        </a>
+      </div>
+      <div className="text-sm">Все новости.</div>
+    </div>
+  );
+};
+
+const TopTitleNav = props => {
+  const [arraya, setArraya] = useState([]);
+
+  const g = [
+    {
+      id: 0,
+      name: 'Авторские'
+    },
+    {
+      id: 1,
+      name: 'Переводы'
+    },
+    {
+      id: 2,
+      name: 'Месяца'
+    },
+    {
+      id: 3,
+      name: 'Недели'
+    }
+  ];
+
+  const onClick = index => {
+    arraya[index] = !arraya[index];
+    setArraya([...arraya]);
+  };
+
+  return (
+    <div className="">
+      <div className="bg-white w-1/2 px-3 py-1 text-lg mb-1">Топовые</div>
+      {g.map(item => (
+        <div>
+          <div
+            className="w-full px-3 py-1 mb-1 bg-white hover:pl-6 transition-all ease-out duration-200"
+            onClick={() => onClick(item.id)}>
+            {item.name}
+          </div>
+          <div
+            className={classNames(
+              arraya[item.id]
+                ? 'h-36 p-3 [&>a]:opacity-1 [&>a]:ease-in [&>a]:duration-500 [&>a]:text-sm [&>a]:mb-[2px] mb-2'
+                : 'h-0 hidden px-3 py-0 [&>a]:hidden [&>a]:opacity:0',
+              'topTitleNavBar'
+            )}>
+            <a href="#" className="flex">
+              <span className="lineUnderWord">1. С системой Marvel в мире Naruto</span>
+            </a>
+            <a href="#" className="flex">
+              <span className="lineUnderWord">1. С системой Marvel в мире Naruto</span>
+            </a>
+            <a href="#" className="flex">
+              <span className="lineUnderWord">1. С системой Marvel в мире Naruto</span>
+            </a>
+            <a href="#" className="flex">
+              <span className="lineUnderWord">1. С системой Marvel в мире Naruto</span>
+            </a>
+            <a href="#" className="flex">
+              <span className="lineUnderWord">1. С системой Marvel в мире Naruto</span>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const HomePage = () => {
   return (
-    <div className=" bg-slate-200 pt-2">
+    <div className=" bg-slate-100 pt-2">
       <Gallery data={data} />
-      <div className="flex flex-row w-full sm:max-w-6xl mx-auto justify-between">
-        <TopDay />
-        <Announcements />
-      </div>
-      <div className="flex flex-row mx-auto max-w-6xl mt-4 justify-between">
-        <div className="w-[820px]">
+      <div className="flex flex-row mx-auto max-w-[1245px] justify-between">
+        <div className="w-[866px]">
           <MostPopular />
+          <MostPopular />
+          <Announcements />
           <LastUpdatesComponent />
         </div>
-        <div className=" w-[336px] h-16">
-          <div className="bg-white ml-4 p-4">Menu</div>
+        <div className=" w-[362px] h-16">
+          <HomePageNews />
+          <TopTitleNav />
+          <div className="bg-white p-4">Menu</div>
           <ShowGenres />
         </div>
       </div>
