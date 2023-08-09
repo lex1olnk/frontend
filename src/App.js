@@ -1,11 +1,12 @@
 import { BrowserRouter } from 'react-router-dom';
-import AppRouter from './content/components/AppRouter';
-import HeaderComponent from './content/components/Header/Header';
 import { observer } from 'mobx-react-lite';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '.';
-import { check } from './content/http/userApi';
-import Footer from './content/components/Footer/Footer';
+import { check } from './http/userApi';
+
+import Router from './components/routes/Router';
+import HeaderComponent from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 const App = observer(() => {
   const { user } = useContext(Context);
@@ -28,7 +29,7 @@ const App = observer(() => {
   return (
     <BrowserRouter>
       <HeaderComponent />
-      <AppRouter />
+      <Router />
       <Footer />
     </BrowserRouter>
   );

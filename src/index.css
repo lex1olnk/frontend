@@ -4,40 +4,38 @@
 
 @font-face {
   font-family: 'Nunito';
-  src: local('Nunito'),
-    url('./content/fonts/Nunito/NunitoSans_7pt_Condensed-Bold.ttf') format('truetype');
+  src: local('Nunito'), url('./fonts/Nunito/NunitoSans_7pt_Condensed-Bold.ttf') format('truetype');
   font-weight: bold;
 }
 
 @font-face {
   font-family: 'Nunito';
   src: local('Nunito'),
-    url('./content/fonts/Nunito/NunitoSans_7pt_Condensed-Regular.ttf') format('truetype');
+    url('./fonts/Nunito/NunitoSans_7pt_Condensed-Regular.ttf') format('truetype');
   font-weight: regular;
 }
 
 @font-face {
   font-family: 'Nunito';
-  src: local('Nunito'),
-    url('./content/fonts/Nunito/NunitoSans_7pt_Condensed-Medium.ttf') format('truetype');
+  src: local('Nunito'), url('./fonts/Nunito/NunitoSans_7pt_Condensed-Medium.ttf') format('truetype');
   font-weight: 500;
 }
 
 @font-face {
   font-family: 'Ysabeau';
-  src: local('Ysabeau'), url('./content/fonts/Ysabeau/Ysabeau-Bold.ttf') format('truetype');
+  src: local('Ysabeau'), url('./fonts/Ysabeau/Ysabeau-Bold.ttf') format('truetype');
   font-weight: bold;
 }
 
 @font-face {
   font-family: 'Ysabeau';
-  src: local('Ysabeau'), url('./content/fonts/Ysabeau/Ysabeau-Regular.ttf') format('truetype');
+  src: local('Ysabeau'), url('./fonts/Ysabeau/Ysabeau-Regular.ttf') format('truetype');
   font-weight: regular;
 }
 
 @font-face {
   font-family: 'Ysabeau';
-  src: local('Ysabeau'), url('./content/fonts/Ysabeau/Ysabeau-Medium.ttf') format('truetype');
+  src: local('Ysabeau'), url('./fonts/Ysabeau/Ysabeau-Medium.ttf') format('truetype');
   font-weight: medium;
 }
 
