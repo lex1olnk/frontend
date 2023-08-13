@@ -1,56 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { getData, postData } from '../../http/univApi';
 import CreatableSelect from 'react-select/creatable';
+import { getData, postData } from '../../http/univApi';
 
-const SelectedInput = props => {
-  const {
-    type,
-    input,
-    label,
-    helper,
-    name,
-    setSelectedOption,
-    valueType = 'value',
-    isMulti = true,
-    onSelect = false
-  } = props;
-  const [items, setItems] = useState(null);
-
-  useEffect(() => {
-    getData(type).then(res => {
-      const data = res.map(item => ({
-        id: item.id,
-        value: item[valueType],
-        label: item[valueType]
-      }));
-      setItems(data);
-    });
-  }, []);
-  console.log();
-  if (!items) return null;
-
-  return (
-    <div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full mx-auto px-3">
-          <Label value={label} />
-          <Select
-            closeMenuOnSelect={onSelect}
-            isMulti={isMulti}
-            onChange={newValue => setSelectedOption({ target: { name: name, value: newValue } })}
-            options={items}
-            className="input"
-            classNamePrefix="select"
-          />
-          <p className="text-gray-600 text-xs italic mt-2">{helper}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const CreatableInput = props => {
+export const CreatableInput = props => {
   const { type, name, helper, setSelectedOption, post, get = getData, someV = null, label } = props;
   const [items, setItems] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -100,7 +53,7 @@ const CreatableInput = props => {
   );
 };
 
-const Input = props => {
+export const Input = props => {
   const { title = null, input = null, helper = null, onChange, type = 'text', name } = props;
   return (
     <div>
@@ -118,10 +71,55 @@ const Input = props => {
   );
 };
 
-const Label = ({ value, className = '' }) => {
+export const Label = ({ value, className = '' }) => {
   return (
     <div className={'tracking-wide text-gray-700 text-md mb-1' + ' ' + className}>{value}</div>
   );
 };
 
-export { SelectedInput, CreatableInput, Input, Label };
+export const SelectedInput = props => {
+  const {
+    type,
+    input,
+    label,
+    helper,
+    name,
+    setSelectedOption,
+    valueType = 'value',
+    isMulti = true,
+    onSelect = false
+  } = props;
+  const [items, setItems] = useState(null);
+
+  useEffect(() => {
+    getData(type).then(res => {
+      const data = res.map(item => ({
+        id: item.id,
+        value: item[valueType],
+        label: item[valueType]
+      }));
+      setItems(data);
+    });
+  }, []);
+  console.log();
+  if (!items) return null;
+
+  return (
+    <div>
+      <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full mx-auto px-3">
+          <Label value={label} />
+          <Select
+            closeMenuOnSelect={onSelect}
+            isMulti={isMulti}
+            onChange={newValue => setSelectedOption({ target: { name: name, value: newValue } })}
+            options={items}
+            className="input"
+            classNamePrefix="select"
+          />
+          <p className="text-gray-600 text-xs italic mt-2">{helper}</p>
+        </div>
+      </div>
+    </div>
+  );
+};

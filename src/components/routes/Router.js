@@ -10,17 +10,17 @@ import {
   CHAPTER_ROUTE
 } from '../../utils/consts';
 import { Context } from '../..';
-import { AuthPage, Login } from '../Authenticaon/AuthPage';
+import { AuthPage, Login } from '../Authentication/AuthPage';
 
 import CreateTitle from '../Title/CreateTitle';
 import CreateTeam from '../Team/CreateTeam';
 import AdminPage from '../Admin/AdminPage';
 import ChapterPage from '../Title/Chapter/ChapterPage';
 import TitlePage from '../Title/TitlePage';
-import HomePage from '../Home/HomePage';
 import TeamsPage from '../Team/TeamsPage';
 import TeamPage from '../Team/TeamPage';
 import AddChapterText from '../Title/Chapter/AddChapterText';
+import Layout from '../Layout/Layout';
 
 const Router = () => {
   const { user } = useContext(Context);
@@ -40,7 +40,7 @@ const Router = () => {
         <Route path={':id'} element={<TitlePage />} />;
         <Route path={'add'} element={<CreateTitle />} />;
       </Route>
-      <Route path={HOME_ROUTE} element={<HomePage />} />;
+      <Route path={HOME_ROUTE} element={<Layout />} />;
     </Routes>
   );
 };

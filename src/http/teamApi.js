@@ -3,7 +3,6 @@ import { $host, $authHost, getContentType } from './index';
 export const teamPost = async formValues => {
   try {
     const contentType = getContentType();
-    const body = formValues;
 
     const res = await $authHost
       .post(`team/`, formValues, { ...contentType, withCredentials: true })

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../..';
 import { login, registration } from '../../http/userApi';
 import { useNavigate } from 'react-router-dom';
-import { Input, Label, SelectedInput } from '../Inputs/Inputs';
+import { Input, Label, SelectedInput } from '../Inputs/inputs';
 import Select from 'react-select';
 import NoteViewer from '../NoteViewer';
 import UploadImage from '../UploadImage';
@@ -44,7 +44,7 @@ const SingleSelect = ({ selectedOption, setSelectedOption }) => {
 };
 
 export const Login = observer(() => {
-  const [_user, setUser] = useState({
+  const [formValues, setFormValues] = useState({
     email: '',
     password: ''
   });
@@ -53,11 +53,11 @@ export const Login = observer(() => {
   const navigate = useNavigate();
 
   const handleChange = e => {
-    setUser(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+    setFormValues(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
   };
 
   const click = async () => {
-    await login({ email: _user.email, password: _user.password }).then(res => {
+    await login(formValues).then(res => {
       user.setUser(res.token);
       user.setIsAuth(true);
       navigate('/');
@@ -84,7 +84,7 @@ export const Login = observer(() => {
             input={'почта'}
             name="email"
             helper={'Напишите уникальное значение'}
-            setValue={handleChange}
+            onChange={handleChange}
           />
           <Input
             title={'Пароль'}
@@ -92,7 +92,7 @@ export const Login = observer(() => {
             type={'password'}
             name="password"
             helper={'Напишите уникальное значение'}
-            setValue={handleChange}
+            onChange={handleChange}
           />
         </div>
         <a className="text-right">забыли пароль?</a>
@@ -109,7 +109,7 @@ export const Login = observer(() => {
 });
 
 export const AuthPage = observer(() => {
-  const [_user, setUser] = useState({
+  const [formValues, setFormValues] = useState({
     name: '',
     email: '',
     password: '',
@@ -130,20 +130,13 @@ export const AuthPage = observer(() => {
   const navigate = useNavigate();
 
   const handleChange = e => {
-    setUser(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
+    setFormValues(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
   };
 
   const click = async () => {
-    console.log(_user);
-    await registration({
-      nickname: _user.name,
-      password: _user.password,
-      email: _user.email,
-      birthday: _user.birthday,
-      sex: _user.sex,
-      img: _user.img
-    }).then(res => {
-      user.setUser({ token: res.token });
+    console.log(formValues);
+    await registration(formValues).then(res => {
+      user.setFormValues({ token: res.token });
       user.setIsAuth(true);
       navigate('/');
       console.log(res);
@@ -156,7 +149,7 @@ export const AuthPage = observer(() => {
         <span className="text-xl mt-2">Аватар</span>
         <UploadImage
           className="mx-auto mt-12 h-[240px] w-[240px]"
-          value={_user.img}
+          value={formValues.img}
           setValue={handleChange}
         />
         <span className="my-4">JPG или PNG не больше 5 мб</span>

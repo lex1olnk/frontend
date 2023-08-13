@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CreatableInput, Input, SelectedInput } from '../../Inputs/Inputs';
+import { CreatableInput, Input, SelectedInput } from '../../Inputs/inputs';
 import { bookTomePost, bookTomesGetByBookId } from '../../../http/bookTomeApi';
 import { chapterPost } from '../../../http/chapterApi';
 

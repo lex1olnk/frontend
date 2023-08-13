@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TextInputDiv } from '../Inputs/Inputs';
+import { TextInputDiv } from '../Inputs/inputs';
 import NoteViewer from '../NoteViewer';
 import { getDisccusionById } from '../../http/discussionApi';
 

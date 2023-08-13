@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import NoteViewer from '../NoteViewer';
 import UploadImage from '../UploadImage';
 import { titlePost } from '../../http/titleApi';
-import { SelectedInput, CreatableInput, Label, Input } from '../Inputs/Inputs';
+import { SelectedInput, CreatableInput, Label, Input } from '../Inputs/inputs';
 import { Context } from '../..';
 import { authorPost } from '../../http/authorApi';
 
