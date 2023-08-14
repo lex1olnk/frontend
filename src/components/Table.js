@@ -34,23 +34,12 @@ const Tbody = props => {
 
   return (
     <tbody className="divide-gray-200 border-b-2" key={cols.id}>
-      <tr>
-        <td className="w-8"></td>
-        <Td value={cols.value} onClick={click} textAlign="left" />
-      </tr>
       {rows.map(row => {
         const rowTime = new Date(row.updatedAt);
         const time =
           rowTime.getDate() + '.' + (rowTime.getMonth() + 1) + '.' + rowTime.getFullYear();
         return (
-          <tr
-            key={row.id}
-            style={{
-              opacity: active ? 1 : 0,
-              transition: 'all 0.3s linear',
-              overflow: !active && 'hidden',
-              display: active ? 'table-row' : 'none'
-            }}>
+          <tr key={row.id}>
             <td className="h-fit">
               <input
                 type="checkbox"

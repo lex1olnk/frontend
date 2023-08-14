@@ -10,7 +10,8 @@ import {
   CHAPTER_ROUTE
 } from '../../utils/consts';
 import { Context } from '../..';
-import { AuthPage, Login } from '../Authentication/AuthPage';
+import { AuthPage } from '../Authentication/AuthPage';
+import { Login } from '../Authentication/Login';
 
 import CreateTitle from '../Title/CreateTitle';
 import CreateTeam from '../Team/CreateTeam';

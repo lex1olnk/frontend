@@ -13,7 +13,15 @@ const authInterceptor = config => {
   return config;
 };
 
-const getContentType = () => {
+const getContentJsonType = () => {
+  return {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+};
+
+const getContentFileType = () => {
   return {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -23,4 +31,4 @@ const getContentType = () => {
 
 $authHost.interceptors.request.use(authInterceptor);
 
-export { $host, $authHost, getContentType };
+export { $host, $authHost, getContentFileType, getContentJsonType };

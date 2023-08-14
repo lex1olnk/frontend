@@ -1,18 +1,16 @@
-import { $authHost } from './index';
+import { $authHost, getContentJsonType } from './index';
 
-export const chapterPost = async props => {
-  const { name, bookTome, status, costChapter, costAudio, titleId, translatorId } = props;
-  const formData = new FormData();
-  formData.append('name', name);
-  formData.append('booktomeId', bookTome);
-  formData.append('titleId', titleId);
-  formData.append('translatorId', translatorId);
-  formData.append('status', status);
-  formData.append('costChapter', costChapter);
-  formData.append('costAudio', costAudio);
-
-  const { data } = await $authHost.post('chapter', formData);
-  return data;
+export const chapterPost = async formValues => {
+  try {
+    const contentType = getContentJsonType();
+    formValues.status = formValues.status.id;
+    formValues.bookTome = formValues.bookTome.id;
+    console.log(formValues);
+    const { data } = await $authHost.post('chapter', formValues, { ...contentType });
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const updateChapterText = async props => {

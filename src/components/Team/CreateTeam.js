@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import NoteViewer from '../NoteViewer';
 import UploadImage from '../UploadImage';
 import { Label, Input } from '../Inputs/inputs';
-import { teamPost } from '../../http/teamApi';
+import { postTeam } from '../../http/teamApi';
 import { Context } from '../..';
 import { toJS } from 'mobx';
 
@@ -33,7 +33,7 @@ const CreateTeam = () => {
   };
 
   const onClick = async () => {
-    teamPost(formValues);
+    postTeam(formValues);
   };
 
   console.log(formValues, _user);

@@ -1,0 +1,7 @@
+.titleHeadButtons {
+  @apply flex flex-row;
+}
+
+.titleHeadButtons button {
+  @apply w-36 h-10 last:ml-4 bg-cred;
+}

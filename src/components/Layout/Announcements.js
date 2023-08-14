@@ -24,7 +24,7 @@ export const Announcements = props => {
 
   return (
     <>
-      <div className="flex flex-col relative bg-white w-full h-[170px] p-3 rounded-lg">
+      <div className="flex flex-col relative bg-white w-full h-[170px] p-3 mb-4">
         <span className="top-0 text-lg mb-2">Анонсы</span>
         <div className="flex flex-row justify-between w-full">
           <div className="flex flex-row w-[410px] h-[110px] text-sm hover:-translate-y-1 transition-all ease-out duration-200">

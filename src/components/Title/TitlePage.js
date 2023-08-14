@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { titleGetById, titleGetByTranslatorId, titleIncrementViews } from '../../http/titleApi';
 import ConvertLexical from '../../plugins/ConvertLexical';
 import { getDescString } from '../../http/univApi';
-import parse from 'html-react-parser';
+import './style.css';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -13,59 +13,8 @@ import TabPanel from '@mui/lab/TabPanel';
 
 import { ReactComponent as VKIcon } from '../../icons/vk.svg';
 import Chapters from './Chapters';
-import Rating from './Rating';
-import { GalleryItem } from '../Gallery';
-import Discussion from '../Discussion/Discussion';
 import { Group } from './Group';
-
-const TitlesByTranslator = props => {
-  const { id, translatorId } = props;
-  const [titles, setTitles] = useState([]);
-
-  useEffect(() => {
-    titleGetByTranslatorId(translatorId).then(res => {
-      setTitles(res.filter(x => x.id != id));
-    });
-  }, []);
-
-  if (!titles) return;
-
-  return (
-    <div className="px-4">
-      <span className="text-xl">Другие работы переводчика: </span>
-      <div className="flex flex-row mt-4">
-        {titles.map(title => (
-          <GalleryItem
-            id={title.id + title.img}
-            img={title.img}
-            name={title.name}
-            key={title.id}
-            imgStyle={
-              'first:ml-0 inline-block aspect-3/4 sm:w-[208px] relative my-auto rounded-md mx-2'
-            }
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const Info = props => {
-  const { title, desc } = props;
-  return (
-    <div className="max-w-[1144px] bg-white mx-auto h-full flex flex-col">
-      <div className="flex flex-col p-4">
-        <span className="text-xl mb-4">Описание</span>
-        <span className="text-md">{parse(desc)}</span>
-      </div>
-      <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
-      <Rating />
-      <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
-      <TitlesByTranslator id={title.id} translatorId={title.translatorId} />
-      <Discussion id={title.discussionId} />
-    </div>
-  );
-};
+import { Info } from './Info';
 
 const TitleDesc = props => {
   const { name, value } = props;
@@ -90,23 +39,22 @@ const TitlePage = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    titleIncrementViews(id);
     titleGetById(id).then(res => {
-      setTitle(res);
-      getDescString('titles/' + res.id + '/', res.name + '.txt').then(res => {
+      getDescString(`titles/${res.id}/${res.name}.txt`).then(res => {
         ConvertLexical({ descString: res, setDesc });
+        console.log('1');
       });
-      console.log('1');
+      setTitle(res);
     });
+  }, []);
+
+  useEffect(() => {
+    titleIncrementViews(id);
   }, []);
 
   if (!title) return <div>...LOADING</div>;
 
   const titleDescs = [
-    {
-      name: 'Переводчик',
-      value: title.translatorId
-    },
     {
       name: 'Автор',
       value: title.author.value
@@ -118,6 +66,14 @@ const TitlePage = () => {
     {
       name: 'Просмотров',
       value: title.views
+    },
+    {
+      name: 'Год',
+      value: title.year
+    },
+    {
+      name: 'Язык оригинала',
+      value: title.language?.value
     }
   ];
 
@@ -125,36 +81,46 @@ const TitlePage = () => {
   return (
     <div className="bg-slate-100 min-h-[calc(100vh_-_65px_-_148px)]">
       <div className="w-full py-4">
-        <div className="max-w-[1144px] h-full mx-auto">
+        <div className="max-w-[1144px] h-full mx-auto bg-cred text-white px-4 py-2">
           <span className="text-2xl">{title.name}</span>
           <br />
           <span className="text-base">{title.origName}</span>
         </div>
-        <div className="max-w-[1144px] h-full mx-auto flex flex-row justify-between mt-4">
+        <div className="max-w-[1144px] h-full mx-auto flex flex-row justify-between p-4 bg-white">
           <div className="border-b-2">
             <img
               src={process.env.REACT_APP_API_URL + '/img/' + title.img}
-              className="rounded-md h-[240px] w-[200px] object-cover"
+              className="rounded-md h-[320px] w-[240px] object-cover"
             />
           </div>
-          <div className="rounded-md w-[925px] bg-white border-b-2">
-            <div className="flex flex-row justify-between pt-2 px-4 text-2xl "></div>
-            <div className="px-4">
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-row">
-                  {titleDescs.map(desc => (
-                    <TitleDesc name={desc.name} value={desc.value} />
-                  ))}
-                </div>
-                <div className="flex">
-                  <span className="mr-6 bg-cred py-1 px-3 my-auto border-b-2">Авторское</span>
-                  <span className="bg-cred py-1 px-3 my-auto border-b-2">В процессе</span>
-                </div>
-              </div>
+          <div className="rounded-md w-[886px] pl-4">
+            <div className="flex flex-row justify-between">
               <div className="flex flex-row">
-                <VKIcon className="vk" />
+                {titleDescs.map(desc => (
+                  <TitleDesc name={desc.name} value={desc.value} />
+                ))}
               </div>
+              <div className="flex">
+                <span className="mr-6 bg-cred py-1 px-3 my-auto border-b-2">Авторское</span>
+                <span className="bg-cred py-1 px-3 my-auto border-b-2">В процессе</span>
+              </div>
+            </div>
+            <div className="flex flex-row py-2">
+              <img
+                src={process.env.REACT_APP_API_URL + '/img/' + title.img}
+                className="my-auto rounded-full border-spacing-1 aspect-square w-12 object-cover"
+              />{' '}
+              <div className="py-1 px-4 text-white my-2 bg-cred mx-4">{title.user.nickname}</div>
+            </div>
+            <div className="flex flex-row py-2">
+              <VKIcon className="vk" />
+            </div>
+            <div className="h-[156px] flex flex-col justify-between">
               <Group title={'Теги'} items={[...title.genres, ...title.tags, ...title.fandoms]} />
+              <div className="titleHeadButtons">
+                <button>Начать читать</button>
+                <button>В закладки</button>
+              </div>
             </div>
           </div>
         </div>

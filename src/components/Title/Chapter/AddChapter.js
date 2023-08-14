@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreatableInput, Input, SelectedInput } from '../../Inputs/inputs';
 import { bookTomePost, bookTomesGetByBookId } from '../../../http/bookTomeApi';
 import { chapterPost } from '../../../http/chapterApi';
 
 const AddChapter = props => {
-  const { setUpdated, isVisible, onClick, titleId, translatorId } = props;
+  const { setUpdated, onClick, titleId, translatorId } = props;
   const [chapter, setChapter] = useState({
     name: '',
-    bookTome: [],
+    bookTome: {},
     status: {},
+    translatorId: -1,
+    titleId: -1,
     costChapter: 0,
     costAudio: 0
   });
 
-  const nav = useNavigate();
+  useEffect(() => {
+    setChapter(prevState => ({
+      ...prevState,
+      ['titleId']: titleId,
+      ['translatorId']: translatorId
+    }));
+  }, []);
 
   const handleChange = e => {
     setChapter(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
@@ -22,23 +30,15 @@ const AddChapter = props => {
 
   const click = async () => {
     try {
-      const res = await chapterPost({
-        name: chapter.name,
-        bookTome: chapter.bookTome.id,
-        status: chapter.status.id,
-        titleId: titleId,
-        translatorId: translatorId,
-        costChapter: chapter.costChapter,
-        costAudio: chapter.costAudio
-      }).then(res => {
+      console.log(chapter);
+      const res = await chapterPost({ ...chapter }).then(() => {
         setUpdated(currentState => !currentState);
+        onClick(currentState => !currentState);
       });
     } catch (e) {
-      return null;
+      console.log(e);
     }
   };
-
-  if (!isVisible) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backgrop-blue-sm flex justify-center items-center">
@@ -46,13 +46,13 @@ const AddChapter = props => {
         <label className="block uppercase tracking-wide text-gray-700 text-xl font-bold text-center">
           Добавить главу
         </label>
-        <div className="flex flex-col mx-auto">
+        <div className="flex flex-col w-[600px] mx-auto">
           <Input
             title={'Название'}
             name="name"
-            input={'Автор'}
+            input={'Глава №'}
             helper={'пишите латинскими символами'}
-            setValue={handleChange}
+            onChange={handleChange}
           />
           <CreatableInput
             type={titleId}
@@ -81,17 +81,17 @@ const AddChapter = props => {
             name="costChapter"
             input={'Автор'}
             helper={'пишите латинскими символами'}
-            setValue={handleChange}
+            onChange={handleChange}
           />
           <Input
             title={'Стоимость аудио'}
             name="costAudio"
             input={'Автор'}
             helper={'пишите латинскими символами'}
-            setValue={handleChange}
+            onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="flex flex-row justify-between">
           <button
             type="button"
             onClick={click}

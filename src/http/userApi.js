@@ -16,8 +16,8 @@ export const login = async formValues => {
     const { data } = await $host.post('user/login', formValues);
     localStorage.setItem('token', data.token);
     return { token: jwt_decode(data.token) };
-  } catch (e) {
-    alert(e.message);
+  } catch (err) {
+    alert(err.response.data.message);
   }
 };
 

@@ -8,6 +8,7 @@ import { ChaptersLastUpdates } from './ChaptersLastUpdates';
 import { TopTitles } from './NavBar.js/TopTitles';
 import { Announcements } from './Announcements';
 import { ServerNews } from './ServerNews';
+import { MostPopularTitles } from './MostPopularTitles';
 
 const hideText = (value, maxlimit) => {
   return value.length > maxlimit ? value.substring(0, maxlimit - 3) + '...' : value;
@@ -80,58 +81,14 @@ const data = [
   }
 ];
 
-const MostPopular = () => {
-  const responsive = {
-    360: { items: 2 },
-    640: { items: 3 },
-    800: { items: 4 },
-    1024: { items: 5 },
-    1280: { items: 6 }
-  };
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    const items2 = data.map(title => {
-      return (
-        <GalleryItem
-          id={title.id}
-          img={title.img}
-          name={title.name}
-          imgStyle={'galleryItem'}
-          isLine={false}
-        />
-      );
-    });
-    setItems(items2);
-  }, []);
-
-  return (
-    <div className="mostPopular mb-4">
-      <AliceCarousel
-        disableButtonsControls={true}
-        disableDotsControls={true}
-        paddingLeft={4}
-        paddingRight={4}
-        responsive={responsive}
-        mouseTracking
-        items={items}
-      />
-    </div>
-  );
-};
-
-const ShowGenres = () => {
-  return <div></div>;
-};
-
 const Layout = () => {
   return (
     <div className=" bg-slate-100 pt-2">
       <Gallery data={data} />
       <div className="flex flex-row mx-auto max-w-[1245px] justify-between">
         <div className="w-[866px]">
-          <MostPopular />
-          <MostPopular />
+          <MostPopularTitles />
+          <MostPopularTitles />
           <Announcements hideText={hideText} />
           <ChaptersLastUpdates hideText={hideText} />
         </div>
@@ -139,7 +96,6 @@ const Layout = () => {
           <ServerNews />
           <TopTitles classNames={classNames} />
           <div className="bg-white p-4">Menu</div>
-          <ShowGenres />
         </div>
       </div>
     </div>

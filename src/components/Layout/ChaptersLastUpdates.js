@@ -5,7 +5,7 @@ import { titleGetLastUpdates } from '../../http/titleApi';
 export const ChaptersLastUpdates = props => {
   const { hideText } = props;
   const [isActive, setIsActive] = useState(true);
-  const [titles, setTitles] = useState([]);
+  const [titles, setTitles] = useState('');
   const asd = 'block aspect-3/4 sm:h-36 rounded-md';
   const pageNum = 1;
 
@@ -15,7 +15,9 @@ export const ChaptersLastUpdates = props => {
     });
   }, []);
 
-  if (!titles) return null;
+  if (!titles) return;
+
+  console.log(titles);
 
   return (
     <div className="w-full mx-auto flex flex-col">
@@ -39,9 +41,9 @@ export const ChaptersLastUpdates = props => {
                   </a>
                   <a
                     className="flex flex-row justify-between border-t-2"
-                    href={'title/' + title.id + '/' + title.chapters[0].id}>
-                    <span className="lineUnderWord">{title.chapters[0].name}</span>
-                    <span>{title.chapters[0].updatedAt}</span>
+                    href={`title/${title.id}/${title.chapters[0]?.name}`}>
+                    <span className="lineUnderWord">{title.chapters[0]?.name}</span>
+                    <span>{title.chapters[0]?.updatedAt}</span>
                   </a>
                   <span>{title.chapters[1]?.name}</span>
                   <span className="text-sm my-auto">

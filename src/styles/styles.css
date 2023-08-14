@@ -12,14 +12,14 @@
 
 .mostPopular {
   .alice-carousel__wrapper {
-    @apply py-4 bg-white rounded-md;
+    @apply bg-white py-4;
   }
 
   .alice-carousel__stage-item {
     @apply rounded-md h-44 px-2 hover:scale-[1.025] transition-transform ease-out duration-300;
   }
 
-  @apply bg-white rounded-md;
+  @apply my-4;
 }
 
 .gallery {
@@ -27,19 +27,19 @@
     @apply absolute top-[7.5rem] p-0 text-left -left-8 -translate-y-1/2;
   }
 
+  .alice-carousel__wrapper {
+    @apply py-2;
+  }
+
   .alice-carousel__next-btn {
     @apply absolute top-[7.5rem] p-0 text-right -right-8 -translate-y-1/2;
   }
 
-  .alice-carousel__wrapper {
-    @apply py-4 bg-white px-1;
-  }
-
   .alice-carousel__stage-item {
-    @apply w-auto h-60 rounded-md mx-0 px-2 hover:scale-[1.025] transition-transform ease-out duration-300;
+    @apply w-auto h-60 rounded-md mx-0 first:pl-2 px-2 hover:scale-[1.025] transition-transform ease-out duration-300;
   }
 
-  @apply sm:max-w-[1245px] mx-auto h-[300px];
+  @apply sm:max-w-[1263px] mx-auto h-[300px] pt-4 py-4;
 }
 
 .galleryItem:hover .galleryItemLink div {
