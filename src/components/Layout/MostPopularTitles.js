@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import { GalleryItem } from '../Gallery';
-import { titleGetMostPopular } from '../../http/titleApi';
+import { getBookMostPopular, titleGetMostPopular } from '../../http/bookApi';
 
 const responsive = {
   360: { items: 2 },
@@ -13,10 +13,10 @@ const responsive = {
 
 export const MostPopularTitles = () => {
   const [items, setItems] = useState([]);
-  const [titles, setTitles] = useState([]);
+  const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    titleGetMostPopular(10, 1).then(res => {
+    getBookMostPopular(10, 1).then(res => {
       const items2 = res.map(title => {
         return (
           <GalleryItem
@@ -28,11 +28,10 @@ export const MostPopularTitles = () => {
           />
         );
       });
-      setTitles(items2);
+      setBooks(items2);
     });
   }, []);
 
-  console.log(titles);
   return (
     <div className="mostPopular">
       <div className="bg-white w-full p-2">
@@ -45,7 +44,7 @@ export const MostPopularTitles = () => {
         paddingRight={4}
         responsive={responsive}
         mouseTracking
-        items={titles}
+        items={books}
       />
     </div>
   );

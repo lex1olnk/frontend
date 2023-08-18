@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { useNavigate } from 'react-router-dom';
 
 const TABLE_HEAD = [
   { value: '', style: '' },
@@ -17,17 +18,16 @@ const Td = props => {
     <td
       key={key}
       style={{ textAlign }}
-      onClick={onClick}
       className={'px-1 py-3 text-md font-medium text-gray-800 whitespace-nowrap ' + className}>
-      <a href={href}>{value}</a>
+      <button onClick={onClick}>{value}</button>
     </td>
   );
 };
 
 const Tbody = props => {
-  const { cols, rows, rowNames, isEditor, titleId } = props;
+  const { cols, rows, rowNames, isEditor, bookId } = props;
   const [active, setActive] = useState(false);
-
+  const navigate = useNavigate();
   const click = () => {
     setActive(!active);
   };
@@ -53,11 +53,13 @@ const Tbody = props => {
                   value={row[name]}
                   key={row.id + row[name]}
                   textAlign={name === 'name' ? 'left' : 'center'}
-                  href={'/title/' + titleId + '/' + row['id']}
+                  onClick={() => navigate(`/book/${bookId}/${row['id']}`)}
                 />
               ) : (
                 <td key={row.id + name}>
-                  <a href={'/title/' + titleId + '/' + row['id'] + '/import'}>Импортировать</a>
+                  <button onClick={() => navigate(`/book/${bookId}/${row['id']}/import`)}>
+                    Импортировать
+                  </button>
                 </td>
               )
             )}
@@ -75,7 +77,7 @@ const Tbody = props => {
 };
 
 export const MyTable = props => {
-  const { isEditor = true, setIsEditor, cols, rowName, titleId } = props;
+  const { isEditor = true, setIsEditor, cols, rowName, bookId } = props;
   if (!cols) return;
   return (
     <div className="flex flex-col max-w-full mx-auto">
@@ -99,7 +101,7 @@ export const MyTable = props => {
             rows={col[rowName]}
             rowNames={['name', 'edit', 'likes', 'views', 'downloaded']}
             isEditor={isEditor}
-            titleId={titleId}
+            bookId={bookId}
           />
         ))}
       </table>

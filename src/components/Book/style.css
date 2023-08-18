@@ -1,7 +1,7 @@
-.titleHeadButtons {
+.bookHeadButtons {
   @apply flex flex-row;
 }
 
-.titleHeadButtons button {
+.bookHeadButtons button {
   @apply w-36 h-10 last:ml-4 bg-cred;
 }

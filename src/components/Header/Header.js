@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import Logo from '../../icons/logo.png';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { authNav, navigation } from './consts';
 
@@ -16,7 +16,8 @@ function classNames(...classes) {
 }
 
 const DefaultHeader = props => {
-  const { auth, logout } = props;
+  const navigate = useNavigate();
+  const { auth, logout, id } = props;
   return (
     <Disclosure as="nav" className="bg-white z-10 border-b-rose-500">
       {({ open }) => (
@@ -35,23 +36,23 @@ const DefaultHeader = props => {
                 </Disclosure.Button>
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <a className="flex flex-shrink-0 items-center" href="/">
+                <button className="flex flex-shrink-0 items-center" onClick={() => navigate('/')}>
                   <img className="block h-8 w-auto lg:hidden" src={Logo} alt="Your Company" />
                   <img className="hidden h-8 w-auto lg:block" src={Logo} alt="Your Company" />
-                </a>
+                </button>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4 h-full">
                     {navigation.map(item => (
-                      <a
+                      <button
                         key={item.name}
-                        href={item.href}
+                        onClick={() => navigate(item.href)}
                         className={classNames(
                           item.current ? 'bg-gray-900 text-white' : '',
                           'headerNavItem lineUnderWord'
                         )}
                         aria-current={item.current ? 'page' : undefined}>
                         {item.name}
-                      </a>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -127,7 +128,7 @@ const DefaultHeader = props => {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#"
+                                href={`user/${id}`}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-black-700'
@@ -251,7 +252,7 @@ const HeaderComponent = observer(() => {
   return validPage.test(location.pathname) ? (
     <ReaderComponent />
   ) : (
-    <DefaultHeader auth={auth} logout={logout} />
+    <DefaultHeader auth={auth} id={_user.id} logout={logout} />
   );
 });
 

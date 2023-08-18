@@ -14,12 +14,13 @@ export const chapterPost = async formValues => {
 };
 
 export const updateChapterText = async props => {
-  const { title, id, desc } = props;
+  const { bookId, id, desc } = props;
+  console.log(bookId, id);
   const formData = new FormData();
-  formData.append('titleId', title);
+  formData.append('bookId', bookId);
   formData.append('desc', desc);
 
-  const { data } = await $authHost.post('chapter/' + id + '/update', formData);
+  const { data } = await $authHost.post(`chapter/${id}/update`, formData);
   return data;
 };
 

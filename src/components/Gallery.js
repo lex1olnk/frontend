@@ -23,14 +23,14 @@ const GalleryItem = ({
   const ratingStyle = 'absolute bottom-6 left-2 text-center font-normal flex flex-row';
   return (
     <a
-      href={'/title/' + id}
+      href={'/book/' + id}
       key={id}
       onDragStart={handleDragStart}
       role="presentation"
       style={{
         background: isLine
-          ? linear + process.env.REACT_APP_API_URL + '/img/' + img + ')'
-          : 'url(' + process.env.REACT_APP_API_URL + '/img/' + img + ')',
+          ? `${linear}  ${process.env.REACT_APP_API_URL}/img/${img})`
+          : `url(${process.env.REACT_APP_API_URL}/img/${img})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}

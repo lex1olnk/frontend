@@ -4,6 +4,7 @@ import { Input } from '../Inputs/inputs';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../..';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const Login = observer(() => {
   const [formValues, setFormValues] = useState({
@@ -19,13 +20,17 @@ export const Login = observer(() => {
   };
 
   const click = async () => {
-    await login(formValues).then(res => {
-      user.setUser(res.token);
-      user.setIsAuth(true);
-      navigate('/');
-      console.log(user);
-      console.log(res);
-    });
+    await login(formValues)
+      .then(res => {
+        user.setUser(res.token);
+        user.setIsAuth(true);
+        navigate('/');
+        console.log(user);
+        console.log(res);
+      })
+      .catch(error => {
+        toast(error.response.data.message);
+      });
   };
 
   return (

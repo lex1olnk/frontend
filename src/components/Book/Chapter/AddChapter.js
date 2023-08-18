@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreatableInput, Input, SelectedInput } from '../../Inputs/inputs';
-import { bookTomePost, bookTomesGetByBookId } from '../../../http/bookTomeApi';
+import { postBookTome, getBookTomesByBookId } from '../../../http/bookTomeApi';
 import { chapterPost } from '../../../http/chapterApi';
 
 const AddChapter = props => {
-  const { setUpdated, onClick, titleId, translatorId } = props;
+  const { setUpdated, onClick, bookId, translatorId } = props;
   const [chapter, setChapter] = useState({
     name: '',
     bookTome: {},
     status: {},
     translatorId: -1,
-    titleId: -1,
+    bookId: -1,
     costChapter: 0,
     costAudio: 0
   });
@@ -19,7 +19,7 @@ const AddChapter = props => {
   useEffect(() => {
     setChapter(prevState => ({
       ...prevState,
-      ['titleId']: titleId,
+      ['bookId']: bookId,
       ['translatorId']: translatorId
     }));
   }, []);
@@ -55,15 +55,15 @@ const AddChapter = props => {
             onChange={handleChange}
           />
           <CreatableInput
-            type={titleId}
+            type={bookId}
             title={'Название'}
             input={'Том'}
             name={'bookTome'}
             helper={'пишите латинскими символами'}
             setSelectedOption={handleChange}
-            get={bookTomesGetByBookId}
-            someV={titleId}
-            post={bookTomePost}
+            get={getBookTomesByBookId}
+            someV={bookId}
+            post={postBookTome}
           />
           <SelectedInput
             type="chapter/status"

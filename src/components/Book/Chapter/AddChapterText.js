@@ -73,17 +73,18 @@ const ParagraphEditor = props => {
 
 const TextEditor = props => {
   const { text, setIsEdit } = props;
-  const originalParagraphs = text.split('\n'); //split up
+  const originalParagraphs = text.split('\n').filter(txt => txt && true); //split up
   const [translated, setTranslated] = useState({});
   const [paragraphs, setParagraphs] = useState([]);
   const [editor, setEditor] = useState('');
   const [edit, setEdit] = useState(false);
   const [num, setNum] = useState(0);
-  const { title, id } = useParams();
-  console.log(title, id);
+  const { book, id } = useParams();
+  console.log(book, id);
   useEffect(() => {
-    originalParagraphs.map(() => {
+    originalParagraphs.map(txt => {
       paragraphs.push({});
+      console.log(txt);
     });
   }, []);
 
@@ -99,7 +100,7 @@ const TextEditor = props => {
         // Get the selection from the EditorState
         const selection = $getSelection();
 
-        for (let i = 0; i < originalParagraphs.length; i++) {
+        for (let i = 0; i < paragraphs.length; i++) {
           const paragraphNode = $createParagraphNode();
 
           // Finally, append the paragraph to the root
@@ -176,10 +177,11 @@ const TextEditor = props => {
   };
 
   useEffect(() => {
+    console.log(book, id);
     if (translated?.editor)
       setTimeout(() => {
         updateChapterText({
-          title: title,
+          bookId: book,
           id: id,
           desc: JSON.stringify(translated.editor.getEditorState())
         }).then(res => {
@@ -196,7 +198,7 @@ const TextEditor = props => {
       <div className="bg-slate-100 border-b-2">
         <div className="w-full mx-auto px-8 py-4 text-xl">Импортировать текст</div>
       </div>
-      <div className="w-full mx-auto py-4 px-8">
+      <div className="h-full w-full mx-auto py-4 px-8">
         <span className="text-xl">Источник</span>
         {originalParagraphs.map((text, index) => (
           <ParagraphEditor
@@ -214,7 +216,7 @@ const TextEditor = props => {
       </div>
       <div className="ChapterTextButtons">
         <button onClick={() => setIsEdit(currentState => !currentState)}>Назад</button>
-        <button href={'title/' + title + '/' + id}>Вернуться на страницу</button>
+        <a href={`/`}>Вернуться на страницу</a>
       </div>
     </div>
   );
@@ -251,7 +253,7 @@ const AddChapterText = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   return (
-    <div className="bg-gray-200 h-screen pt-4">
+    <div className="bg-gray-200 pt-4">
       {!isEdit ? (
         <TextRead text={text} setText={setText} setIsEdit={setIsEdit} />
       ) : (

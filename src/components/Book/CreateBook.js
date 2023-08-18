@@ -3,12 +3,13 @@ import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import NoteViewer from '../NoteViewer';
 import UploadImage from '../UploadImage';
-import { titlePost } from '../../http/titleApi';
+import { postBook } from '../../http/bookApi';
 import { SelectedInput, CreatableInput, Label, Input } from '../Inputs/inputs';
 import { Context } from '../..';
 import { authorPost } from '../../http/authorApi';
+import { toast } from 'react-toastify';
 
-const CreateTitle = observer(() => {
+const CreateBook = observer(() => {
   const [formValues, setFormValues] = useState({
     name: '',
     origName: '',
@@ -42,9 +43,11 @@ const CreateTitle = observer(() => {
   };
 
   const click = async () => {
-    const res = await titlePost(formValues);
+    const res = await postBook({ ...formValues }).catch(res => {
+      toast.error(res.response.data.message);
+    });
   };
-
+  console.log(_user);
   console.log(formValues);
 
   return (
@@ -131,4 +134,4 @@ const CreateTitle = observer(() => {
   );
 });
 
-export default CreateTitle;
+export default CreateBook;

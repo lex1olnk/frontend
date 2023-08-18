@@ -7,6 +7,9 @@ import { check } from './http/userApi';
 import Router from './components/routes/Router';
 import HeaderComponent from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = observer(() => {
   const { user } = useContext(Context);
@@ -31,6 +34,19 @@ const App = observer(() => {
       <HeaderComponent />
       <Router />
       <Footer />
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </BrowserRouter>
   );
 });

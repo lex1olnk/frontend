@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
-import { bookTomesGetByBookId } from '../../http/bookTomeApi';
+import { getBookTomesByBookId } from '../../http/bookTomeApi';
 
 import { MyTable } from '../Table';
 import AddChapter from './Chapter/AddChapter';
 import { Context } from '../..';
 import { toJS } from 'mobx';
 
-const Chapters = ({ titleId, translatorId }) => {
+const Chapters = ({ bookId, translatorId }) => {
   const { user } = useContext(Context);
   const [isVisible, setIsVisible] = useState(false);
   const [bookTomes, setBookTomes] = useState([]);
@@ -19,11 +19,13 @@ const Chapters = ({ titleId, translatorId }) => {
     if (_user.id === translatorId) {
       setIsEditor(true);
     }
-    bookTomesGetByBookId(titleId).then(res => {
+    getBookTomesByBookId(bookId).then(res => {
       setIsLoading(true);
       setBookTomes(res);
     });
   }, [updated]);
+
+  console.log(isVisible);
 
   if (!isLoading) return;
   console.log(_user.id, translatorId);
@@ -31,17 +33,17 @@ const Chapters = ({ titleId, translatorId }) => {
     <div className="max-w-[1144px] bg-white mx-auto mt-4">
       <div className="flex flex-row justify-between">
         <div className="flex flex-row">
-          <a href="#" className="titleChapterButton" onClick={() => setIsVisible(!isVisible)}>
+          <a href="#" className="bookChapterButton" onClick={() => setIsVisible(!isVisible)}>
             Добавить главу
           </a>
-          <a href="#" className="titleChapterButton">
+          <a href="#" className="bookChapterButton">
             Скачать
           </a>
-          <a href="#" className="titleChapterButton">
+          <a href="#" className="bookChapterButton">
             Выбрать главы
           </a>
         </div>
-        <a href="#" className="titlePageButton">
+        <a href="#" className="bookPageButton">
           Добавить главу
         </a>
       </div>
@@ -49,15 +51,17 @@ const Chapters = ({ titleId, translatorId }) => {
         cols={bookTomes.length && bookTomes}
         rowName={'chapters'}
         isEditor={isEditor}
-        titleId={titleId}
+        bookId={bookId}
       />
-      <AddChapter
-        translatorId={translatorId}
-        setUpdated={setUpdated}
-        isVisible={isVisible}
-        onClick={setIsVisible}
-        titleId={titleId}
-      />
+      {isVisible && (
+        <AddChapter
+          translatorId={translatorId}
+          setUpdated={setUpdated}
+          isVisible={isVisible}
+          onClick={setIsVisible}
+          bookId={bookId}
+        />
+      )}
     </div>
   );
 };

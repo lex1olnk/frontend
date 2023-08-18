@@ -6,7 +6,7 @@
   @apply inline-block aspect-3/4 sm:h-36 relative my-auto rounded-md;
 }
 
-.titleItems {
+.bookItems {
   @apply inline-block aspect-3/4 sm:h-32 relative my-auto rounded-md;
 }
 
@@ -58,15 +58,15 @@
   @apply text-lg mb-1 text-white;
 }
 
-.titlePageButton {
+.bookPageButton {
   @apply rounded-md text-lg px-4 py-2 bg-white last:ml-8;
 }
 
-.titleMenuSpan {
+.bookMenuSpan {
   @apply first:ml-0 text-lg py-2 px-4;
 }
 
-.titleChapterButton {
+.bookChapterButton {
   @apply rounded-md text-base my-auto px-3 py-1 bg-cred mx-4 text-white;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .vk path {
-  @apply fill-blue-500;
+  @apply fill-blue-500 h-6 w-6;
 }
 
 .editor-shell {
@@ -134,9 +134,9 @@
 }
 
 .textOptionStyle {
-  @apply p-4 border-l-2 transition-transform duration-500 w-[400px] ease-out absolute top-0 right-0 min-h-screen origin-right;
+  @apply z-[9999] p-4 border-l-2 transition-transform duration-500 w-[400px] ease-out absolute top-0 right-0 min-h-screen origin-right;
 }
 
-.topTitleNavBar {
+.topbookNavBar {
   @apply bg-white flex flex-col transition-all duration-300 ease-out origin-top;
 }

@@ -6,7 +6,7 @@ export const navigation = [
 ];
 
 export const authNav = [
-  { name: 'Добавить тайтл', href: '/title/add', current: false },
+  { name: 'Добавить тайтл', href: '/book/add', current: false },
   { name: 'Добавить команду', href: '/team/add', current: false },
   { name: 'Добавить услугу', href: '#', current: false }
 ];

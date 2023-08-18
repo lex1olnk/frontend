@@ -1,9 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getDescString } from '../../../http/univApi';
-import ConvertLexical from '../../../plugins/ConvertLexical';
-import parse, { domToReact } from 'html-react-parser';
-import Discussion from '../../Discussion/Discussion';
+import { useState } from 'react';
+
 import Logo from '../../../icons/logo.png';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
@@ -13,7 +9,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const TextOptionMenu = props => {
+export const TextOptionMenu = props => {
   const {
     setTextSize,
     setLineHeight,
@@ -56,7 +52,10 @@ const TextOptionMenu = props => {
   return (
     <div
       className={
-        'absolute flex top-0 w-full h-16 bg-none z-0 border-b-2 ' + headerColor + ' ' + textColor
+        'absolute flex top-0 w-full h-16 bg-none z-[9999] border-b-2 ' +
+        headerColor +
+        ' ' +
+        textColor
       }>
       <a className="my-auto" href="/">
         <img className="h-8 w-auto ml-4" src={Logo} alt="Your Company" />
@@ -83,7 +82,8 @@ const TextOptionMenu = props => {
         <div
           className={classNames(
             isOpen ? 'translate-x-0' : 'translate-x-full',
-            'textOptionStyle mt-16'
+            'textOptionStyle mt-16',
+            bgColor
           )}>
           <div className="text-lg mt-1 pb-2 mb-4">Стилизация страницы</div>
 
@@ -160,69 +160,3 @@ const TextOptionMenu = props => {
     </div>
   );
 };
-
-const ChapterPage = () => {
-  const [textColor, setTextColor] = useState('text-black');
-  const [bgColor, setBgColor] = useState('bg-slate-50');
-  const [textSize, setTextSize] = useState(14);
-  const [lineHeight, setLineHeight] = useState(1);
-  const [width, setWidth] = useState(800);
-  const [paragraphMargin, setParagraphMargin] = useState(2);
-  const { title, id } = useParams();
-  const [desc, setDesc] = useState();
-
-  useEffect(() => {
-    getDescString('titles/' + title + '/', id + '.txt').then(res => {
-      ConvertLexical({ descString: res, setDesc });
-    });
-    console.log('1');
-  }, []);
-
-  const options = {
-    replace: ({ name, children }) => {
-      if (!name) return;
-      if (name == 'p') {
-        return (
-          <p style={{ marginTop: paragraphMargin, marginBottom: paragraphMargin }}>
-            {domToReact(children, options)}
-          </p>
-        );
-      }
-    }
-  };
-
-  if (!desc) return;
-
-  return (
-    <>
-      <TextOptionMenu
-        setTextSize={setTextSize}
-        setLineHeight={setLineHeight}
-        setWidth={setWidth}
-        setParagraphMargin={setParagraphMargin}
-        setBgColor={setBgColor}
-        setTextColor={setTextColor}
-        bgColor={bgColor}
-        textColor={textColor}
-      />
-      <div
-        className={
-          'min-h-[calc(100vh_-_65px_-_148px)] transition-all ' + bgColor + ' ' + textColor
-        }>
-        <div style={{ width: width }} className={'mx-auto p-4'}>
-          <span>Глава №</span>
-          <div
-            style={{
-              fontSize: textSize,
-              lineHeight: lineHeight
-            }}>
-            {parse(desc, options)}
-          </div>
-        </div>
-        <Discussion id={id} className="w-[840px] mx-auto pt-4" />
-      </div>
-    </>
-  );
-};
-
-export default ChapterPage;

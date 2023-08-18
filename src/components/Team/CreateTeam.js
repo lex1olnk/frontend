@@ -33,7 +33,7 @@ const CreateTeam = () => {
   };
 
   const onClick = async () => {
-    postTeam(formValues);
+    await postTeam(formValues);
   };
 
   console.log(formValues, _user);

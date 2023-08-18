@@ -32,7 +32,7 @@ export const TopTitles = props => {
     <div className="">
       <div className="bg-white w-1/2 px-3 py-1 text-lg mb-1">Топовые</div>
       {g.map(item => (
-        <div>
+        <div key={item.name + item.id}>
           <div
             className="w-full px-3 py-1 mb-1 bg-white hover:pl-6 transition-all ease-out duration-200"
             onClick={() => onClick(item.id)}>

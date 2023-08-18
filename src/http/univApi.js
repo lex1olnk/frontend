@@ -1,5 +1,6 @@
 import { $authHost, $host } from './index';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const getData = async type => {
   const { data } = await $host.get(type + '/all');
@@ -15,7 +16,7 @@ export const getDescString = async url => {
   try {
     const { data } = await axios.get(process.env.REACT_APP_API_URL + '/' + url);
     return data;
-  } catch (e) {
-    alert('str', e.message);
+  } catch (err) {
+    toast.error('Файл не найден');
   }
 };
