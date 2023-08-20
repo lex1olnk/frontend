@@ -4,19 +4,32 @@ import NoteViewer from '../NoteViewer';
 import { getDisccusionById } from '../../http/discussionApi';
 
 const Discussion = props => {
-  const { id, className } = props;
+  const { id, discussionId, className, onSubmit, userId, path } = props;
+  const [updated, setUpdated] = useState(false);
   const [disc, setDisc] = useState(undefined);
   const [desc, setDesc] = useState('');
 
+  console.log(discussionId);
+
   useEffect(() => {
-    getDisccusionById(id).then(res => {
+    getDisccusionById(discussionId).then(res => {
       setDisc(res);
     });
   }, []);
 
   if (!disc) return;
 
-  console.log(disc);
+  useEffect(() => {
+    getDescString(`${path}/${id}.txt`).then(res => {
+      if (res) ConvertLexical({ descString: res, setDesc });
+    });
+  }, [updated]);
+
+  const onClick = () => {
+    onSubmit({ id, discussionId, userId, value: desc, path }).then(() => {
+      setUpdated(false);
+    });
+  };
 
   return (
     <div className={!className ? 'w-[1016px] mx-auto px-4 mt-4' : className}>
@@ -24,6 +37,11 @@ const Discussion = props => {
       <div className="mt-4">
         <div>
           <NoteViewer setDesc={setDesc} />
+          <button
+            onClick={onClick}
+            className="float-right px-3 py-1 mt-2 bg-white border-2 border-gray-200">
+            Отправить
+          </button>
         </div>
         <div className="">
           {disc.comments.length ? (

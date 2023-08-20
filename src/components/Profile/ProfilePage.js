@@ -86,9 +86,6 @@ const ProfilePage = () => {
                       src={process.env.REACT_APP_API_URL + '/img/' + data.img}
                       className="h-[240px] w-[240px] rounded-full object-cover border-2 border-white"
                     />
-                    <div className="mt-2">
-                      <button className="mx-auto flex px-8 py-3 bg-stone-100 ">Подписаться</button>
-                    </div>
                   </div>
                   <div className="flex flex-col w-[336px] py-2">
                     <div className="flex flex-row mt-11 justify-center h-14">
@@ -103,13 +100,13 @@ const ProfilePage = () => {
                     </div>
                     <div className="ml-4 px-6 mt-2">
                       <p>Ссылки</p>
-                      <div className="flex flex-row mt-2 ">
+                      <div className="flex flex-row mt-2">
                         <VKIcon className="vk" />
-                        <p className="text-lg ">vk.com</p>
+                        <p className="text-lg ml-4">vk.com</p>
                       </div>
                       <div className="flex flex-row mt-2">
                         <VKIcon className="vk" />
-                        <p className="text-lg">vk.com</p>
+                        <p className="text-lg ml-4">vk.com</p>
                       </div>
                     </div>
                   </div>

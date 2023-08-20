@@ -32,7 +32,6 @@ const Router = () => {
     <Routes>
       <Route path={REGISTRATION_ROUTE} element={<AuthPage />} />;
       <Route path={LOGIN_ROUTE} element={<Login />} />;
-      <Route path={CHAPTER_ROUTE} element={<ChapterPage />} />;
       <Route path={'user/:id'} element={<ProfilePage />} />;
       <Route path={TEAM_ROUTE}>
         <Route path={':id'} element={<TeamPage />} />;
@@ -47,6 +46,7 @@ const Router = () => {
         <Route path={''} element={<TeamsPage />} />;
       </Route>
       <Route path={BOOK_ROUTE}>
+        <Route path={':book/:id'} element={<ChapterPage />} />;
         <Route path={':book/:id/import'} element={<AddChapterText />} />;
         <Route path={':id'} element={<BookPage />} />;
         <Route path={'add'} element={<CreateBook />} />;

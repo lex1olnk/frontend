@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreatableInput, Input, SelectedInput } from '../../Inputs/inputs';
 import { postBookTome, getBookTomesByBookId } from '../../../http/bookTomeApi';
-import { chapterPost } from '../../../http/chapterApi';
+import { postChapter } from '../../../http/chapterApi';
+import { toast } from 'react-toastify';
 
 const AddChapter = props => {
   const { setUpdated, onClick, bookId, translatorId } = props;
@@ -29,15 +30,15 @@ const AddChapter = props => {
   };
 
   const click = async () => {
-    try {
-      console.log(chapter);
-      const res = await chapterPost({ ...chapter }).then(() => {
+    console.log(chapter);
+    const res = await postChapter({ ...chapter })
+      .then(() => {
         setUpdated(currentState => !currentState);
         onClick(currentState => !currentState);
+      })
+      .catch(error => {
+        toast.error(error.response.data.message);
       });
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   return (

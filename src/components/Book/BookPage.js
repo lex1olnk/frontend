@@ -23,12 +23,31 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import PublicIcon from '@mui/icons-material/Public';
 import AttributionIcon from '@mui/icons-material/Attribution';
 import { ReactComponent as VKIcon } from '../../icons/vk.svg';
+import { ReactComponent as AccIcon } from '../../icons/account.svg';
 
 import Chapters from './Chapters';
 import { Group } from './Group';
 import { Info } from './Info';
 import { useQuery } from 'react-query';
 import { rusToLat } from '../../utils/consts';
+
+const bookDescs = [
+  {
+    name: 'Главы',
+    logo: <ArticleIcon sx={{ width: 30, height: 30 }} />,
+    value: 'chaptersCount'
+  },
+  {
+    name: 'Просмотры',
+    logo: <VisibilityIcon sx={{ width: 30, height: 30 }} />,
+    value: 'views'
+  },
+  {
+    name: 'Год',
+    logo: <AccessTimeIcon sx={{ width: 30, height: 30 }} />,
+    value: 'year'
+  }
+];
 
 const BookPage = () => {
   const [desc, setDesc] = useState('');
@@ -46,7 +65,7 @@ const BookPage = () => {
   useEffect(() => {
     if (isSuccess) {
       incrementBookViews(id);
-      getDescString(`books/${data.origName}/${data.origName}.txt`).then(res => {
+      getDescString(`books/${data.id}/${data.origName}.txt`).then(res => {
         if (res) ConvertLexical({ descString: res, setDesc });
       });
     }
@@ -59,24 +78,6 @@ const BookPage = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const bookDescs = [
-    {
-      name: 'Главы',
-      logo: <ArticleIcon sx={{ width: 30, height: 30 }} />,
-      value: 'chaptersCount'
-    },
-    {
-      name: 'Просмотры',
-      logo: <VisibilityIcon sx={{ width: 30, height: 30 }} />,
-      value: 'views'
-    },
-    {
-      name: 'Год',
-      logo: <AccessTimeIcon sx={{ width: 30, height: 30 }} />,
-      value: 'year'
-    }
-  ];
 
   return (
     <>
@@ -107,7 +108,7 @@ const BookPage = () => {
                   <div className="mt-2 flex flex-col justify-center align-middle">
                     <p className="pl-6 text-xl pb-2">Информация о тайтле</p>
                     <div className="px-6 flex flex-row py-2">
-                      <AttributionIcon sx={{ width: 30, height: 30 }} />
+                      <AccIcon />
                       <div className="ml-2">
                         <p className="text-sm m-0 leading-none">Автор</p>
                         <p className="text-lg leading-none">{data.author.value}</p>
@@ -131,7 +132,7 @@ const BookPage = () => {
                 <div className="w-[240px]">
                   <img
                     src={process.env.REACT_APP_API_URL + '/img/' + data.img}
-                    className="rounded-md h-[320px] w-[240px] object-cover"
+                    className="rounded-md h-[320px] w-[240px] object-cover border-2 border-white"
                   />
                   <div className="bookHeadButtons mt-2">
                     <button onClick={() => navigate(`/book/${id}/${1}`)}>Начать читать</button>

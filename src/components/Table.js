@@ -53,7 +53,7 @@ const Tbody = props => {
                   value={row[name]}
                   key={row.id + row[name]}
                   textAlign={name === 'name' ? 'left' : 'center'}
-                  onClick={() => navigate(`/book/${bookId}/${row['id']}`)}
+                  onClick={() => name === 'name' && navigate(`/book/${bookId}/${row['id']}`)}
                 />
               ) : (
                 <td key={row.id + name}>
@@ -140,7 +140,7 @@ export const SimpleTable = props => {
                 <span className="ml-4 my-auto">{row.name}</span>
               </td>
               <td>
-                <a href={'/team/' + row.id}>users</a>
+                <a href={'/team/' + row.id}>{row.name}</a>
               </td>
               <td>
                 <a href={'/team/' + row.id}>titles</a>

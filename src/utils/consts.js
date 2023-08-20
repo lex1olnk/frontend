@@ -5,7 +5,6 @@ export const HOME_ROUTE = '/';
 export const REGISTRATION_ROUTE = '/registration';
 export const SEARCH_ROUTE = '/search';
 export const BOOK_ROUTE = '/book';
-export const CHAPTER_ROUTE = BOOK_ROUTE + '/:book/:id';
 export const TEAM_ROUTE = '/team';
 export const USER_ROUTE = '/user';
 

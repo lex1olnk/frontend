@@ -128,7 +128,7 @@ const DefaultHeader = props => {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href={`user/${id}`}
+                                href={`/user/${id}`}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-black-700'
