@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SelectedInput } from '../Inputs/inputs';
-import { sendTeamRequest } from '../../http/teamApi';
+import { sendTeamRequest } from '../../actions/teamApi';
 
 const SendInviteUser = props => {
   const { setUpdated, onClick, teamId } = props;

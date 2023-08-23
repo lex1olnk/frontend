@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import {
+  $createParagraphNode,
+  createEditor,
+  $getSelection,
+  $getRoot,
+  $getNodeByKey,
+  ParagraphNode,
+  $createTextNode
+} from 'lexical';
 import { toJS } from 'mobx';
 import parse from 'html-react-parser';
+import ConvertLexical from '../../../plugins/ConvertLexical';
 import { useParams } from 'react-router-dom';
 
+import NoteViewer from '../../NoteViewer';
 import { ReactComponent as SubmitIcon } from '../../../icons/submit.svg';
 import { ReactComponent as EditIcon } from '../../../icons/edit.svg';
 import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
@@ -37,6 +48,7 @@ const ParagraphEditor = props => {
       <div className=" w-[calc(50%_-_20px)] h-full border-2 rounded-md p-2 text-base">{text}</div>
       {edit && num === index ? (
         <div className="w-[calc(50%_-_20px)] relative my-0">
+          <NoteViewer setDesc={setEditor} editor={paragraph.editorState} />
           <SubmitIcon
             className="absolute bottom-8 -left-8"
             onClick={() => insertParagraph(index)}
@@ -68,6 +80,117 @@ const TextEditor = props => {
   const [edit, setEdit] = useState(false);
   const [num, setNum] = useState(0);
   const { book, id } = useParams();
+  console.log(book, id);
+  useEffect(() => {
+    originalParagraphs.map(txt => {
+      paragraphs.push({});
+      console.log(txt);
+    });
+  }, []);
+
+  useEffect(() => {
+    const textNodeKeys = [];
+    const editor = createEditor();
+
+    if (editor)
+      editor.update(() => {
+        // Get the RootNode from the EditorState
+        const root = $getRoot();
+
+        // Get the selection from the EditorState
+        const selection = $getSelection();
+
+        for (let i = 0; i < paragraphs.length; i++) {
+          const paragraphNode = $createParagraphNode();
+
+          // Finally, append the paragraph to the root
+          root.append(paragraphNode);
+
+          textNodeKeys.push(paragraphNode.getKey());
+        }
+      });
+
+    setTranslated({ editor: editor, textNodeKeys: textNodeKeys });
+  }, []);
+
+  const editIndex = index => {
+    setEdit(!edit);
+    setNum(index);
+  };
+
+  const updateTranslatedEditor = (paragraph, index) => {
+    const editor = paragraph;
+    const tranEditor = translated.editor;
+    const textNodes = [];
+
+    editor.read(() => {
+      const root = $getRoot();
+
+      root.getAllTextNodes().map(node => {
+        textNodes.push({
+          text: node.getTextContent(),
+          detail: node.getDetail(),
+          mode: node.getMode(),
+          style: node.getStyle(),
+          format: node.getFormat()
+        });
+      });
+    });
+
+    tranEditor.update(() => {
+      const root = $getRoot();
+
+      const par = $getNodeByKey(translated.textNodeKeys[index]);
+
+      const texts = par.getAllTextNodes();
+
+      if (texts.length > 0) texts.map(txt => txt.setTextContent(''));
+
+      textNodes.map(node => {
+        const text = $createTextNode(node.text);
+        text.setStyle(node.style);
+        text.setFormat(node.format);
+        text.setDetail(node.detail);
+        text.setMode(node.mode);
+        par.append(text);
+      });
+
+      setTranslated({ editor: tranEditor, textNodeKeys: translated.textNodeKeys });
+    });
+
+    console.log(translated.editor.getEditorState()._nodeMap);
+  };
+
+  const setHTML = (value, index) => {
+    paragraphs[index].html = value;
+  };
+
+  const insertParagraph = index => {
+    const ed = editor.target.value;
+
+    ConvertLexical({ descString: JSON.stringify(ed), setDesc: value => setHTML(value, index) });
+    paragraphs[index] = { html: paragraphs[index].html, editorState: ed };
+
+    setEditor('');
+    setEdit(!edit);
+    updateTranslatedEditor(paragraphs[index].editorState, index);
+  };
+
+  useEffect(() => {
+    console.log(book, id);
+    if (translated?.editor)
+      setTimeout(() => {
+        updateChapterText({
+          bookId: book,
+          id: id,
+          desc: JSON.stringify(translated.editor.getEditorState())
+        }).then(res => {
+          console.log(res);
+        });
+      }, 100);
+  }, [translated]);
+
+  console.log(translated.editor);
 
   return (
     <div className="w-full mx-auto bg-white rounded-md pb-4">

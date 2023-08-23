@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreatableInput, Input, SelectedInput } from '../../Inputs/inputs';
-import { postBookTome, getBookTomesByBookId } from '../../../http/bookTomeApi';
-import { postChapter } from '../../../http/chapterApi';
+import { postBookTome, getBookTomes } from '../../../actions/bookTomeApi';
+import { postChapter } from '../../../actions/chapterApi';
 import { toast } from 'react-toastify';
 
 const AddChapter = props => {
@@ -62,7 +62,7 @@ const AddChapter = props => {
             name={'bookTome'}
             helper={'пишите латинскими символами'}
             setSelectedOption={handleChange}
-            get={getBookTomesByBookId}
+            get={getBookTomes}
             someV={bookId}
             post={postBookTome}
           />

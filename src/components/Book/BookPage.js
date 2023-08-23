@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  getBookById,
-  getBookByTranslatorId,
-  incrementBookViews,
-  postBookmarkByBookId
-} from '../../http/bookApi';
-import ConvertLexical from '../../plugins/ConvertLexical';
-import { getDescString } from '../../http/univApi';
+import { getBook, incrementBookViews, postBookmarkByBookId } from '../../actions/bookApi';
+import { getHTML } from '../../actions/univApi';
 import './style.css';
 
 import Box from '@mui/material/Box';
@@ -29,7 +23,6 @@ import Chapters from './Chapters';
 import { Group } from './Group';
 import { Info } from './Info';
 import { useQuery } from 'react-query';
-import { rusToLat } from '../../utils/consts';
 
 const bookDescs = [
   {
@@ -49,25 +42,25 @@ const bookDescs = [
   }
 ];
 
-const BookPage = () => {
+const BookPage = props => {
   const [desc, setDesc] = useState('');
   const [value, setValue] = useState('1');
   const navigate = useNavigate();
 
   const { id } = useParams();
 
-  const { isLoading, isSuccess, error, isError, data } = useQuery(['id', id], getBookById, {
+  const { isLoading, isSuccess, error, isError, data } = useQuery(['id', id], getBook, {
     retry: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false
   });
 
+  console.log(data);
+
   useEffect(() => {
     if (isSuccess) {
       incrementBookViews(id);
-      getDescString(`books/${data.id}/${data.origName}.txt`).then(res => {
-        if (res) ConvertLexical({ descString: res, setDesc });
-      });
+      getHTML(`books/${data.id}/${data.origName}.txt`);
     }
   }, [isSuccess]);
 

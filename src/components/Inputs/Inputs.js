@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
-import { getData, postData } from '../../http/univApi';
+import { getData, postData } from '../../actions/univApi';
 
 export const CreatableInput = props => {
   const { type, name, helper, setSelectedOption, post, get = getData, someV = null, label } = props;

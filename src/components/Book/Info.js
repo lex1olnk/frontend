@@ -3,7 +3,7 @@ import Discussion from '../Discussion/Discussion';
 import { GalleryItem } from '../Gallery';
 import Rating from './Rating';
 import parse from 'html-react-parser';
-import { getBookByTranslatorId } from '../../http/bookApi';
+import { getBookByTranslatorId } from '../../actions/bookApi';
 
 const TitlesByTranslator = props => {
   const { id, translatorId } = props;

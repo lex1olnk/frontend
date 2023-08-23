@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { SimpleTable } from '../Table';
-import { getTeamsAll } from '../../http/teamApi';
+import { getTeamsAll } from '../../actions/teamApi';
 
 const TeamsPage = () => {
   const [teams, setTeams] = useState('');
   const cols = ['Команда', 'Участников', 'Работ', 'Лайков'];
+
   useEffect(() => {
     getTeamsAll().then(res => {
       setTeams(res);

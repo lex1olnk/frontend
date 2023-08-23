@@ -7,7 +7,7 @@ import {
   postBookmarkByBookId
 } from '../../http/bookApi';
 import ConvertLexical from '../../plugins/ConvertLexical';
-import { getDescString } from '../../http/univApi';
+import { getHTML } from '../../http/univApi';
 import './style.css';
 
 import Box from '@mui/material/Box';
@@ -38,7 +38,7 @@ const BookPage = () => {
   useEffect(() => {
     if (isSuccess) {
       incrementBookViews(id);
-      getDescString(`books/${data.id}/${data.id}.txt`).then(res => {
+      getHTML(`books/${data.id}/${data.id}.txt`).then(res => {
         if (res) ConvertLexical({ descString: res, setDesc });
       });
     }

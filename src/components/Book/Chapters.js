@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { getBookTomesByBookId } from '../../http/bookTomeApi';
+import { getBookTomes } from '../../actions/bookTomeApi';
 
 import { MyTable } from '../Table';
 import AddChapter from './Chapter/AddChapter';
@@ -19,7 +19,7 @@ const Chapters = ({ bookId, translatorId }) => {
     if (_user.id === translatorId) {
       setIsEditor(true);
     }
-    getBookTomesByBookId(bookId).then(res => {
+    getBookTomes(bookId).then(res => {
       setIsLoading(true);
       setBookTomes(res);
     });

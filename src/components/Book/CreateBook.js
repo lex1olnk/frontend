@@ -1,13 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import NoteViewer from '../NoteViewer';
 import UploadImage from '../UploadImage';
-import { postBook } from '../../http/bookApi';
+import { postBook } from '../../actions/bookApi';
 import { SelectedInput, CreatableInput, Label, Input } from '../Inputs/inputs';
 import { Context } from '../..';
-import { authorPost } from '../../http/authorApi';
-import { toast } from 'react-toastify';
+import { postAuthor } from '../../actions/authorApi';
 
 const CreateBook = observer(() => {
   const [formValues, setFormValues] = useState({
@@ -21,7 +19,7 @@ const CreateBook = observer(() => {
     genres: [],
     tags: [],
     fandoms: [],
-    desc: '',
+    html: '',
     translatorId: -1
   });
 
@@ -30,22 +28,17 @@ const CreateBook = observer(() => {
   const { user } = useContext(Context);
   const _user = toJS(user.user);
 
-  useEffect(() => {
-    setFormValues(prevState => ({ ...prevState, ['img']: image }));
-  }, [image]);
+  useEffect(() => setFormValues(prevState => ({ ...prevState, ['img']: image })), [image]);
 
-  useEffect(() => {
-    setFormValues(prevState => ({ ...prevState, ['translatorId']: _user.id }));
-  }, []);
+  useEffect(() => setFormValues(prevState => ({ ...prevState, ['translatorId']: _user.id })), []);
 
-  const handleChange = e => {
+  const handleChange = e =>
     setFormValues(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
-  };
+
+  const handleChangeText = value => setFormValues(prevState => ({ ...prevState, ['html']: value }));
 
   const click = async () => {
-    const res = await postBook({ ...formValues }).catch(res => {
-      toast.error(res.response.data.message);
-    });
+    const res = await postBook({ ...formValues });
   };
   console.log(_user);
   console.log(formValues);
@@ -84,7 +77,7 @@ const CreateBook = observer(() => {
                 type="author"
                 label="Автор"
                 setSelectedOption={handleChange}
-                post={authorPost}
+                post={postAuthor}
                 onSelect={true}
               />
               <SelectedInput
@@ -122,7 +115,6 @@ const CreateBook = observer(() => {
         <div className=" bg-slate-200 shadow-md h-[52px] flex">
           <span className="text-xl text-left px-8 my-auto">Описание</span>
         </div>
-        <NoteViewer setDesc={handleChange} />
       </div>
       <button
         type="button"

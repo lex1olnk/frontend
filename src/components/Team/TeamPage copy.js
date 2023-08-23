@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getTeamById } from '../../http/teamApi';
 import { useParams } from 'react-router-dom';
-import { getDescString } from '../../http/univApi';
+import { getHTML } from '../../http/univApi';
 import parse from 'html-react-parser';
 import SendInviteUser from './SendInviteUser';
 import { ToastContainer } from 'react-toastify';
@@ -21,7 +21,7 @@ const TeamPage = () => {
 
   useEffect(() => {
     if (isSuccess)
-      getDescString(`teams/${data.name}.txt`).then(res => {
+      getHTML(`teams/${data.name}.txt`).then(res => {
         if (res) ConvertLexical({ descString: res, setDesc });
       });
   }, [isSuccess]);

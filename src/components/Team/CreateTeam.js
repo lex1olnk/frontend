@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import NoteViewer from '../NoteViewer';
 import UploadImage from '../UploadImage';
 import { Label, Input } from '../Inputs/inputs';
-import { postTeam } from '../../http/teamApi';
+import { postTeam } from '../../actions/teamApi';
 import { Context } from '../..';
 import { toJS } from 'mobx';
 
@@ -77,7 +76,6 @@ const CreateTeam = () => {
               onChange={handleChange}
             />
           </div>
-          <NoteViewer setDesc={handleChange} />
         </div>
       </div>
 

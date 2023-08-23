@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { getDescString } from '../../../http/univApi';
-import ConvertLexical from '../../../plugins/ConvertLexical';
+import { getHTML } from '../../../actions/univApi';
 import parse, { domToReact } from 'html-react-parser';
 import Discussion from '../../Discussion/Discussion';
 
 import { TextOptionMenu } from './TextOptionMenu';
-import { getChapterById, postChapterComment } from '../../../http/chapterApi';
+import { getChapter, postChapterComment } from '../../../actions/chapterApi';
 import { useQuery } from 'react-query';
 import { Context } from '../../..';
 import { toJS } from 'mobx';
@@ -21,21 +20,19 @@ const ChapterPage = () => {
   const [desc, setDesc] = useState('');
 
   const { user } = useContext(Context);
+
   const _user = toJS(user.user);
 
   const { book, id } = useParams();
 
-  const { isLoading, isSuccess, error, isError, data } = useQuery(['id', id], getChapterById, {
+  const { isLoading, isSuccess, error, isError, data } = useQuery(['id', id], getChapter, {
     retry: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false
   });
 
   useEffect(() => {
-    if (isSuccess && data)
-      getDescString(`books/${book}/${id}/${id}.txt`).then(res => {
-        if (res) ConvertLexical({ descString: res, setDesc });
-      });
+    if (isSuccess && data) getHTML(`books/${book}/${id}/${id}.txt`);
   }, [isSuccess]);
 
   const onSubmit = values => {
@@ -95,6 +92,7 @@ const ChapterPage = () => {
               className="w-[840px] mx-auto pt-4"
               userId={_user.id}
               path={`books/${book}/${id}`}
+              auth={user.isAuth}
             />
           </div>
         </>
