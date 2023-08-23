@@ -1,25 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react'
 
-import Router from './components/routes/Router';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import { ToastContainer } from 'react-toastify';
+import Router from './components/routes/Router'
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
+import { ToastContainer } from 'react-toastify'
 
-import 'react-toastify/dist/ReactToastify.css';
-import { useSelector } from 'react-redux';
-import { State } from './interfaces';
-import { verifyUser } from './actions/userActions';
-import { useDispatch } from 'react-redux';
-import { useAppDispatch } from './hooks/hooks';
+import 'react-toastify/dist/ReactToastify.css'
+import { verifyUser } from './actions/userActions'
+import { useAppDispatch, useAppSelector } from './hooks/hooks'
 
 const App: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const {user} = useSelector((state: State) => state.user)
-
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(({ root }) => root.user)
+  console.log(user);
   useEffect(() => {
-    dispatch(verifyUser());
+    dispatch(verifyUser())
   }, [])
-
 
   return (
     <React.Fragment>
@@ -29,7 +25,7 @@ const App: React.FC = () => {
 
       <Footer />
       <ToastContainer
-        position="top-center"
+        position='top-center'
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -38,10 +34,10 @@ const App: React.FC = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme='light'
       />
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default App;
+export default App

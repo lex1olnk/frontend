@@ -4,18 +4,14 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 
 import { authNav, navigation } from './consts'
+import { logOut } from '../../actions/userActions'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { classNames } from '../../utils/consts'
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
+const DefaultHeader: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAppSelector(({ root }) => root.user);
 
-type HeaderProps = {
-  auth: boolean
-  logout: () => void
-}
-
-const DefaultHeader: React.FC<HeaderProps> = (props) => {
-  const { auth, logout } = props
   return (
     <Disclosure as='nav' className='bg-white z-10 border-b-rose-500'>
       {() => (
@@ -53,7 +49,7 @@ const DefaultHeader: React.FC<HeaderProps> = (props) => {
               </div>
               <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
                 {/* Adding dropdown */}
-                {auth ? (
+                {isAuthenticated ? (
                   <Menu as='div' className='relative mr-3'>
                     <div>
                       <Menu.Button className='flex focus:outline-none'>
@@ -120,7 +116,7 @@ const DefaultHeader: React.FC<HeaderProps> = (props) => {
                     leaveTo='transform opacity-0 scale-95'
                   >
                     <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                      {auth ? (
+                      {isAuthenticated ? (
                         <div>
                           <Menu.Item>
                             {({ active }) => (
@@ -152,7 +148,9 @@ const DefaultHeader: React.FC<HeaderProps> = (props) => {
                             {({ active }) => (
                               <a
                                 href='#'
-                                onClick={logout}
+                                onClick={() => {
+                                  dispatch(logOut());
+                                }}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-black-700',
@@ -238,14 +236,11 @@ const ReaderComponent: React.FC = () => {
 
 const Header: React.FC = () => {
   const validPage = new RegExp('^(/book/[0-9]/[0-9])$')
-  const logout = () => {
-    localStorage.removeItem('token')
-  }
 
   return validPage.test(window.location.pathname) ? (
     <ReaderComponent />
   ) : (
-    <DefaultHeader auth={true} logout={logout} />
+    <DefaultHeader />
   )
 }
 

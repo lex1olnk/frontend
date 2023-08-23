@@ -8,3 +8,6 @@ export const BOOK_ROUTE = '/book';
 export const TEAM_ROUTE = '/team';
 export const USER_ROUTE = '/user';
 
+export function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ')
+}

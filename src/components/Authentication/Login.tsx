@@ -1,18 +1,17 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { loginUser } from '../../actions/userActions'
-import { Input } from '../Inputs/inputs'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { useDispatch, useSelector } from 'react-redux'
-import { State } from '../../interfaces'
-import { useAppDispatch } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { formErrorOccured, removeFormError, submitForm } from '../../reducers/layoutReducer'
 import { validateEmail } from '../../helpers'
+import { useNavigate } from 'react-router-dom'
 
-export const Login = () => {
+import './styles.css'
+
+export const Login: React.FC = () => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { formErrors, formSubmitted } = useSelector((state: State) => state.layout)
-
+  const { formErrors, formSubmitted } = useAppSelector(({ root }) => root.layout)
+  const { isAuthenticated } = useAppSelector(({ root }) => root.user)
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -22,8 +21,6 @@ export const Login = () => {
     email: false,
     password: false,
   })
-
-  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -72,6 +69,12 @@ export const Login = () => {
     dispatch(loginUser(formValues))
   }
 
+  useEffect(() => {
+    if (isAuthenticated) navigate('/')
+  }, [isAuthenticated])
+
+  const { email, password } = formValues
+
   return (
     <div className='bg-slate-100 min-h-[calc(100vh_-_65px_-_148px)] flex flex-row justify-center'>
       <div className='text-center justify-centerw-[333px] h-[400px] rounded-md my-auto mx-2 bg-cred flex flex-col p-4 text-white'>
@@ -82,12 +85,31 @@ export const Login = () => {
         <span className='my-2'>Добро пожаловать к нам!</span>
         <span>Чувствуйте себя как дома.</span>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className='bg-white flex flex-col my-auto justify-center h-[400px] rounded-md p-4'>
+      <form onSubmit={handleSubmit} className='bg-white my-auto h-[400px] rounded-md p-4'>
+        <div className='flex flex-col justify-center my-auto'>
           <span className='text-xl text-center'>Авторизация</span>
           <div className='flex flex-col mx-auto w-[364px]'></div>
           <a className='text-right'>забыли пароль?</a>
+          <input
+            className={'input'}
+            value={email}
+            onChange={handleChange}
+            onBlur={(e) => handleValidation(e.target.name)}
+            type='text'
+            name='email'
+            placeholder='Email'
+          />
+          <input
+            className={'input'}
+            value={password}
+            onChange={handleChange}
+            onBlur={(e) => handleValidation(e.target.name)}
+            type='password'
+            name='password'
+            placeholder='Пароль'
+          />
           <button
+            disabled={!validInputs.email || !validInputs.password || formSubmitted}
             type='submit'
             className='text-white w-28 mx-auto my-4 outline-none bg-cred h-9 rounded-full'
           >

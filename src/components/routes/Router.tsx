@@ -21,14 +21,13 @@ import { Login } from '../Authentication/Login';
 // import TeamPage from '../Team/TeamPage.tsx';
 // import AddChapterText from '../Book/Chapter/AddChapterText';
 import Layout from '../Layout/Layout';
-import ProfilePage from '../Profile/ProfilePage';
 
 const Router: React.FC = () => {
   return (
     <Routes>
       {/* <Route path={REGISTRATION_ROUTE} element={<AuthPage />} />; */}
       <Route path={LOGIN_ROUTE} element={<Login />} />;
-      <Route path={'user/:id'} element={<ProfilePage />} />;
+      {/* <Route path={'user/:id'} element={<ProfilePage />} />; */}
       {/* <Route path={TEAM_ROUTE}>
         <Route path={':id'} element={<TeamPage />} />;
         <Route

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { registrateUser } from '../../actions/userActions';
 import { useNavigate } from 'react-router-dom';
-import { Input } from '../Inputs/inputs';
 import UploadImage from '../UploadImage';
-import { register } from '../../reducers/userReducer';
 import { useAppDispatch } from '../../hooks/hooks';
 
 const names = [
@@ -37,8 +35,6 @@ export const AuthPage: React.FC = () => {
   useEffect(() => {
     setFormValues(prevState => ({ ...prevState, ['img']: image }));
   }, [image]);
-
-  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
