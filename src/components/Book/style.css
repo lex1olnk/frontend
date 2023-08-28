@@ -1,0 +1,7 @@
+.bookHeadButtons {
+  @apply flex flex-row;
+}
+
+.bookHeadButtons button {
+  @apply w-36 h-10 last:ml-4 bg-cred;
+}

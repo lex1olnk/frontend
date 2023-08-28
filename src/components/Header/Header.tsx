@@ -4,9 +4,9 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 
 import { authNav, navigation } from './consts'
-import { logOut } from '../../actions/userActions'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { classNames } from '../../utils/consts'
+import { logout } from '../../reducers/userReducer'
 
 const DefaultHeader: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -149,7 +149,7 @@ const DefaultHeader: React.FC = () => {
                               <a
                                 href='#'
                                 onClick={() => {
-                                  dispatch(logOut());
+                                  dispatch(logout());
                                 }}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',

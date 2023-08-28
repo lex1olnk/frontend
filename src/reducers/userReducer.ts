@@ -1,3 +1,4 @@
+import { loginUser, verifyUser } from '../actions/userActions'
 import { UserState, User, Token } from '../interfaces/user'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -30,19 +31,8 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     register() {},
-    login(state, action) {
-      localStorage.setItem('user', JSON.stringify(action.payload.user))
-      localStorage.setItem('token', JSON.stringify(action.payload.token))
-      state.user = action.payload.user
-      state.token = action.payload.token
-      state.isAuthenticated = true
-    },
-    verify(state) {
-      const user = JSON.parse(localStorage.getItem('user') + '')
-      const token = JSON.parse(localStorage.getItem('token') + '')
-      state.user = user
-      state.token = token
-    },
+    login() {},
+    verify() {},
     logout(state) {
       localStorage.removeItem('user')
       localStorage.removeItem('token')
@@ -59,6 +49,22 @@ const userSlice = createSlice({
         iat: 0,
       }
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.fulfilled, (state, action) => {
+        localStorage.setItem('user', JSON.stringify(action.payload.user))
+        localStorage.setItem('token', JSON.stringify(action.payload.token))
+        state.user = action.payload.user
+        state.token = action.payload.token
+        state.isAuthenticated = true
+      })
+      .addCase(verifyUser.fulfilled, (state) => {
+        const user = JSON.parse(localStorage.getItem('user') + '')
+        const token = JSON.parse(localStorage.getItem('token') + '')
+        state.user = user
+        state.token = token
+      })
   },
 })
 

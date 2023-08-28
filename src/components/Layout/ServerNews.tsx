@@ -1,4 +1,4 @@
-export const ServerNews = props => {
+export const ServerNews = () => {
   return (
     <div className="w-full h-[260px] bg-white p-3 mb-4">
       <span className="text-lg">Новости</span>

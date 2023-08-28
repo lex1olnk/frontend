@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { registrateUser } from '../../actions/userActions';
+import { registerUser } from '../../actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import UploadImage from '../UploadImage';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -23,12 +23,12 @@ export const AuthPage: React.FC = () => {
     sex: 0
   });
 
-  const [validInputs, setValidInputs] = useState({
-    username: false,
-    email: false,
-    password: false,
-    repassword: false,
-})
+  // const [validInputs, setValidInputs] = useState({
+  //   username: false,
+  //   email: false,
+  //   password: false,
+  //   repassword: false,
+  // })
 
   const [image, setImage] = useState('');
 
@@ -46,7 +46,7 @@ export const AuthPage: React.FC = () => {
     e.preventDefault()
 
     console.log(formValues);
-    dispatch(registrateUser(formValues))
+    dispatch(registerUser(formValues))
   };
 
   return (
@@ -108,9 +108,7 @@ export const AuthPage: React.FC = () => {
             </div>
           </div> */}
           <button
-            type="submit"  disabled={
-              !validInputs.username || !validInputs.email || !validInputs.password || !validInputs.repassword
-            }
+            type="submit"
             className="text-white w-36 mx-auto bg-cred hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
             Создать
           </button>

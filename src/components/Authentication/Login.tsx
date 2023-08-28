@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { loginUser } from '../../actions/userActions'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
-import { formErrorOccured, removeFormError, submitForm } from '../../reducers/layoutReducer'
-import { validateEmail } from '../../helpers'
+import { removeFormError, submitForm } from '../../reducers/layoutReducer'
+// import { validateEmail } from '../../helpers'
 import { useNavigate } from 'react-router-dom'
 
 import './styles.css'
+import { classNames } from '../../utils/consts'
 
 export const Login: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { formErrors, formSubmitted } = useAppSelector(({ root }) => root.layout)
+  const { formErrors } = useAppSelector(({ root }) => root.layout)
   const { isAuthenticated } = useAppSelector(({ root }) => root.user)
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
   })
 
-  const [validInputs, setValidInputs] = useState({
-    email: false,
-    password: false,
-  })
+  // const [validInputs, setValidInputs] = useState({
+  //   email: false,
+  //   password: false,
+  // })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -33,34 +34,34 @@ export const Login: React.FC = () => {
     }
   }
 
-  const handleValidation = (inputName: string) => {
-    switch (inputName) {
-      case 'email':
-        if (formValues.email === '') {
-          setValidInputs({ ...validInputs, [inputName]: false })
-          dispatch(formErrorOccured({ inputName, error: 'Email is required' }))
-        } else if (!validateEmail(formValues.email)) {
-          setValidInputs({ ...validInputs, [inputName]: false })
-          dispatch(formErrorOccured({ inputName, error: 'Please enter a valid email' }))
-        } else {
-          setValidInputs({ ...validInputs, [inputName]: true })
-        }
-        break
-      case 'password':
-        if (formValues.password === '') {
-          setValidInputs({ ...validInputs, [inputName]: false })
-          dispatch(formErrorOccured({ inputName, error: 'Password is required' }))
-        } else if (formValues.password.length < 6) {
-          setValidInputs({ ...validInputs, [inputName]: false })
-          dispatch(formErrorOccured({ inputName, error: 'Password must be at least 6 characters' }))
-        } else {
-          setValidInputs({ ...validInputs, [inputName]: true })
-        }
-        break
-      default:
-        break
-    }
-  }
+  // const handleValidation = (inputName: string) => {
+  //   switch (inputName) {
+  //     case 'email':
+  //       if (formValues.email === '') {
+  //         setValidInputs({ ...validInputs, [inputName]: false })
+  //         dispatch(formErrorOccured({ inputName, error: 'Email is required' }))
+  //       } else if (!validateEmail(formValues.email)) {
+  //         setValidInputs({ ...validInputs, [inputName]: false })
+  //         dispatch(formErrorOccured({ inputName, error: 'Please enter a valid email' }))
+  //       } else {
+  //         setValidInputs({ ...validInputs, [inputName]: true })
+  //       }
+  //       break
+  //     case 'password':
+  //       if (formValues.password === '') {
+  //         setValidInputs({ ...validInputs, [inputName]: false })
+  //         dispatch(formErrorOccured({ inputName, error: 'Password is required' }))
+  //       } else if (formValues.password.length < 6) {
+  //         setValidInputs({ ...validInputs, [inputName]: false })
+  //         dispatch(formErrorOccured({ inputName, error: 'Password must be at least 6 characters' }))
+  //       } else {
+  //         setValidInputs({ ...validInputs, [inputName]: true })
+  //       }
+  //       break
+  //     default:
+  //       break
+  //   }
+  // }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -91,10 +92,12 @@ export const Login: React.FC = () => {
           <div className='flex flex-col mx-auto w-[364px]'></div>
           <a className='text-right'>забыли пароль?</a>
           <input
-            className={'input'}
+            className={classNames(
+              'input'
+            )}
             value={email}
             onChange={handleChange}
-            onBlur={(e) => handleValidation(e.target.name)}
+            // onBlur={(e) => handleValidation(e.target.name)}
             type='text'
             name='email'
             placeholder='Email'
@@ -103,13 +106,13 @@ export const Login: React.FC = () => {
             className={'input'}
             value={password}
             onChange={handleChange}
-            onBlur={(e) => handleValidation(e.target.name)}
+            // onBlur={(e) => handleValidation(e.target.name)}
             type='password'
             name='password'
             placeholder='Пароль'
           />
           <button
-            disabled={!validInputs.email || !validInputs.password || formSubmitted}
+            // disabled={!validInputs.email || !validInputs.password || formSubmitted}
             type='submit'
             className='text-white w-28 mx-auto my-4 outline-none bg-cred h-9 rounded-full'
           >

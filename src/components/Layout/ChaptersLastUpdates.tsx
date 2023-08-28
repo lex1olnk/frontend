@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { GalleryItem } from '../Gallery'
-import { getBookLastUpdates } from '../../actions/bookApi'
+import { getBookLastUpdates } from '../../actions/bookAction'
 import { useNavigate } from 'react-router-dom'
 import { Book } from '../../interfaces/book'
 import { Link } from 'react-router-dom'

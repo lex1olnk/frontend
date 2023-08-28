@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import { GalleryItem } from '../Gallery';
-import { getBookMostPopular } from '../../actions/bookApi';
+import { getBookMostPopular } from '../../actions/bookAction';
 
 const responsive = {
   360: { items: 2 },

@@ -12,7 +12,7 @@ const TABLE_HEAD = [
   { value: 'Обновлено', style: '' }
 ];
 
-const Td = props => {
+const Td = (props: any) => {
   const { value, textAlign = 'center', onClick, className, key, href } = props;
   return (
     <td
@@ -24,7 +24,7 @@ const Td = props => {
   );
 };
 
-const Tbody = props => {
+const Tbody = (props: any) => {
   const { cols, rows, rowNames, isEditor, bookId } = props;
   const [active, setActive] = useState(false);
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Tbody = props => {
 
   return (
     <tbody className="divide-gray-200 border-b-2" key={cols.id}>
-      {rows.map(row => {
+      {rows.map((row: any) => {
         const rowTime = new Date(row.updatedAt);
         const time =
           rowTime.getDate() + '.' + (rowTime.getMonth() + 1) + '.' + rowTime.getFullYear();
@@ -47,7 +47,7 @@ const Tbody = props => {
                 className="flex m-auto w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
               />
             </td>
-            {rowNames.map(name =>
+            {rowNames.map((name: any) =>
               name !== 'edit' ? (
                 <Td
                   value={row[name]}
@@ -76,9 +76,9 @@ const Tbody = props => {
   );
 };
 
-export const MyTable = props => {
+export const MyTable = (props: any) => {
   const { isEditor = true, setIsEditor, cols, rowName, bookId } = props;
-  if (!cols) return;
+  if (!cols) return null;
   return (
     <div className="flex flex-col max-w-full mx-auto">
       <table className="min-w-full  divide-gray-200">
@@ -95,7 +95,7 @@ export const MyTable = props => {
             ))}
           </tr>
         </thead>
-        {cols.map(col => (
+        {cols.map((col: any) => (
           <Tbody
             cols={col}
             rows={col[rowName]}
@@ -109,16 +109,16 @@ export const MyTable = props => {
   );
 };
 
-export const SimpleTable = props => {
+export const SimpleTable = (props: any) => {
   const { cols, rows } = props;
   console.log(rows);
-  if (!rows) return;
+  if (!rows) return null;
   return (
     <div className="flex flex-col max-w-5xl mx-auto">
       <table className="min-w-full  divide-gray-200">
         <thead>
           <tr>
-            {cols.map((item, index) => (
+            {cols.map((item: any, index: number) => (
               <th
                 key={item}
                 scope="col"
@@ -130,7 +130,7 @@ export const SimpleTable = props => {
           </tr>
         </thead>
         <tbody>
-          {rows.map(row => (
+          {rows.map((row: any) => (
             <tr key={row.name} className="h-12 text-center">
               <td className="flex flex-row my-auto py-2">
                 <img

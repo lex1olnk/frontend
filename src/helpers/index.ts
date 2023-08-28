@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
 const authorization =  `Bearer ${localStorage.getItem('token')}`;
 
