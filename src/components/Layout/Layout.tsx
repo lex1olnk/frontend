@@ -3,11 +3,11 @@ import React from 'react'
 
 import '../../styles/styles.css'
 import { Gallery } from '../Gallery'
-// import { ChaptersLastUpdates } from './ChaptersLastUpdates';
+import { ChaptersLastUpdates } from './ChaptersLastUpdates';
 import { TopTitles } from './NavBar.js/TopTitles'
 import { Announcements } from './Announcements'
 import { ServerNews } from './ServerNews'
-// import { MostPopularTitles } from './MostPopularTitles';
+import { MostPopularTitles } from './MostPopularTitles';
 
 const hideText = (value: string, maxlimit: number) => {
   return value.length > maxlimit ? value.substring(0, maxlimit - 3) + '...' : value
@@ -86,10 +86,9 @@ const Layout: React.FC = () => {
       <Gallery data={data} />
       <div className='flex flex-row mx-auto max-w-[1245px] justify-between'>
         <div className='w-[866px]'>
-          {/* <MostPopularTitles />
-          <MostPopularTitles /> */}
+          <MostPopularTitles />
           <Announcements hideText={hideText} />
-          {/* <ChaptersLastUpdates hideText={hideText} /> */}
+          <ChaptersLastUpdates hideText={hideText} />
         </div>
         <div className=' w-[362px] h-16'>
           <ServerNews />

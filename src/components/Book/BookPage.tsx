@@ -40,7 +40,7 @@ const bookDescs = [
   },
 ]
 
-const BookPage = () => {
+const BookPage: React.FC = () => {
   const [desc, setDesc] = useState('')
   const [value, setValue] = useState('1')
   const navigate = useNavigate()

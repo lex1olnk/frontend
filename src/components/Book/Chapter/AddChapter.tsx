@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CreatableInput, Input, SelectedInput } from '../../../../../components/Inputs/inputs';
+import { CreatableInput, Input, SelectedInput } from '../../Inputs/inputs'
 import { postBookTome, getBookTomes } from '../../../actions/bookTomeApi';
 import { postChapter } from '../../../actions/chapterApi';
 import { toast } from 'react-toastify';
 
-const AddChapter = props => {
+type AddChapterProps = {
+  setUpdated: (value: boolean) => void
+  onClick: (value: boolean) => void
+  bookId: number
+  translatorId: number
+}
+
+const AddChapter: React.FC<AddChapterProps> = props => {
   const { setUpdated, onClick, bookId, translatorId } = props;
   const [chapter, setChapter] = useState({
     name: '',
@@ -25,21 +32,11 @@ const AddChapter = props => {
     }));
   }, []);
 
-  const handleChange = e => {
-    setChapter(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
 
-  const click = async () => {
-    console.log(chapter);
-    const res = await postChapter({ ...chapter })
-      .then(() => {
-        setUpdated(currentState => !currentState);
-        onClick(currentState => !currentState);
-      })
-      .catch(error => {
-        toast.error(error.response.data.message);
-      });
-  };
+    setChapter((prevState) => ({ ...prevState, [name]: value }))
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backgrop-blue-sm flex justify-center items-center">
@@ -95,7 +92,6 @@ const AddChapter = props => {
         <div className="flex flex-row justify-between">
           <button
             type="button"
-            onClick={click}
             className="text-white w-36 mx-auto bg-cred hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2  focus:outline-none dark:focus:ring-blue-800">
             Добавить
           </button>

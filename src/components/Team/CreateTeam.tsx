@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UploadImage from '../UploadImage';
-import { Label, Input } from '../../../../components/Inputs/inputs';
+import { Label, Input } from '../Inputs/inputs';
 import { postTeam } from '../../actions/teamActions';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 

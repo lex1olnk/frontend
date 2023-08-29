@@ -1,15 +1,24 @@
 import { useState } from 'react';
 
-import Logo from '../../../icons/logo.png';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export const TextOptionMenu = props => {
+type TextOptionMenuProps = {
+  setTextSize: (value: number) => any
+  setLineHeight: (value: number) => any
+  setWidth: (value: number) => any
+  setParagraphMargin: (value: number) => any
+  setTextColor: (value: string) => any
+  setBgColor: (value: string) => any
+  bgColor: string
+  textColor: string
+}
+
+export const TextOptionMenu: React.FC<TextOptionMenuProps> = props => {
   const {
     setTextSize,
     setLineHeight,
@@ -58,14 +67,14 @@ export const TextOptionMenu = props => {
         textColor
       }>
       <a className="my-auto" href="/">
-        <img className="h-8 w-auto ml-4" src={Logo} alt="Your Company" />
+        <img className="h-8 w-auto ml-4" alt="Your Company" />
       </a>
       <div className="w-[840px] mx-auto flex">
         <span className="my-auto">Текущая глава</span>
       </div>
       <div className="my-auto mr-4 flex flex-row transition-all duration-300">
         <div className="z-20">
-          {isOpen ? (
+          {/* {isOpen ? (
             <XMarkIcon
               onClick={() => setIsOpen(cur => !cur)}
               className="block h-6 w-6"
@@ -77,7 +86,7 @@ export const TextOptionMenu = props => {
               className="block h-6 w-6"
               aria-hidden="true"
             />
-          )}
+          )} */}
         </div>
         <div
           className={classNames(

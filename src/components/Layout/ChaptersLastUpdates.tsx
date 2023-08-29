@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
-import { GalleryItem } from '../Gallery'
+import React, { useState, useEffect } from 'react'
 import { getBookLastUpdates } from '../../actions/bookAction'
-import { useNavigate } from 'react-router-dom'
-import { Book } from '../../interfaces/book'
 import { Link } from 'react-router-dom'
+import { Book } from '../../interfaces/book'
 
 type ComponentProps = {
   hideText: (value: string, maxlimit: number) => string
@@ -15,15 +13,13 @@ export const ChaptersLastUpdates: React.FC<ComponentProps> = ({ hideText }) => {
   const asd = 'block aspect-3/4 sm:h-36 rounded-md'
   const pageNum = 1
 
-  const navigate = useNavigate()
-
   useEffect(() => {
     getBookLastUpdates(10, pageNum).then((res) => {
       setbooks(res)
     })
   }, [])
 
-  if (!books) return null;
+  if (!books) return null
 
   console.log(books)
 
@@ -47,19 +43,17 @@ export const ChaptersLastUpdates: React.FC<ComponentProps> = ({ hideText }) => {
                 </a>
                 <div className='pl-3 grid grid-cols-1 grid-rows-5 w-full'>
                   <div>
-                    <button
-                      onClick={() => navigate(`book/${book.id}`)}
-                      className='text-base my-auto lineUnderWord before:duration-700'
-                    >
-                      {hideText(book.name, 80)}
-                    </button>
+                    <Link to={`book/${book.id}`}>
+                      <button className='text-base my-auto lineUnderWord before:duration-700'>
+                        {' '}
+                        {hideText(book.name, 80)}
+                      </button>
+                    </Link>
                   </div>
-                  <button
-                    onClick={() => navigate(`book/${book.id}`)}
-                    className='text-sm text-left my-auto'
-                  >
-                    {hideText(book.originalName, 96)}
-                  </button>
+                  <Link to={`book/${book.id}`}>
+                    <a className='text-sm text-left my-auto'>{hideText(book.originalName, 96)}</a>
+                  </Link>
+
                   {book.chapters && (
                     <Link to={`/book/${book.id}/${book?.chapters[0].id}`}>
                       <a className='flex flex-row justify-between border-t-2'>

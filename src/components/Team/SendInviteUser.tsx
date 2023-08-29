@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { SelectedInput } from '../../../../components/Inputs/inputs'
+import { SelectedInput } from '../Inputs/inputs'
 import { sendTeamRequest } from '../../actions/teamActions'
 
 type SendInviteUserProps = {

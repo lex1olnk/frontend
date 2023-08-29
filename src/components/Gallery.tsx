@@ -3,7 +3,7 @@ import AliceCarousel from 'react-alice-carousel'
 
 import 'react-alice-carousel/lib/alice-carousel.css'
 
-import Star from '../icons/ratingStar.svg'
+// import Star from '../icons/ratingStar.svg'
 
 const hideText = (value: string, maxlimit: number) => {
   return value.length > maxlimit ? value.substring(0, maxlimit - 3) + '...' : value
@@ -41,7 +41,7 @@ const GalleryItem: React.FC<GalleryItemProps> = (props) => {
       <div className='galleryItemLink'>
         {rating && (
           <div className={ratingStyle}>
-            <Star className='my-auto mr-1' />
+            {/* <Star className='my-auto mr-1' /> */}
             {rating}
           </div>
         )}

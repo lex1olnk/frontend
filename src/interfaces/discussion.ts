@@ -1,11 +1,11 @@
-interface Discussion {
+export interface Discussion {
   id: number
   comments: Comment[]
   createdAt?: string
   updatedAt: string
 }
 
-interface Comment {
+export interface Comment {
   id: number
   value: string
   userId: number

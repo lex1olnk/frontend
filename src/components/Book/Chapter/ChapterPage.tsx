@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { getHTML } from '../../../actions/univAction';
-import parse, { domToReact } from 'html-react-parser';
-import Discussion from '../../Discussion/Discussion';
 
 import { TextOptionMenu } from './TextOptionMenu';
 import { getChapter, postChapterComment } from '../../../actions/chapterApi';
 import { useQuery } from 'react-query';
-import { Context } from '../../..';
-import { toJS } from 'mobx';
 
 const ChapterPage = () => {
   const [textColor, setTextColor] = useState('text-black');
@@ -19,13 +15,9 @@ const ChapterPage = () => {
   const [paragraphMargin, setParagraphMargin] = useState(2);
   const [desc, setDesc] = useState('');
 
-  const { user } = useContext(Context);
-
-  const _user = toJS(user.user);
-
   const { book, id } = useParams();
 
-  const { isLoading, isSuccess, error, isError, data } = useQuery(['id', id], getChapter, {
+  const { isLoading, isSuccess, error, isError, data } = useQuery<any, any>(['id', id], getChapter, {
     retry: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false
@@ -35,24 +27,7 @@ const ChapterPage = () => {
     if (isSuccess && data) getHTML(`books/${book}/${id}/${id}.txt`);
   }, [isSuccess]);
 
-  const onSubmit = values => {
-    postChapterComment(values);
-  };
-
   console.log(data);
-
-  const options = {
-    replace: ({ name, children }) => {
-      if (!name) return;
-      if (name == 'p') {
-        return (
-          <p style={{ marginTop: paragraphMargin, marginBottom: paragraphMargin }}>
-            {domToReact(children, options)}
-          </p>
-        );
-      }
-    }
-  };
 
   return (
     <>
@@ -81,19 +56,9 @@ const ChapterPage = () => {
                   fontSize: textSize,
                   lineHeight: lineHeight
                 }}>
-                {desc && parse(desc, options)}
                 {!desc && <div>Глава еще не загружена</div>}
               </div>
             </div>
-            <Discussion
-              onSubmit={onSubmit}
-              id={id}
-              discussionId={data.discussionId}
-              className="w-[840px] mx-auto pt-4"
-              userId={_user.id}
-              path={`books/${book}/${id}`}
-              auth={user.isAuth}
-            />
           </div>
         </>
       )}

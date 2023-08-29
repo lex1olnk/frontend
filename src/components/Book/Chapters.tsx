@@ -54,7 +54,6 @@ export const Chapters: React.FC<ChaptersProps> = ({ bookId, translatorId }) => {
         <AddChapter
           translatorId={translatorId}
           setUpdated={setUpdated}
-          isVisible={isVisible}
           onClick={setIsVisible}
           bookId={bookId}
         />

@@ -2,7 +2,6 @@ export interface BookState {
   book: Book
   books: Book[]
   chapters?: Chapter[] | undefined
-  discussion?: Discussion | undefined
   isLoading: boolean
 }
 

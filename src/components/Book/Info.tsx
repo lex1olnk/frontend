@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Discussion from '../Discussion/Discussion';
 import { GalleryItem } from '../Gallery';
 import { getBookByTranslatorId } from '../../actions/bookAction';
 
@@ -41,7 +40,6 @@ export const Info = (props: any) => {
       </div>
       <div className="w-full h-[0.1rem] bg-slate-200 rounded-md mx-auto my-4"></div>
       <TitlesByTranslator id={book.id} translatorId={book.translator.id} />
-      <Discussion classN="w-[880px] mx-auto" id={book.discussionId} />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import UploadImage from '../UploadImage'
 import { postBook } from '../../actions/bookAction'
-import { SelectedInput, CreatableInput, Label, Input } from '../../../../components/Inputs/inputs'
+import { SelectedInput, CreatableInput, Label, Input } from '../Inputs/inputs'
 import { postAuthor } from '../../actions/authorApi'
 import { Author } from '../../interfaces/book'
 import { useAppDispatch } from '../../hooks/hooks'

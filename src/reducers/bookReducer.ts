@@ -1,5 +1,4 @@
 import { getBook } from '../actions/bookAction'
-import { getDisccusion } from '../actions/discussionApi'
 import { BookState } from '../interfaces/book'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -13,7 +12,6 @@ const initialState: BookState = {
     createdAt: '',
   },
   books: [],
-  discussion: undefined,
   chapters: undefined,
   isLoading: true
 }
@@ -28,9 +26,6 @@ const BookSlice = createSlice({
       .addCase(getBook.fulfilled, (state, action) => {
         state.book = action.payload.data
         state.isLoading = false
-      })
-      .addCase(getDisccusion.fulfilled, (state, action) => {
-        state.discussion = action.payload.data
       })
   }
 })
