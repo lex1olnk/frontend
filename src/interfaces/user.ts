@@ -1,7 +1,6 @@
 export interface UserState {
     isAuthenticated: boolean;
     user: User;
-    token: Token;
 }
 
 export interface User{

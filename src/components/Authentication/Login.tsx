@@ -14,7 +14,7 @@ export const Login: React.FC = () => {
   const { formErrors } = useAppSelector(({ root }) => root.layout)
   const { isAuthenticated } = useAppSelector(({ root }) => root.user)
   const [formValues, setFormValues] = useState({
-    email: '',
+    login: '',
     password: '',
   })
 
@@ -27,7 +27,7 @@ export const Login: React.FC = () => {
     const { name, value } = e.target
     setFormValues((prevState) => ({ ...prevState, [name]: value }))
 
-    if (name === 'email' || name === 'password') {
+    if (name === 'login' || name === 'password') {
       if (formErrors[name].errorOccured) {
         dispatch(removeFormError({ name }))
       }
@@ -74,7 +74,7 @@ export const Login: React.FC = () => {
     if (isAuthenticated) navigate('/')
   }, [isAuthenticated])
 
-  const { email, password } = formValues
+  const { login, password } = formValues
 
   return (
     <div className='bg-slate-100 min-h-[calc(100vh_-_65px_-_148px)] flex flex-row justify-center'>
@@ -95,11 +95,11 @@ export const Login: React.FC = () => {
             className={classNames(
               'input'
             )}
-            value={email}
+            value={login}
             onChange={handleChange}
             // onBlur={(e) => handleValidation(e.target.name)}
             type='text'
-            name='email'
+            name='login'
             placeholder='Email'
           />
           <input

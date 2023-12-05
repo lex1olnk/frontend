@@ -2,7 +2,7 @@ import { $host, getAxiosBody, getContentJsonType } from '../helpers'
 import { login } from '../reducers/userReducer'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-export const registerUser = createAsyncThunk('users/registerUser', async (formValues: object) => {
+export const registerUser = createAsyncThunk('users/registerUser', async (formValues: any) => {
   const contentType = getContentJsonType()
   const body = getAxiosBody(formValues)
 
@@ -13,22 +13,18 @@ export const registerUser = createAsyncThunk('users/registerUser', async (formVa
   return res.data
 })
 
-export const loginUser = createAsyncThunk('users/loginUser', async (formValues: Object) => {
+export const loginUser = createAsyncThunk('loginUser', async (formValues: any) => {
   const contentType = getContentJsonType()
-  const body = getAxiosBody(formValues)
-
-  const res = await $host.post('user/login', body, { ...contentType, withCredentials: true })
-  localStorage.setItem('token', res.data.token)
-  return res.data
+  
+  const { data } = await $host.post('login', formValues)
+  console.log(data)
+  return data;
 })
 
 export const verifyUser = createAsyncThunk('users/verify', async () => {
-  if (localStorage.getItem('token')) {
-    const res = await $host.get('/user/auth', { withCredentials: true })
-    login(res.data)
-    if (res.data.success) {
-      localStorage.setItem('token', res.data.token)
-    }
+  if (!localStorage.getItem('user')) {
+    const { data } = await $host.get('/context')
+    login(data)
   }
 })
 

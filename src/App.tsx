@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from './hooks/hooks'
 const App: React.FC = () => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(({ root }) => root.user)
-  console.log(user);
+
   useEffect(() => {
     dispatch(verifyUser())
   }, [])

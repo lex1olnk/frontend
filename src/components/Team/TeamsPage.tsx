@@ -8,9 +8,9 @@ const TeamsPage = () => {
   const { teams } = useAppSelector(({ root }) => root.teams);
   const cols = ['Команда', 'Участников', 'Работ', 'Лайков'];
 
-  useEffect(() => {
-    dispatch(getTeamsAll());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getTeamsAll());
+  // }, []);
 
   return (
     <div className="bg-slate-100 pt-2 min-h-[calc(100vh_-_65px_-_148px)]">
@@ -19,7 +19,7 @@ const TeamsPage = () => {
       </div>
       <div className="flex flex-row justify-between mx-auto max-w-[1144px]">
         <div className="bg-white w-[800px] h-full rounded-lg p-4">
-          <SimpleTable cols={cols} rows={teams} />
+          <SimpleTable cols={cols} rows={teams} loading={true} />
         </div>
         <div className="bg-white w-[332px] h-32 rounded-lg p-4">ss</div>
       </div>

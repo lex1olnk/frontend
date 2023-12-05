@@ -1,8 +1,10 @@
+import { Book } from "./book";
+
 export interface ProfileState{
     profile: Profile;
     notifications: Notification[];
     currentProfile: Profile;
-    isLoading: boolean;
+    currentBooks: Book[];
 }
 
 export interface ProfilePayload{

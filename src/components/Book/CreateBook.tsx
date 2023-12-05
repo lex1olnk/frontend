@@ -5,6 +5,7 @@ import { SelectedInput, CreatableInput, Label, Input } from '../Inputs/inputs'
 import { postAuthor } from '../../actions/authorApi'
 import { Author } from '../../interfaces/book'
 import { useAppDispatch } from '../../hooks/hooks'
+import QuillComponent from '../QuillComponent'
 
 type BookFormValues = {
   name: string
@@ -12,22 +13,22 @@ type BookFormValues = {
   originalLink: string
   src: string
   year: number
-  author: JSON
-  language: JSON
-  genres: Array<JSON>
-  tags: Array<JSON>
-  fandoms: Array<JSON>
+  author: {}
+  language: {}
+  genres: Array<{}>
+  tags: Array<{}>
+  fandoms: Array<{}>
   html: string
-  img: File
+  img?: File | undefined
 }
 
-const CreateBook = () => {
+const CreateBook: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const [formValues, setFormValues] = useState({
     name: '',
-    origName: '',
-    origLink: '',
+    originalName: '',
+    originalLink: '',
     src: '',
     year: 0,
     author: {},
@@ -62,51 +63,55 @@ const CreateBook = () => {
   return (
     <div className='bg-slate-50'>
       <div className='flex flex-row w-full justify-center'>
-        <div className='shadow-md text-center w-[333px] h-[600px] rounded-md mx-2 bg-white flex flex-col'>
+        <div className='shadow-md w-[308px] h-[628px] rounded-md mx-2 bg-white flex flex-col'>
           <div className='w-full bg-slate-200 h-[52px] flex'>
             <span className='text-xl text-left px-8 my-auto'>Лого</span>
           </div>
-          <div className='px-8 mt-8'>
+          <div className='px-8 mt-8 [&>div]:my-1'>
             <UploadImage
-              className='mx-auto h-[320px] w-[240px]'
+              className='mx-auto h-[271px] w-full'
               value={formValues.img}
               onChange={setImage}
             />
-            <p className='my-3'>JPG или PNG не больше 5 мб</p>
-            <p>
-              Нажмите на <b>квадрат</b>, чтобы добавить изображение
-            </p>
+            <Input title='Год выпуска' name='year' onChange={handleChange} className="pt-[1rem]" />
+            {/* <SelectedInput
+              className="pt-2"
+              label='Язык оригинала'
+              name='language'
+              type='language'
+              setSelectedOption={handleChange}
+              isMulti={false}
+              onSelect={true}
+            />
+            <SelectedInput
+              className="pt-3"
+              label='Категория'
+              name='language'
+              type='language'
+              setSelectedOption={handleChange}
+              isMulti={false}
+              onSelect={true}
+            /> */}
           </div>
         </div>
-        <div className='w-[720px] h-[800px] bg-white shadow-md'>
+        <div className='w-[685px] h-[628px] bg-white shadow-md'>
           <div className='w-full bg-slate-200 h-[52px] flex'>
             <span className='text-xl text-left px-8 my-auto'>Информация о тайтле</span>
           </div>
           <form onSubmit={handleSubmit}>
-            <div className='px-8 mt-4'>
+            <div className='px-6 mt-4 [&>div]:py-1'>
               <Input title='Название тайтла' name='name' onChange={handleChange} />
               <Input title='Оригинальное название' name='origName' onChange={handleChange} />
               <Input title='Ссылка на первоисточник' name='src' onChange={handleChange} />
-              <Input title='Год выпуска' name='year' onChange={handleChange} />
-              <div className='flex flex-row justify-between align-middle [&>div]:w-[320px]'>
-                <CreatableInput
-                  name='author'
-                  type='author'
-                  label='Автор'
-                  setSelectedOption={handleChange}
-                  post={postAuthor}
-                  onSelect={true}
-                />
-                <SelectedInput
-                  label='Язык оригинала'
-                  name='language'
-                  type='language'
-                  setSelectedOption={handleChange}
-                  isMulti={false}
-                  onSelect={true}
-                />
-              </div>
-              <SelectedInput
+              <CreatableInput
+                name='author'
+                type='authors'
+                label='Автор'
+                setSelectedOption={handleChange}
+                post={postAuthor}
+                onSelect={true}
+              />
+              {/* <SelectedInput
                 label='Жанры'
                 name='genres'
                 type='genre'
@@ -124,7 +129,7 @@ const CreateBook = () => {
                 name='tags'
                 type='fandom'
                 setSelectedOption={handleChange}
-              />
+              /> */}
             </div>
           </form>
         </div>
@@ -132,8 +137,8 @@ const CreateBook = () => {
       <div className='block mx-auto w-[996px] mt-4'>
         <div className=' bg-slate-200 shadow-md h-[52px] flex'>
           <span className='text-xl text-left px-8 my-auto'>Описание</span>
-        
         </div>
+        <QuillComponent />
       </div>
       <button
         type='submit'

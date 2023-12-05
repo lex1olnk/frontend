@@ -1,16 +1,23 @@
-import { toast } from "react-toastify";
-import { $host } from "../helpers";
-import { fetchProfile } from "../reducers/profileReducer";
-import { Dispatch } from 'redux'
+import { $host } from '../helpers'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
-export const getProfile = (id: string) => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const res = await $host.get(`user/${id}`, { withCredentials: true })
-      
-      dispatch(fetchProfile(res.data));
-    } catch (error) {
-      toast.error('Пользователя с таким id не найдено')
-    }
-  }
-}
+export const getProfile = createAsyncThunk('profile/getProfile', async (id: number) => {
+  const res = await $host.get(`user/${id}`, { withCredentials: true })
+  return res.data
+})
+
+export const getCurrentProfile = createAsyncThunk(
+  'profile/getCurrentProfile',
+  async (id: number) => {
+    const res = await $host.get(`user/${id}`, { withCredentials: true })
+    return res.data
+  },
+)
+
+export const getCurrentProfileMarks = createAsyncThunk(
+  'profile/getCurrentProfileMarks',
+  async (id: number) => {
+    const res = await $host.get(`books/usermarks/${id}`, { withCredentials: true })
+    return res.data
+  },
+)

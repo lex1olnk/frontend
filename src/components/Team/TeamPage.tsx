@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { getTeam } from '../../actions/teamActions'
 import { useParams } from 'react-router-dom'
 import { getHTML } from '../../actions/univAction'
 import SendInviteUser from './SendInviteUser'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AttributionIcon from '@mui/icons-material/Attribution'
@@ -20,10 +20,6 @@ const TeamPage: React.FC = () => {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   })
-
-  useEffect(() => {
-    if (isSuccess) getHTML(`teams/${data.name}.txt`)
-  }, [isSuccess])
 
   // useEffect(() => {
   //   if (isSuccess && data.adminId === _user.id) setIsEditor(true);
@@ -62,11 +58,11 @@ const TeamPage: React.FC = () => {
                   <div className='w-[336px] py-2'>
                     <div className='flex flex-row h-14 mt-10 justify-center'>
                       <img
-                        src={`${process.env.REACT_APP_API_URL}/img/${data.admin.img}`}
+                        src={`${process.env.REACT_APP_API_URL}/img/${data.admin && data.admin.img}`}
                         className='my-auto rounded-full border-2 border-white aspect-square w-12 object-cover'
                       />
                       <div className='py-1 px-4 text-white my-2 bg-cred mx-4 border-2 border-white'>
-                        {data.admin.nickname}
+                        {data.admin && data.admin.nickname}
                       </div>
                     </div>
                     <div>

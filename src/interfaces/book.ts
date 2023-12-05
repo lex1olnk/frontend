@@ -33,6 +33,7 @@ export interface Book {
   rating?: Rating
   createdAt?: string
   updatedAt?: string
+  bookmark?: string
 }
 
 export interface BookForm {}

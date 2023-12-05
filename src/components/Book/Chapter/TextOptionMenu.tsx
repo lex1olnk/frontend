@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
@@ -101,6 +101,7 @@ export const TextOptionMenu: React.FC<TextOptionMenuProps> = props => {
               const bor = ' border-' + t.textColor.substr(5);
               return (
                 <div
+                  key={bor}
                   onClick={() => {
                     setBgColor(t.bgColor);
                     setTextColor(t.textColor);

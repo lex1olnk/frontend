@@ -1,3 +1,4 @@
+import { getCurrentProfile, getProfile } from '../actions/profileActions'
 import { ProfileState } from '../interfaces/profile'
 
 import { createSlice } from '@reduxjs/toolkit'
@@ -20,7 +21,7 @@ const initialState: ProfileState = {
     birthday: '',
     username: '',
   },
-  isLoading: false
+  currentBooks: [],
 }
 
 const ProfileSlice = createSlice({
@@ -31,6 +32,31 @@ const ProfileSlice = createSlice({
       state.profile = action.payload.profile
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getProfile.fulfilled, (state, action) => {
+        const profile = action.payload
+        state.profile = { 
+          id: profile.id,
+          img: profile.img,
+          createdAt: profile.createdAt,
+          teamId: profile.teamId,
+          birthday: profile.birthday,
+          username: profile.username
+        }
+      })
+      .addCase(getCurrentProfile.fulfilled, (state, action) => {
+        const profile = action.payload
+        state.currentProfile = { 
+          id: profile.id,
+          img: profile.img,
+          createdAt: profile.createdAt,
+          teamId: profile.teamId,
+          birthday: profile.birthday,
+          username: profile.username
+        }
+      })
+    }
 })
 
 export const { fetchProfile } = ProfileSlice.actions

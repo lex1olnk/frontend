@@ -6,7 +6,7 @@ export interface LayoutState{
 
 export interface FormErrors{
   username:FormError;
-  email:FormError;
+  login:FormError;
   password:FormError;
   confirmPassword:FormError;
 }

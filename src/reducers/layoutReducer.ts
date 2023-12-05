@@ -5,7 +5,7 @@ const initialState: LayoutState = {
   formType: null,
   formErrors: {
     username: { errorOccured: false, errorMessage: '' },
-    email: { errorOccured: false, errorMessage: '' },
+    login: { errorOccured: false, errorMessage: '' },
     password: { errorOccured: false, errorMessage: '' },
     confirmPassword: { errorOccured: false, errorMessage: '' },
   },

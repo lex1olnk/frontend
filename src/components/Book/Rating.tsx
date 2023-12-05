@@ -1,6 +1,13 @@
-import { ReactComponent as Star } from '../../icons/ratingStar.svg';
+import React from 'react'
 
-const RatingStars = ({ value, rate }) => {
+import Star from '../../icons/ratingStar.svg';
+
+type RatingStarsProps = {
+  value: number,
+  rate: number
+}
+
+const RatingStars: React.FC<RatingStarsProps> = ({ value, rate }) => {
   const stars = [20.0, 20.0, 20.0, 20.0, 20.0];
   for (let i = 4; i >= 0; i--) {
     if (20 * i > rate) {

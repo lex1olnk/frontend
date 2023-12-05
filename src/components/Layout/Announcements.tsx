@@ -2,10 +2,11 @@ import React from 'react'
 
 type AnnouncementsProps = {
   hideText: (value: string, maxlimit: number) => string
+  loading: boolean
 }
 
 export const Announcements: React.FC<AnnouncementsProps> = (props) => {
-  const { hideText } = props
+  const { hideText, loading } = props
   const data = [
     {
       id: 0,
@@ -31,26 +32,62 @@ export const Announcements: React.FC<AnnouncementsProps> = (props) => {
         <span className='top-0 text-lg mb-2'>Анонсы</span>
         <div className='flex flex-row justify-between w-full'>
           <div className='flex flex-row w-[410px] h-[110px] text-sm hover:-translate-y-1 transition-all ease-out duration-200'>
-            <img src={data[0].img} className='rounded-md w-[72px] h-[110px] object-cover' />
-            <div className='h-full flex flex-col ml-2 justify-between'>
-              <span>{hideText(data[0].title, 48)}</span>
-              <span>{hideText(data[0].info, 140)}</span>
-              <div className='flex flex-row justify-between'>
-                <span>{data[0].time}</span>
-                <span>{data[0].team}</span>
-              </div>
-            </div>
+            {loading ? (
+              <>
+                <div className='mr-2 rounded-md w-[72px] h-[110px] bg-slate-300'></div>
+                <div className='w-10/12 h-full flex flex-col justify-between'>
+                  <div className='h-4 w-full bg-slate-300 rounded-lg'></div>
+                  <div className='h-4 w-full bg-slate-300 mt-2 rounded-lg'></div>
+                  <div className='h-4 w-full bg-slate-300 rounded-lg'></div>
+                  <div className='h-4 w-1/4 bg-slate-300 rounded-lg'></div>
+                  <div className='flex flex-row justify-between mt-2'>
+                    <div className='h-4 w-1/4 bg-slate-300 rounded-lg'></div>
+                    <div className='h-4 w-1/4 bg-slate-300 rounded-lg'></div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <img src={data[0].img} className='rounded-md w-[72px] h-[110px] object-cover' />
+                <div className='h-full flex flex-col ml-2 justify-between'>
+                  <span>{hideText(data[0].title, 48)}</span>
+                  <span>{hideText(data[0].info, 140)}</span>
+                  <div className='flex flex-row justify-between'>
+                    <span>{data[0].time}</span>
+                    <span>{data[0].team}</span>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
           <div className='flex flex-row w-[410px] h-[110px] text-sm hover:-translate-y-1 transition-all ease-out duration-200'>
-            <img src={data[0].img} className='rounded-md w-[72px] h-[110px] object-cover' />
-            <div className='h-full flex flex-col ml-2 justify-between'>
-              <span>{hideText(data[0].title, 48)}</span>
-              <span>{hideText(data[0].info, 140)}</span>
-              <div className='flex flex-row justify-between'>
-                <span>{data[0].time}</span>
-                <span>{data[0].team}</span>
-              </div>
-            </div>
+            {loading ? (
+              <>
+                <div className='mr-2 rounded-md w-[72px] h-[110px] bg-slate-300'></div>
+                <div className='w-10/12 h-full flex flex-col justify-between'>
+                  <div className='h-4 w-full bg-slate-300 rounded-lg'></div>
+                  <div className='h-4 w-full bg-slate-300 mt-2 rounded-lg'></div>
+                  <div className='h-4 w-full bg-slate-300 rounded-lg'></div>
+                  <div className='h-4 w-1/4 bg-slate-300 rounded-lg'></div>
+                  <div className='flex flex-row justify-between mt-2'>
+                    <div className='h-4 w-1/4 bg-slate-300 rounded-lg'></div>
+                    <div className='h-4 w-1/4 bg-slate-300 rounded-lg'></div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <img src={data[0].img} className='rounded-md w-[72px] h-[110px] object-cover' />
+                <div className='h-full flex flex-col ml-2 justify-between'>
+                  <span>{hideText(data[0].title, 48)}</span>
+                  <span>{hideText(data[0].info, 140)}</span>
+                  <div className='flex flex-row justify-between'>
+                    <span>{data[0].time}</span>
+                    <span>{data[0].team}</span>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

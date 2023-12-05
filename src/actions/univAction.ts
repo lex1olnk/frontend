@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export const getData = async(type: string) => {
-  const { data } = await $host.get(`${type}/all`);
+  const { data } = await $host.get(`${type}`);
   return data;
 };
 

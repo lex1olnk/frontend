@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 
 import PostAddIcon from '@mui/icons-material/PostAdd'
+import Logo from '../../icons/logo.png'
 
 import { authNav, navigation } from './consts'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
@@ -10,7 +11,7 @@ import { logout } from '../../reducers/userReducer'
 
 const DefaultHeader: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector(({ root }) => root.user);
+  const { user, isAuthenticated } = useAppSelector(({ root }) => root.user);
 
   return (
     <Disclosure as='nav' className='bg-white z-10 border-b-rose-500'>
@@ -26,8 +27,8 @@ const DefaultHeader: React.FC = () => {
               </div>
               <div className='flex flex-1 items-center justify-center sm:items-stretch sm:justify-start'>
                 <a className='flex flex-shrink-0 items-center' href='/'>
-                  {/* <img className="block h-8 w-auto lg:hidden" src={Logo} alt="Your Company" />
-                  <img className="hidden h-8 w-auto lg:block" src={Logo} alt="Your Company" /> */}
+                  <img className="block h-8 w-auto lg:hidden" src={Logo} alt="Your Company" />
+                  <img className="hidden h-8 w-auto lg:block" src={Logo} alt="Your Company" />
                 </a>
                 <div className='hidden sm:ml-6 sm:block'>
                   <div className='flex space-x-4 h-full'>
@@ -49,7 +50,7 @@ const DefaultHeader: React.FC = () => {
               </div>
               <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
                 {/* Adding dropdown */}
-                {isAuthenticated ? (
+                {(
                   <Menu as='div' className='relative mr-3'>
                     <div>
                       <Menu.Button className='flex focus:outline-none'>
@@ -86,7 +87,7 @@ const DefaultHeader: React.FC = () => {
                       </Menu.Items>
                     </Transition>
                   </Menu>
-                ) : null}
+                )}
 
                 <button
                   type='button'
@@ -121,7 +122,7 @@ const DefaultHeader: React.FC = () => {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href='/user/'
+                                href={`user/${user.id}`}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-black-700',

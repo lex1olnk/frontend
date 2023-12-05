@@ -6,7 +6,7 @@ interface nav {
 
 export const navigation: nav[] = [
   { name: 'Каталог', href: '#', current: false },
-  { name: 'Поиск', href: '#', current: false },
+  { name: 'Поиск', href: '/search', current: false },
   { name: 'Команды', href: '/team', current: false },
   { name: 'Форум', href: '#', current: false }
 ];

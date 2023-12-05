@@ -1,15 +1,15 @@
-import { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { getBookTomes } from '../../actions/bookTomeApi'
-
 import { MyTable } from '../Table'
 import AddChapter from './Chapter/AddChapter'
 
-type ChaptersProps = {
-  bookId: number
+type propTypes = {
+  bookId: number,
   translatorId: number
 }
 
-export const Chapters: React.FC<ChaptersProps> = ({ bookId, translatorId }) => {
+const Chapters: React.FC<propTypes> = props => {
+  const { bookId, translatorId } = props
   const [isVisible, setIsVisible] = useState(false)
   const [bookTomes, setBookTomes] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -61,3 +61,5 @@ export const Chapters: React.FC<ChaptersProps> = ({ bookId, translatorId }) => {
     </div>
   )
 }
+
+export default Chapters

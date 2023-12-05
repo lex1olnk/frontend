@@ -1,3 +1,5 @@
+import React from 'react'
+
 type Item = {
   id: number;
   value: string;
@@ -5,10 +7,10 @@ type Item = {
 
 type GroupProps = {
   type: string;
-  items: Array<Item>;
+  items: Item[]
 }
 
-export const Group: React.FC<GroupProps> = ({ type, items }) => {
+const Group: React.FC<GroupProps> = ({ type, items }) => {
   const data = items;
   if (!data) return null;
   return (
@@ -23,3 +25,5 @@ export const Group: React.FC<GroupProps> = ({ type, items }) => {
     </div>
   );
 };
+
+export default Group
