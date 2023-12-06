@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/2.4382533e.chunk.js","mappings":"+HAMA,UAJkB,WAChB,OAAOA,EAAAA,EAAAA,KAAA,SACT,C","sources":["components/Admin/AdminPage.js"],"sourcesContent":["import React from 'react';\r\n\r\nconst AdminPage = () => {\r\n  return <div></div>;\r\n};\r\n\r\nexport default AdminPage;\r\n"],"names":["_jsx"],"sourceRoot":""}

@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/944.48045209.chunk.css","mappings":"AACE,6BAAoB,CAApB,kBAAoB,CAIpB,yCAAkC,CAAlC,kEAAkC,CAAlC,UAAkC,CAAlC,mDAAkC","sources":["components/Book/style.css"],"sourcesContent":[".bookHeadButtons {\r\n  @apply flex flex-row;\r\n}\r\n\r\n.bookHeadButtons button {\r\n  @apply w-36 h-10 last:ml-4 bg-cred;\r\n}\r\n"],"names":[],"sourceRoot":""}
